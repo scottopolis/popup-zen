@@ -1,0 +1,889 @@
+(function(window, document, $, undefined){
+
+  var pzen = {};
+
+  pzen.init = function() {
+
+    // set defaults
+    pzen.newVisitor = false;
+
+    pzen.checkForPreview();
+
+  }
+
+  // Polyfill for Date.now() on IE
+  if ( ! Date.now ) {
+
+    Date.now = function now() {
+
+      return new Date().getTime();
+
+    };
+
+  }
+
+  function pzenGetUrlParameter( name ) {
+
+    name = name.replace( /[\[]/, '\\[').replace(/[\]]/, '\\]' );
+
+    var regex = new RegExp( '[\\?&]' + name + '=([^&#]*)' );
+
+    var results = regex.exec( location.search );
+
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+
+  }
+
+  // if using the ?pzen_preview=ID query string, show it no matter what
+  pzen.checkForPreview = function() {
+
+    if( pzenGetUrlParameter( 'pzen_preview' ) ) {
+
+      var id = pzenGetUrlParameter( 'pzen_preview' )
+
+      pzen.showItem( id );
+
+      pzen.noteListeners( id );
+
+      return;
+
+    }
+
+    // No preview, continue...
+    // determine if new or returning visitor
+    pzen.checkCookie();
+
+    // if we have active items, loop through them
+    if( window.popupZenVars.active )
+      pzen.doActive( window.popupZenVars.active );
+
+  }
+
+  // determine if new or returning visitor
+  pzen.checkCookie = function() {
+
+    if( pzen.getCookie('pzen_visit') === "" ) {
+
+      // New visitor, set visitor cookie. This tracks original visit
+      pzen.setCookie('pzen_visit', Date.now(), parseInt( window.popupZenVars.expires ));
+      pzen.setCookie('pzen_new', 'true', 1 );
+      pzen.newVisitor = true;
+
+    } else if( pzen.getCookie('pzen_new') != "" ) {
+      pzen.newVisitor = true;
+    }
+
+  }
+
+  // Notification box exists
+  pzen.doActive = function( ids ) {
+
+    for (var i = 0; i < ids.length; i++) {
+      pzen.doChecks( ids[i] );
+    }
+
+  }
+
+  // Check if we should display item
+  pzen.doChecks = function( id, forceShow ) {
+
+    // If markup doesn't exist, bail
+    var item = document.getElementById( 'pzen-' + id );
+    if( !item )
+      return;
+
+    var vars = window.popupZenVars[id];
+
+    if( !vars.visitor )
+      return;
+
+    if( vars.visitor === 'new' && pzen.newVisitor != true )
+      return;
+
+    if( vars.visitor === 'returning' && pzen.newVisitor != false )
+      return;
+
+    // hide after interacted with?
+    if( vars.showSettings === 'interacts' && pzen.getCookie( 'pzen_' + id + '_int' ) != '' )
+      return;
+
+    // maybe hide on certain devices
+    if( window.popupZenVars.isMobile === "" && vars.devices === "mobile_only" ) {
+      return;
+    } else if( window.popupZenVars.isMobile === "1" && vars.devices === "desktop_only" ) {
+      return;
+    }
+
+    var shown = pzen.getCookie( 'pzen_' + id + '_shown' );
+
+    // only show once?
+    if( vars.showSettings === 'hide_for' && shown === 'true' && !forceShow )
+      return;
+
+    // passes checks, show it
+
+    if( vars.display_when === 'exit' ) {
+
+      // bail if it's been closed already
+      if( pzen.getCookie( 'pzen-' + id + '_hide' ) === 'true' )
+        return;
+
+      // add exit listener
+      $('body').on( 'mouseleave', pzen.mouseExit );
+
+    }
+
+    // Delay showing item?
+    if( vars.display_when != 'scroll' ) {
+
+      // don't show yet if using exit detect or link activation. Shows when we use the forceShow argument
+      if( vars.display_when === 'exit' && !forceShow || vars.display_when === 'link' && !forceShow )
+        return;
+
+      var delay = ( vars.display_when === 'delay' ? parseInt( vars.delay ) : 0 );
+
+      // should we show popup?
+      if( vars.type === 'pzen-popup' && vars.showSettings === 'always' ) {
+
+        // remove cookie so popup shows properly
+        pzen.setCookie( 'pzen-' + id + '_hide', '', -1 );
+
+      } else if( vars.type === 'pzen-popup' && vars.showSettings === 'interacts' && pzen.getCookie( 'pzen-' + id + '_hide' ) === 'true' ) {
+
+        // don't show popup if user has hidden
+        return;
+
+      }
+
+      setTimeout( function() {
+        pzen.showItem( id );
+
+        // Track that note was shown. Here because this loads once per page, showItem() loads on hide/show, too many times.
+        pzen.trackingAndListeners(id);
+
+      }, delay * 1000 );
+
+    } else {
+
+      // Use scroll detect setting
+      pzen.detectScroll( id );
+
+    }
+
+  }
+
+  // Event listeners
+  pzen.noteListeners = function( id ) {
+
+    $('body')
+    .on('click', '.pzen-close', pzen.hideItem )
+    .on('click', '.pzen-floating-btn', pzen.btnClick )
+    .on('click', '#pzen-' + id + ' .pzen-email-btn', pzen.emailSubmitClick )
+    .on('click', '.pzen-backdrop', pzen.bdClick );
+
+    $('#pzen-' + id + ' .pzen-email-input').on('keypress', pzen.submitEmailOnEnter );
+
+    $('#pzen-' + id + ' a').on('click', pzen.interactionLink )
+
+  }
+
+  // detect when user scrolls partway down the page
+  // https://www.sitepoint.com/jquery-capture-vertical-scroll-percentage/
+  pzen.detectScroll = function( id ) {
+
+    $(window).scroll(
+      // debounce so we don't adversely affect scroll performance
+      pzen.debounce( function() {
+
+        var wintop = $(window).scrollTop(), docheight = $(document).height(), winheight = $(window).height();
+        var  scrolltrigger = 0.5;
+
+        // when user scrolls below fold, show it
+        if( (wintop/(docheight-winheight)) > scrolltrigger && !pzen.show['pzen-' + id] ) {
+          pzen.showItem( id );
+          pzen.show['pzen-' + id] = true
+
+          // track
+          pzen.trackingAndListeners(id);
+        }
+      }, 250) )
+
+  }
+
+  // Show/hide elements based on options object
+  pzen.showItem = function( id ) {
+
+    var options = window.popupZenVars[id];
+
+    var item = document.getElementById( 'pzen-' + id );
+
+    // show/hide backdrop for popups
+    if( options.type === 'pzen-popup' && $(item).hasClass('pzen-show') ) {
+      pzen.transitionOut( $('#pzen-bd-' + id) );
+    } else if( options.type === 'pzen-popup' ) {
+      pzen.transitionIn( $('#pzen-bd-' + id) );
+    }
+
+    // visitor has hidden this item, don't show box unless it's a popup
+    if( pzen.getCookie( 'pzen-' + id + '_hide' ) === 'true' ) {
+
+      // hide box, show btn
+      pzen.transitionOut( item );
+
+      // if set to show every page load and floating btn is hidden, need to delete hide cookie so it shows properly
+      if( options.showSettings === 'always' ) {
+
+        if( options.hideBtn === '1' || options.type == 'pzen-banner' || options.type == 'footer-bar' ) {
+          pzen.setCookie( 'pzen-' + id + '_hide', '', -1 );
+        }
+        
+      }
+
+      // show stuff that should always be shown. Includes pzen banner and footer bar if show every page load is selected
+      if( options.hideBtn != '1' && options.type != 'pzen-banner' || options.type == 'pzen-banner' && options.showSettings === 'always' ) {
+        pzen.transitionIn( $( '.pzen-btn-' + id ) );
+      }
+
+    } else {
+
+      if( options.type === 'fomo' && options.fomoLoopTimes ) {
+        pzen.fomoLoopStart( id, item, options.fomoLoopTimes, 1 );
+      } else if( options.type === 'fomo' ) {
+        pzen.fomoContent( id, item );
+      } else {
+        // Show the box and what's in it
+        pzen.transitionIn( item );
+      }
+
+      if( options.hideBtn != '1' && options.type != 'pzen-banner' )
+        pzen.transitionOut( $( '.pzen-btn-' + id ) );
+
+      // Show email opt-in
+      if( options.hideEmail != "1" )
+        pzen.showEmailSubmit( id );
+
+    }
+
+    // Button should not be shown
+    if( options.hideBtn === '1' )
+      pzen.hide( $( '.pzen-btn-' + id ) );
+
+    if( options.type === 'pzen-banner' && pzen.getCookie( 'pzen-' + id + '_hide' ) != 'true' )
+      pzen.toggleBnrMargin( id );
+    
+
+    // Should we hide it after a delay? Skip if showing multiple fomos
+    if( options.hide_after === 'delay' && !options.fomoDisplayTime ) {
+
+      setTimeout( function() {
+        pzen.transitionOut( item );
+      }, parseInt( options.hide_after_delay ) * 1000 );
+
+    }
+
+  }
+
+  // Set a cookie. https://www.w3schools.com/js/js_cookies.asp
+  pzen.setCookie = function(cname, cvalue, exdays, path) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      var expires = "expires="+ d.toUTCString();
+      if( !path )
+        path = '/';
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=" + path;
+      return cvalue;
+  }
+
+  // Get a cookie by name. https://www.w3schools.com/js/js_cookies.asp
+  pzen.getCookie = function(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for(var i = 0; i <ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+              c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+              return c.substring(name.length, c.length);
+          }
+      }
+      return "";
+  }
+
+  // Reusable function to throttle or debounce function calls
+  pzen.debounce = function(fn, delay) {
+    var timer = null;
+    return function () {
+      var context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fn.apply(context, args);
+      }, delay);
+    };
+  }
+
+  // Add top-margin to body when banner is present
+  pzen.toggleBnrMargin = function( id, hide ) {
+
+    // reset
+    $('body').css('padding-top', '');
+
+    if( !hide ) {
+      var height = $('#pzen-' + id).outerHeight();
+      $('body').css('padding-top', height);
+    }
+    
+  }
+
+  // User clicked hide
+  pzen.hideItem = function( e ) {
+
+    e.stopImmediatePropagation();
+
+    var closest = $(e.target).closest('.popup-zen-box');
+
+    var id = closest.attr('id').split('-')[1];
+
+    pzen.toggleHide( id );
+
+    if( closest.hasClass('pzen-banner') )
+      pzen.toggleBnrMargin( id, true );
+
+    // prevent duplicate firing
+    return false;
+
+  }
+
+  // floating button clicked
+  pzen.btnClick = function(e) {
+
+    e.stopImmediatePropagation();
+
+    var id = $(this).data('id');
+
+    pzen.toggleHide( id );
+
+  }
+
+  // Handle show/hide storage items, then run showItem func. Used when floating btn is clicked
+  pzen.toggleHide = function( id ) {
+
+    var hide = pzen.getCookie( 'pzen-' + id + '_hide');
+
+    console.log('hide ' + id, hide)
+
+    if( hide === 'true' ) {
+      pzen.setCookie( 'pzen-' + id + '_hide', 'true', -1 );
+    } else {
+      pzen.setCookie( 'pzen-' + id + '_hide', 'true', 1 );
+    }
+
+    pzen.showItem( id );
+
+  }
+
+  pzen.transitionIn = function(item) {
+
+    $(item).css('display','block');
+
+    setTimeout( function() {
+      $(item).addClass('pzen-transition-in').removeClass('pzen-hide');
+    }, 1);
+
+    setTimeout( function() {
+      $(item).removeClass('pzen-transition-in').addClass('pzen-show');
+    }, 300);
+
+  }
+
+  pzen.transitionOut = function(item) {
+    
+    $(item).addClass('pzen-transition-out').removeClass('pzen-show');
+
+    setTimeout( function() {
+      $(item).removeClass('pzen-transition-out').addClass('pzen-hide');
+      $(item).css('display','');
+    }, 200);
+
+  }
+
+  pzen.show = function(item) {
+    
+    item.style.display = 'block';
+    $(item).removeClass('pzen-hide').addClass('pzen-show');
+
+  }
+
+  pzen.hide = function(item) {
+    
+    $(item).removeClass('pzen-show').addClass('pzen-hide');
+    $(item).css('display','');
+
+  }
+
+  // Detect enter key
+  pzen.submitEmailOnEnter = function(e) {
+
+    if ( e.target.value && e.target.value != '' && e.keyCode == 13 ) {
+
+      var id = $(e.target).closest('.popup-zen-box').attr('id').split('-')[1];
+
+      e.preventDefault();
+
+      pzen.emailSubmitted( id );
+
+    }
+
+  }
+
+  // Show email field
+  pzen.showEmailSubmit = function( id ) {
+
+    var emailForm = $('#pzen-' + id + ' .pzen-form');
+
+    var options = window.popupZenVars[id];
+
+    // don't show duplicates
+    if( emailForm.hasClass('pzen-show') )
+      return;
+
+    // Setup localized vars
+    var textInput = document.querySelector('#pzen-' + id + ' .pzen-email-input');
+    
+    textInput.setAttribute('placeholder', options.placeholder );
+
+    $('#pzen-' + id ).addClass('has-optin');
+
+    emailForm.removeClass('pzen-hide').addClass('pzen-show');
+
+    emailForm.prepend( '<span class="pzen-away-msg">' + options.optinMsg + '</span>' );
+
+  }
+
+  // handle click of email submit btn
+  pzen.emailSubmitClick = function(e) {
+
+    e.stopImmediatePropagation();
+    e.preventDefault();
+
+    var id = $(e.target).closest('.popup-zen-box').attr('id').split('-')[1];
+
+    pzen.emailSubmitted( id );
+  }
+
+  // User submitted email, send to server
+  pzen.emailSubmitted = function( id ) {
+
+    var email = $('#pzen-' + id + ' .pzen-email-input').val();
+
+    if( !email ) {
+      alert( window.popupZenVars.emailErr + ' err1' );
+      return;
+    }
+
+    var name = $('#pzen-' + id + ' .pzen-name').val();
+
+    var title = $('#pzen-' + id + ' .pzen-title').text();
+
+    // validate email
+    if( email.indexOf('@') === -1 || email.indexOf('.') === -1 ) {
+      alert( window.popupZenVars.emailErr + ' err2' + email)
+      return;
+    }
+
+    // honeypot
+    if( $( '#pzen-' + id + ' input[name=pzen_hp]').val() != "" )
+      return;
+
+    // do different things for email providers
+    if( window.popupZenVars[id].emailProvider === 'ck' ) {
+      pzen.ckSubscribe( email, id );
+      return;
+    } else if( window.popupZenVars[id].emailProvider === 'mc' ) {
+      pzen.mcSubscribe( email, id );
+      return;
+    } else if( window.popupZenVars[id].emailProvider === 'ac' ) {
+      pzen.acSubscribe( email, id );
+      return;
+    } else if( window.popupZenVars[id].emailProvider === 'mailpoet' ) {
+      pzen.mpSubscribe( email, id );
+      return;
+    } else if( window.popupZenVars[id].emailProvider === 'drip' ) {
+      pzen.dripSubscribe( email, id );
+      return;
+    } else if( window.popupZenVars[id].emailProvider === 'default' ) {
+      pzen.sendEmail( email, id );
+      return;
+    }
+
+  }
+
+  // Send email
+  pzen.sendEmail = function( email, id ) {
+
+    pzen.showSpinner( id );
+
+    $.ajax({
+      method: "GET",
+      url: window.popupZenVars.ajaxurl,
+      data: { email: email, id: id, action: 'pzen_send_email', nonce: window.popupZenVars.pzenNonce }
+      })
+      .done(function(msg) {
+
+        $('#pzen-' + id + ' .pzen-form').hide();
+        pzen.showConfirmation( id );
+
+        pzen.conversion( id );
+
+      })
+      .fail(function(err) {
+        console.log(err);
+        pzen.hideSpinner();
+      });
+  }
+
+
+  // ConvertKit subscribe through API
+  pzen.ckSubscribe = function( email, id ) {
+
+    var options = window.popupZenVars[id];
+
+    var formId = $('#pzen-' + id + ' .ck-form-id').val();
+    var apiUrl = 'https://api.convertkit.com/v3/forms/' + formId + '/subscribe';
+
+    var name = $('#pzen-' + id + ' .pzen-name').val();
+
+    pzen.showSpinner( id );
+
+    $.ajax({
+      method: "POST",
+      url: apiUrl,
+      data: { email: email, api_key: options.ckApi, first_name: name }
+      })
+      .done(function(msg) {
+
+        // reset to defaults
+        pzen.showConfirmation( id );
+        $('#pzen-' + id + ' .pzen-form').hide();
+        pzen.conversion( id );
+
+      })
+      .fail(function(err) {
+
+        pzen.hideSpinner();
+
+        $('#pzen-' + id + ' .pzen-form').prepend('<span id="pzen-err">There seems to be a problem, can you try again?</span>');
+
+        setTimeout( function() {
+          $('#pzen-err').remove();
+        }, 3000);
+
+        console.log(err);
+      });
+
+  }
+
+  // Submit to MailChimp
+  pzen.mcSubscribe = function( email, id ) {
+
+    var listId = $('#pzen-' + id + ' .mc-list-id').val();
+    var name = $('#pzen-' + id + ' .pzen-name').val();
+
+    var interestIds = $('#pzen-' + id + ' .mc-interests').val();
+    if( interestIds )
+      interestIds = JSON.parse( interestIds );
+
+    if( !listId ) {
+      alert("MailChimp list ID is missing.");
+      return;
+    }
+
+    pzen.showSpinner( id );
+
+    $.ajax({
+      method: "GET",
+      url: window.popupZenVars.ajaxurl,
+      data: { email: email, list_id: listId, action: 'pzen_mc_subscribe', interests: interestIds, nonce: window.popupZenVars.pzenNonce, name: name }
+      })
+      .done(function(msg) {
+
+        // reset to defaults
+        pzen.showConfirmation( id );
+        $('#pzen-' + id + ' .pzen-form').hide();
+        pzen.conversion( id );
+
+      })
+      .fail(function(err) {
+        console.log(err);
+        pzen.hideSpinner();
+      });
+
+  }
+
+  // Submit to Active Campaign
+  pzen.acSubscribe = function( email, id ) {
+
+    var listId = $('#pzen-' + id + ' .ac-list-id').val();
+    var name = $('#pzen-' + id + ' .pzen-name').val();
+
+    if( !listId ) {
+      alert("List ID is missing.");
+      return;
+    }
+
+    pzen.showSpinner( id );
+
+    $.ajax({
+      method: "GET",
+      url: window.popupZenVars.ajaxurl,
+      data: { email: email, list_id: listId, action: 'pzen_ac_subscribe', nonce: window.popupZenVars.pzenNonce, name: name }
+      })
+      .done(function(msg) {
+
+        // console.log(msg)
+
+        if( msg.success == true ) {
+
+          // reset to defaults
+          pzen.showConfirmation( id );
+          $('#pzen-' + id + ' .pzen-form').hide();
+          pzen.conversion( id );
+
+        } else {
+          console.warn(msg)
+          $('#pzen-' + id + ' .pzen-content').html('<p>' + msg.data + '</p>');
+          pzen.hideSpinner();
+        }
+
+      })
+      .fail(function(err) {
+        console.warn(err);
+        pzen.hideSpinner();
+      });
+
+  }
+
+  // Submit to Drip
+  pzen.dripSubscribe = function( email, id ) {
+
+    if( !window._dcq ) {
+      alert("Drip code not installed properly.");
+      return;
+    }
+
+    var tags = $('#pzen-' + id + ' .drip-tags').val();
+    var name = $('#pzen-' + id + ' .pzen-name').val();
+
+    var tagArr = tags.split(",");
+
+    pzen.showSpinner( id );
+
+    pzen.dripid = id;
+
+    var response = _dcq.push(["identify", {
+      email: email,
+      first_name: name,
+      tags: tagArr,
+      success: pzen.dripResponse,
+      failure: pzen.dripResponse
+    }]);
+
+  }
+
+  pzen.dripResponse = function( response ) {
+
+    pzen.hideSpinner();
+
+    if( response.success == true ) {
+
+      // reset to defaults
+      pzen.showConfirmation( pzen.dripid );
+      $('#pzen-' + pzen.dripid + ' .pzen-form').hide();
+      pzen.conversion( pzen.dripid );
+
+    } else {
+      console.warn(response);
+      $('#pzen-' + pzen.dripid + ' .pzen-content').html('<p>' + response.error + '</p>');
+    }
+
+  }
+
+  // Submit to MailPoet
+  pzen.mpSubscribe = function( email, id ) {
+
+    var listId = $('#pzen-' + id + ' .mailpoet-list-id').val();
+
+    if( !listId ) {
+      alert("List ID is missing.");
+      return;
+    }
+
+    var name = $('#pzen-' + id + ' .pzen-name').val();
+
+    pzen.showSpinner( id );
+
+    $.ajax({
+      method: "GET",
+      url: window.popupZenVars.ajaxurl,
+      data: { email: email, list_id: listId, action: 'pzen_mailpoet_subscribe', nonce: window.popupZenVars.pzenNonce, name: name }
+      })
+      .done(function(msg) {
+
+        // console.log(msg)
+
+        // reset to defaults
+        pzen.showConfirmation( id );
+        $('#pzen-' + id + ' .pzen-form').hide();
+        pzen.conversion( id );
+
+      })
+      .fail(function(err) {
+        console.log(err);
+        pzen.hideSpinner();
+      });
+
+  }
+
+  // callback when interaction link clicked
+  pzen.interactionLink = function(e) {
+
+    // don't count attribution clicks as conversions
+    if( e.target.href === 'https://getpopupzen.com/' ) 
+      return;
+
+    var id = $(e.target).closest('.popup-zen-box').attr('id').split('-')[1];
+
+    pzen.conversion( id );
+  }
+
+  // Callback for user interaction
+  pzen.conversion = function( id ) {
+
+    var params = { action: 'pzen_track_event', nonce: window.popupZenVars.pzenNonce, id: id };
+
+    // store interaction data
+    $.ajax({
+      method: "GET",
+      url: window.popupZenVars.ajaxurl,
+      data: params
+      })
+      .done(function(msg) {
+
+        var redirect = window.popupZenVars[id].redirect;
+
+        if( redirect ) {
+
+          $('#pzen-' + id + ' .pzen-content').append( ' Redirecting... <img src="' + window.popupZenVars.pluginUrl + 'assets/img/loading.gif" class="pzen-loading" />');
+
+          setTimeout( function() {
+            window.location.href = redirect;
+          }, 1000);
+
+        }
+
+      })
+      .fail(function(err) {
+        console.log(err);
+      });
+
+    pzen.setCookie('pzen_' + id + '_int', 'true', 1 );
+
+  }
+
+  // show confirmation message after email submitted
+  pzen.showConfirmation = function( id ) {
+
+    pzen.hideSpinner();
+
+    var options = window.popupZenVars[id];
+
+    var msg = ( options.confirmMsg != '' ? options.confirmMsg : "Thanks!" );
+
+    if( options.type === 'pzen-banner' ) {
+
+      $('#pzen-' + id + ' .popup-zen-box-rows').addClass('pzen-full-width').html(msg);
+
+      pzen.toggleBnrMargin( id );
+
+    } else {
+
+      $('#pzen-' + id + ' .pzen-content').html(msg);
+
+    }
+
+  }
+
+  // Callback for tracking
+  pzen.trackingAndListeners = function( id ) {
+
+    // add click listeners and such. Doing it here because it's most reliable way of knowing when note is actually shown on page.
+    pzen.noteListeners( id );
+
+    var options = window.popupZenVars[id];
+
+    var hideFor = ( options.hideForDays ? parseInt( options.hideForDays ) : 1 );
+    pzen.setCookie( 'pzen_' + id + '_shown', 'true', hideFor );
+
+    // should we track impressions via GA?
+    if( window.popupZenVars.ga_tracking != '1' || typeof 'ga' != "function" ) {
+      return;
+    }
+
+    // store interaction data
+    ga(
+      'send',
+      'event',
+      'popup-zen-impression',
+      'impression',
+      'popup-zen',
+      id
+    );
+
+  }
+
+  pzen.showSpinner = function( id ) {
+
+    $( '#pzen-' + id + ' .pzen-form' ).html( '<img src="' + window.popupZenVars.pluginUrl + 'assets/img/loading.gif" class="pzen-loading" />');
+    $('#pzen-' + id + ' .pzen-name-row').hide();
+
+  }
+
+  pzen.hideSpinner = function() {
+    $('img.pzen-loading').remove();
+  }
+
+  pzen.bdClick = function(e) {
+
+    e.stopImmediatePropagation();
+
+    var id = $(e.currentTarget).data('id');
+
+    pzen.toggleHide( id );
+
+  }
+
+  // detect mouse leave and show a box
+  pzen.mouseExit = function(e) {
+
+    var el = $('.popup-zen-box.pzen-show-on-exit')[0];
+
+    if( !el )
+      return;
+
+    if( $(el).hasClass('pzen-show') )
+      return;
+    
+    var id = el.id.split('-')[1];
+
+    pzen.doChecks( id, true );
+
+  }
+
+  $(window).on( 'load', function() {
+    pzen.init();
+  });
+
+  window.popupZenFuncs = pzen;
+
+})(window, document, jQuery);
