@@ -161,12 +161,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 delete_option( 'pzen_powered_by' );
             }
 
-            if( isset( $_POST['pzen_disable_tracking'] ) ) {
-                update_option( 'pzen_disable_tracking', sanitize_text_field( $_POST['pzen_disable_tracking'] ) );
-            } elseif( !empty( $_POST ) && empty( $_POST['pzen_disable_tracking'] )  ) {
-                delete_option( 'pzen_disable_tracking' );
-            }
-
             ?>
             <div id="pzen-settings-wrap" class="wrap">          
 
@@ -202,11 +196,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 <h3><?php _e('Miscellaneous', 'popup-zen'); ?></h3>
 
                 <p>
-                    <input type="checkbox" id="pzen_disable_tracking" name="pzen_disable_tracking" value="1" <?php checked('1', get_option( 'pzen_disable_tracking' ), true); ?> />
-                    <?php _e( 'Disable Tracking (High traffic sites should check this for better performance)', 'popup-zen' ); ?>
-                </p>
-
-                <p>
                     <input type="checkbox" id="pzen_powered_by" name="pzen_powered_by" value="1" <?php checked('1', get_option( 'pzen_powered_by' ), true); ?> />
                     <?php _e( 'Hide attribution links', 'popup-zen' ); ?>
                 </p>
@@ -235,14 +224,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             $date = $columns['date'];
             unset($columns['date']);
 
-            if( !get_option('pzen_disable_tracking') ) {
-                $columns["impressions"] = "Impressions";
-                $columns["conversions"] = "Conversions";
-                $columns["rate"] = "Percent";
-            } else {
-                $columns["tracking_disabled"] = "Views (Disabled)";
-                $columns["conversions"] = "Conversions";
-            }
+            $columns["conversions"] = "Conversions";
             
             $columns["active"] = "Active";
             $columns['date'] = $date;
@@ -271,32 +253,9 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             $conversions = get_post_meta( $post_id, 'pzen_conversions', 1);
 
-            if( get_option( 'pzen_disable_tracking' ) ) {
-
-                $views = $rate = '<small>Disabled</small>';
-
-            } else {
-
-                $views = get_post_meta( $post_id, 'pzen_views', 1);
-
-                if( empty( $conversions ) || empty( $views ) ) {
-                    $rate = '0%';
-                } else {
-                    $rate = intval( $conversions ) / intval( $views );
-                    $rate = number_format( $rate, 3 ) * 100 . '%';
-                }
-
-            }
-
             switch ( $column ) {
-                case 'impressions':
-                    echo $views;
-                    break;
                 case 'conversions':
                     echo $conversions;
-                    break;
-                case 'rate':
-                    echo $rate;
                     break;
                 case 'active':
                     echo '<label class="pzen-switch"><input data-id="' . $post_id . '" type="checkbox" value="1" ' . checked(1, get_post_meta( $post_id, 'pzen_active', true ), false) . ' /><div class="pzen-slider pzen-round"></div></label>';
@@ -391,15 +350,21 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     </h4>
                     <p>
                         <label class="pzen-radio-withimage">
-                            <span class="text">Notification Box</span>
-                            <img src="<?php echo Popup_Zen_URL . 'assets/img/bottom-right-icon.png'; ?>" class="pzen-radio-image" />
+                            <span class="text">Zen Box</span>
+                            <img src="<?php echo Popup_Zen_URL . 'assets/img/small-box-icon.png'; ?>" class="pzen-radio-image" />
                             <input type="radio" name="pzen_type" value="notification" <?php checked( "notification", get_post_meta( $post->ID, 'pzen_type', true ) ); ?> />
                         </label>
 
                         <label class="pzen-radio-withimage">
-                            <span class="text">Popup</span>
-                            <img src="<?php echo Popup_Zen_URL . 'assets/img/popup-icon.png'; ?>" class="pzen-radio-image" />
-                            <input type="radio" name="pzen_type" value="pzen-popup" <?php checked( "pzen-popup", get_post_meta( $post->ID, 'pzen_type', 1 ) ); ?> />
+                            <span class="text">Header Bar</span>
+                            <img src="<?php echo Popup_Zen_URL . 'assets/img/header-bar-icon.png'; ?>" class="pzen-radio-image" />
+                            <input type="radio" name="pzen_type" value="header_bar" <?php checked( "header_bar", get_post_meta( $post->ID, 'pzen_type', true ) ); ?> />
+                        </label>
+
+                        <label class="pzen-radio-withimage">
+                            <span class="text">Footer Bar</span>
+                            <img src="<?php echo Popup_Zen_URL . 'assets/img/footer-bar-icon.png'; ?>" class="pzen-radio-image" />
+                            <input type="radio" name="pzen_type" value="footer_bar" <?php checked( "footer_bar", get_post_meta( $post->ID, 'pzen_type', true ) ); ?> />
                         </label>
 
                         <?php do_action('pzen_type_settings', $post->ID); ?>
@@ -575,13 +540,13 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 <div id="show-email-options">
 
                     <h4>
-                        <label for="position"><?php _e( 'Email Options' ); ?></label>
+                        <label for="position"><?php _e( 'Email Provider' ); ?></label>
                     </h4>
 
                     <select name="email_provider">
 
                         <option value="default" <?php selected( get_post_meta( $post->ID, 'email_provider', true ), "default"); ?> >
-                            <?php _e( 'Send to email address', 'popup-zen' ); ?>
+                            <?php _e( 'None', 'popup-zen' ); ?>
                         </option>
 
                         <option value="ck" <?php selected( get_post_meta( $post->ID, 'email_provider', true ), "ck"); ?> >
@@ -718,10 +683,9 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     <?php endif; ?>
 
                     
-                    <div id="send-to-option">
+                    <div id="none-selected">
                         <p>
-                            <label for="opt_in_send_to"><?php _e( 'Send to email <em>*required</em>', 'popup-zen' ); ?></label>
-                            <input class="widefat" type="email" name="opt_in_send_to" id="opt_in_send_to" value="<?php echo esc_attr( get_post_meta( $post->ID, 'opt_in_send_to', true ) ); ?>" size="20" />
+                            Please select an email provider.
                         </p>
                     </div>
 
@@ -773,11 +737,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     </div>
 
                 </div>
-
-                <p>
-                <input type="checkbox" id="hide_optin" name="hide_optin" value="1" <?php checked('1', get_post_meta( $post->ID, 'hide_optin', true ), true); ?> />
-                <?php _e( 'Hide email opt-in?', 'popup-zen' ); ?>
-                </p>
 
             </div>
 
@@ -1086,7 +1045,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 return $post_id;
 
             $keys = array(
-                'hide_optin', 
                 'show_on',
                 'opt_in_message',
                 'opt_in_confirmation',

@@ -116,7 +116,6 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                 
                 $array[$value] = array( 
                     'type' => $type,
-                    'hideEmail' => get_post_meta($value, 'hide_optin', 1),
                     'emailProvider' => get_post_meta( $value, 'email_provider', 1 ),
                     'redirect' => get_post_meta( $value, 'pzen_redirect', 1 ),
                     'ckApi' => get_option( 'pzen_ck_api_key' ),

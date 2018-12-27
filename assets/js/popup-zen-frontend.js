@@ -259,8 +259,7 @@
         pzen.transitionOut( $( '.pzen-btn-' + id ) );
 
       // Show email opt-in
-      if( options.hideEmail != "1" )
-        pzen.showEmailSubmit( id );
+      pzen.showEmailSubmit( id );
 
     }
 

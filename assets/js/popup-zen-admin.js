@@ -8,7 +8,6 @@
     pzen.toggleShowOn();
     pzen.toggleTypes();
     pzen.toggleDatepicker();
-    pzen.emailCheckbox();
     pzen.toggleEmailForm();
     pzen.toggleTimeAgo();
 
@@ -41,7 +40,6 @@
     }
 
     $('body')
-    .on('change', 'input[name=hide_optin]', pzen.emailCheckbox )
     .on('change', '.pzen-switch input', pzen.toggleSwitch )
     .on('change', 'input[name=expiration]', pzen.toggleDatepicker )
     .on('change', 'input[name=show_on]', pzen.toggleShowOn )
@@ -200,27 +198,10 @@
     }
   }
 
-  // New item selected, update preview and settings display
-  pzen.emailCheckbox = function() {
-
-    var optin = $("#show-email-options");
-
-    if( $('input[name=hide_optin]').is(':checked') ) {
-
-      optin.fadeOut(200);
-
-    } else {
-
-      optin.fadeIn();
-      
-    }
-
-  }
-
   // Handle display of different email options
   pzen.toggleEmailForm = function() {
 
-    var sendTo = $('#send-to-option');
+    var noneSelected = $('#none-selected');
     var defaultDiv = $('#default-email-options');
     var custom = $('#custom-email-options');
     var checkedVal = $('select[name=email_provider]').val();
@@ -239,8 +220,8 @@
     }
 
     if( checkedVal === 'default' ) {
-      sendTo.fadeIn();
-      defaultDiv.fadeIn();
+      noneSelected.fadeIn();
+      defaultDiv.hide();
       custom.hide();
       ckFields.hide();
       mcFields.hide();
@@ -250,7 +231,7 @@
     } else if( checkedVal === 'custom' ) {
       custom.fadeIn();
       defaultDiv.hide();
-      sendTo.hide();
+      noneSelected.hide();
       ckFields.hide();
       mcFields.hide();
       mailpoet.hide();
@@ -261,7 +242,7 @@
       defaultDiv.fadeIn();
       ckFields.hide();
       custom.hide();
-      sendTo.hide();
+      noneSelected.hide();
       mailpoet.hide();
       acFields.hide();
       drip.hide();
@@ -270,7 +251,7 @@
       defaultDiv.fadeIn();
       mcFields.hide();
       custom.hide();
-      sendTo.hide();
+      noneSelected.hide();
       mailpoet.hide();
       acFields.hide();
       drip.hide();
@@ -279,7 +260,7 @@
       defaultDiv.fadeIn();
       mcFields.hide();
       custom.hide();
-      sendTo.hide();
+      noneSelected.hide();
       ckFields.hide();
       acFields.hide();
       drip.hide();
@@ -288,7 +269,7 @@
       defaultDiv.fadeIn();
       mcFields.hide();
       custom.hide();
-      sendTo.hide();
+      noneSelected.hide();
       mailpoet.hide();
       acFields.fadeIn();
       drip.hide();
@@ -298,7 +279,7 @@
       defaultDiv.fadeIn();
       mcFields.hide();
       custom.hide();
-      sendTo.hide();
+      noneSelected.hide();
       mailpoet.hide();
       acFields.hide();
     }
