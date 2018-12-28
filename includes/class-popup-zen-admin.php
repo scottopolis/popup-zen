@@ -166,43 +166,43 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             ?>
             <div id="pzen-settings-wrap" class="wrap">          
 
-            <h2><?php _e('Settings', 'popup-zen'); ?></h2>
+            <h2><?php _e('Settings', 'popup-zen-lite'); ?></h2>
 
             <form method="post" action="edit.php?post_type=popupzen&page=popupzen">
 
-                <h3><?php _e('Email Settings', 'popup-zen'); ?></h3>
+                <h3><?php _e('Email Settings', 'popup-zen-lite'); ?></h3>
 
-                <p><?php _e('If you are using ConvertKit, entery your API key. It can be found on your <a href="https://app.convertkit.com/account/edit#account_info" target="_blank">account info page.</a>', 'popup-zen'); ?></p>
+                <p><?php _e('If you are using ConvertKit, entery your API key. It can be found on your <a href="https://app.convertkit.com/account/edit#account_info" target="_blank">account info page.</a>', 'popup-zen-lite'); ?></p>
                 
                 <input id="pzen_ck_api_key" name="pzen_ck_api_key" value="<?php echo esc_html( get_option( 'pzen_ck_api_key' ) ); ?>" placeholder="ConvertKit API key" type="text" size="50" />
 
-                <p><?php _e('If you are using Active Campaign, enter your url and API key. It can be found under My Settings -> Developer.', 'popup-zen'); ?></p>
+                <p><?php _e('If you are using Active Campaign, enter your url and API key. It can be found under My Settings -> Developer.', 'popup-zen-lite'); ?></p>
 
                 <input id="pzen_ac_url" name="pzen_ac_url" value="<?php echo esc_html( get_option( 'pzen_ac_url' ) ); ?>" placeholder="Active Campaign URL" type="text" size="50" /><br/>
 
                 <input id="pzen_ac_api_key" name="pzen_ac_api_key" value="<?php echo esc_html( get_option( 'pzen_ac_api_key' ) ); ?>" placeholder="Active Campaign API key" type="password" size="50" /><br/>
 
-                <p><?php _e('If you are using MailChimp, enter your API key. It can be found under Account -> Extras -> API Keys.', 'popup-zen'); ?></p>
+                <p><?php _e('If you are using MailChimp, enter your API key. It can be found under Account -> Extras -> API Keys.', 'popup-zen-lite'); ?></p>
                 
                 <input id="pzen_mc_api_key" name="pzen_mc_api_key" value="<?php echo esc_html( get_option( 'pzen_mc_api_key' ) ); ?>" placeholder="MailChimp API key" type="text" size="50" /><br/>
 
                 <p>
                     <input type="checkbox" id="pzen_mc_status" name="pzen_mc_status" value="1" <?php checked('1', get_option( 'pzen_mc_status' ), true); ?> />
-                    <?php _e( 'Disable MailChimp double-opt in? Check to subscribe users to your list without confirmation. If checked, MailChimp will not send a final welcome email.', 'popup-zen' ); ?>
+                    <?php _e( 'Disable MailChimp double-opt in? Check to subscribe users to your list without confirmation. If checked, MailChimp will not send a final welcome email.', 'popup-zen-lite' ); ?>
                 </p>
 
-                <h3><?php _e('Google Analytics Tracking', 'popup-zen'); ?></h3>
+                <h3><?php _e('Google Analytics Tracking', 'popup-zen-lite'); ?></h3>
 
                 <p>
                     <input type="checkbox" id="pzen_ga_tracking" name="pzen_ga_tracking" value="1" <?php checked('1', get_option( 'pzen_ga_tracking' ), true); ?> />
-                    <?php _e( 'Track popup views with Google Analytics? Must have <a href="https://kinsta.com/blog/add-google-analytics-to-wordpress/" target="_blank">GA tracking code installed.</a>', 'popup-zen' ); ?>
+                    <?php _e( 'Track popup views with Google Analytics? Must have <a href="https://kinsta.com/blog/add-google-analytics-to-wordpress/" target="_blank">GA tracking code installed.</a>', 'popup-zen-lite' ); ?>
                 </p>
 
-                <h3><?php _e('Miscellaneous', 'popup-zen'); ?></h3>
+                <h3><?php _e('Miscellaneous', 'popup-zen-lite'); ?></h3>
 
                 <p>
                     <input type="checkbox" id="pzen_powered_by" name="pzen_powered_by" value="1" <?php checked('1', get_option( 'pzen_powered_by' ), true); ?> />
-                    <?php _e( 'Hide attribution links', 'popup-zen' ); ?>
+                    <?php _e( 'Hide attribution links', 'popup-zen-lite' ); ?>
                 </p>
 
                 <?php do_action( 'pzen_settings_page' ); ?>
@@ -273,20 +273,20 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
         public function register_cpt() {
 
             $labels = array(
-                'name'              => __( 'Popup Zen', 'popup-zen' ),
-                'singular_name'     => __( 'Popup Zen', 'popup-zen' ),
-                'menu_name'         => __( 'Popup Zen', 'popup-zen' ),
-                'name_admin_bar'        => __( 'Popup Zen', 'popup-zen' ),
-                'add_new'           => __( 'Add New', 'popup-zen' ),
-                'add_new_item'      => __( 'Add New Popup', 'popup-zen' ),
-                'new_item'          => __( 'New Popup', 'popup-zen' ),
-                'edit_item'         => __( 'Edit Popup', 'popup-zen' ),
-                'view_item'         => __( 'View Popup', 'popup-zen' ),
-                'all_items'         => __( 'All Popups', 'popup-zen' ),
-                'search_items'      => __( 'Search Popups', 'popup-zen' ),
-                'parent_item_colon' => __( 'Parent Popups:', 'popup-zen' ),
-                'not_found'         => __( 'No Popups found.', 'popup-zen' ),
-                'not_found_in_trash' => __( 'No Popups found in Trash.', 'popup-zen' )
+                'name'              => __( 'Popup Zen', 'popup-zen-lite' ),
+                'singular_name'     => __( 'Popup Zen', 'popup-zen-lite' ),
+                'menu_name'         => __( 'Popup Zen', 'popup-zen-lite' ),
+                'name_admin_bar'        => __( 'Popup Zen', 'popup-zen-lite' ),
+                'add_new'           => __( 'Add New', 'popup-zen-lite' ),
+                'add_new_item'      => __( 'Add New Popup', 'popup-zen-lite' ),
+                'new_item'          => __( 'New Popup', 'popup-zen-lite' ),
+                'edit_item'         => __( 'Edit Popup', 'popup-zen-lite' ),
+                'view_item'         => __( 'View Popup', 'popup-zen-lite' ),
+                'all_items'         => __( 'All Popups', 'popup-zen-lite' ),
+                'search_items'      => __( 'Search Popups', 'popup-zen-lite' ),
+                'parent_item_colon' => __( 'Parent Popups:', 'popup-zen-lite' ),
+                'not_found'         => __( 'No Popups found.', 'popup-zen-lite' ),
+                'not_found_in_trash' => __( 'No Popups found in Trash.', 'popup-zen-lite' )
             );
 
             $args = array(
@@ -320,7 +320,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             add_meta_box(
                 'display_meta_box',
-                __( 'Display', 'popup-zen' ),
+                __( 'Display', 'popup-zen-lite' ),
                 array( $this, 'display_meta_box_callback' ),
                 'popupzen',
                 'normal',
@@ -329,7 +329,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             add_meta_box(
                 'settings_meta_box',
-                __( 'Advanced Settings', 'popup-zen' ),
+                __( 'Advanced Settings', 'popup-zen-lite' ),
                 array( $this, 'settings_meta_box_callback' ),
                 'popupzen',
                 'normal',
@@ -487,7 +487,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 </h4>
                 
                 <p>
-                    <?php _e( 'Upload a Custom Image', 'popup-zen' ); ?>
+                    <?php _e( 'Upload a Custom Image', 'popup-zen-lite' ); ?>
                 </p>
                 
                 <img src="<?php echo get_post_meta( $post->ID, 'popup_image', 1 ); ?>" class="pzen-popup-image" />
@@ -500,14 +500,14 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             <div class="pzen-section" id="box-colors">
                 
                 <div id="send-btn-color">
-                    <p><?php _e( 'Accent color', 'popup-zen' ); ?></p>
+                    <p><?php _e( 'Accent color', 'popup-zen-lite' ); ?></p>
                     <input type="text" name="button_color1" value="<?php echo esc_html( get_post_meta( $post->ID, 'button_color1', true ) ); ?>" class="pzen-colors" data-default-color="#1191cb" />
                 </div>
                 
-                <p><?php _e( 'Background color', 'popup-zen' ); ?></p>
+                <p><?php _e( 'Background color', 'popup-zen-lite' ); ?></p>
                 <input type="text" name="bg_color" value="<?php echo esc_html( get_post_meta( $post->ID, 'bg_color', true ) ); ?>" class="pzen-colors" data-default-color="#ffffff" />
                 
-                <p><?php _e( 'Text color', 'popup-zen' ); ?></p>
+                <p><?php _e( 'Text color', 'popup-zen-lite' ); ?></p>
                 <input type="text" name="text_color" value="<?php echo esc_html( get_post_meta( $post->ID, 'text_color', true ) ); ?>" class="pzen-colors" data-default-color="#333333" />
 
             </div>
@@ -523,35 +523,35 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     <select name="email_provider">
 
                         <option value="default" <?php selected( get_post_meta( $post->ID, 'email_provider', true ), "default"); ?> >
-                            <?php _e( 'None', 'popup-zen' ); ?>
+                            <?php _e( 'None', 'popup-zen-lite' ); ?>
                         </option>
 
                         <option value="ck" <?php selected( get_post_meta( $post->ID, 'email_provider', true ), "ck"); ?> >
-                            <?php _e( 'ConvertKit', 'popup-zen' ); ?>
+                            <?php _e( 'ConvertKit', 'popup-zen-lite' ); ?>
                         </option>
 
                         <option value="mc" <?php selected( get_post_meta( $post->ID, 'email_provider', true ), "mc"); ?> >
-                            <?php _e( 'MailChimp', 'popup-zen' ); ?>
+                            <?php _e( 'MailChimp', 'popup-zen-lite' ); ?>
                         </option>
 
                         <option value="ac" <?php selected( get_post_meta( $post->ID, 'email_provider', true ), "ac"); ?> >
-                            <?php _e( 'Active Campaign', 'popup-zen' ); ?>
+                            <?php _e( 'Active Campaign', 'popup-zen-lite' ); ?>
                         </option>
 
                         <option value="drip" <?php selected( get_post_meta( $post->ID, 'email_provider', true ), "drip"); ?> >
-                            <?php _e( 'Drip', 'popup-zen' ); ?>
+                            <?php _e( 'Drip', 'popup-zen-lite' ); ?>
                         </option>
 
                         <?php if( class_exists('\MailPoet\API\API') ) : ?>
 
                         <option value="mailpoet" <?php selected( get_post_meta( $post->ID, 'email_provider', true ), "mailpoet"); ?> >
-                            <?php _e( 'MailPoet', 'popup-zen' ); ?>
+                            <?php _e( 'MailPoet', 'popup-zen-lite' ); ?>
                         </option>
 
                         <?php endif; ?>
 
                         <option value="custom" <?php selected( get_post_meta( $post->ID, 'email_provider', true ), "custom"); ?> >
-                            <?php _e( 'Custom', 'popup-zen' ); ?>
+                            <?php _e( 'Custom', 'popup-zen-lite' ); ?>
                         </option>
 
                     </select>
@@ -560,12 +560,12 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
                     <p id="convertkit-fields">
                         <?php _e( 'ConvertKit List ID, <a href=
-                        "http://popupzen.helpscoutdocs.com/article/6-convertkit-integration" target="_blank">click for help.</a> <em>*required</em>', 'popup-zen' ); ?>
+                        "http://popupzen.helpscoutdocs.com/article/6-convertkit-integration" target="_blank">click for help.</a> <em>*required</em>', 'popup-zen-lite' ); ?>
                         <input id="ck_id" name="ck_id" class="widefat" value="<?php echo get_post_meta( $post->ID, 'ck_id', 1 ); ?>" placeholder="ConvertKit list ID" type="text" />
                     </p>
                     
                     <div id="mailchimp-fields">
-                        <p><strong><?php _e( 'MailChimp List *required', 'popup-zen' ); ?></strong></p>
+                        <p><strong><?php _e( 'MailChimp List *required', 'popup-zen-lite' ); ?></strong></p>
 
                             <?php
 
@@ -598,7 +598,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     </div>
 
                     <div id="ac-fields">
-                        <p><strong><?php _e( 'Active Campaign List *required', 'popup-zen' ); ?></strong></p>
+                        <p><strong><?php _e( 'Active Campaign List *required', 'popup-zen-lite' ); ?></strong></p>
 
                             <?php
 
@@ -630,7 +630,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
                         <div id="mailpoet-fields">
 
-                        <p><strong><?php _e( 'MailPoet List <em>*required</em>', 'popup-zen' ); ?></strong></p>
+                        <p><strong><?php _e( 'MailPoet List <em>*required</em>', 'popup-zen-lite' ); ?></strong></p>
 
                         <select name="mailpoet_list_id" id="mailpoet_list_id">
                     
@@ -668,7 +668,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
                     <div id="custom-email-options">
                         <p>
-                            <label for="custom_email_form"><?php _e( 'Insert HTML form code here', 'popup-zen' ); ?></label>
+                            <label for="custom_email_form"><?php _e( 'Insert HTML form code here', 'popup-zen-lite' ); ?></label>
                             <textarea class="pzen-textarea" name="custom_email_form" id="custom_email_form"><?php echo esc_html( get_post_meta( $post->ID, 'custom_email_form', true ) ); ?></textarea>
                         </p>
                     </div>
@@ -678,34 +678,34 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                         <div id="pzen-name-fields">
 
                         <p>
-                            <?php _e( 'Name Field Placeholder', 'popup-zen' ); ?>
+                            <?php _e( 'Name Field Placeholder', 'popup-zen-lite' ); ?>
                             <input id="name_placeholder" name="name_placeholder" class="widefat" value="<?php echo get_post_meta( $post->ID, 'name_placeholder', 1 ); ?>" placeholder="First Name" type="text" />
                         </p>
 
                         <p>
                             <input type="checkbox" id="dont_show_name" name="dont_show_name" value="1" <?php checked('1', get_post_meta( $post->ID, 'dont_show_name', true ), true); ?> />
-                            <?php _e( 'Don\'t show first name field', 'popup-zen' ); ?>
+                            <?php _e( 'Don\'t show first name field', 'popup-zen-lite' ); ?>
                         </p>
 
                         </div>
 
                         <p>
-                            <label for="opt_in_message"><?php _e( 'Small text above email field', 'popup-zen' ); ?></label>
+                            <label for="opt_in_message"><?php _e( 'Small text above email field', 'popup-zen-lite' ); ?></label>
                             <input class="widefat" type="text" name="opt_in_message" id="opt_in_message" placeholder="We don't spam or share your information." value="<?php echo esc_attr( get_post_meta( $post->ID, 'opt_in_message', true ) ); ?>" size="20" />
                         </p>
 
                         <p>
-                            <label for="opt_in_placeholder"><?php _e( 'Placeholder', 'popup-zen' ); ?></label>
+                            <label for="opt_in_placeholder"><?php _e( 'Placeholder', 'popup-zen-lite' ); ?></label>
                             <input class="widefat" type="text" name="opt_in_placeholder" id="opt_in_placeholder" value="<?php echo esc_attr( get_post_meta( $post->ID, 'opt_in_placeholder', true ) ); ?>" size="20" />
                         </p>
 
                         <p>
-                            <label for="opt_in_confirmation"><?php _e( 'Confirmation Message', 'popup-zen' ); ?></label>
+                            <label for="opt_in_confirmation"><?php _e( 'Confirmation Message', 'popup-zen-lite' ); ?></label>
                             <input class="widefat" type="text" name="opt_in_confirmation" id="opt_in_confirmation" value="<?php echo esc_attr( get_post_meta( $post->ID, 'opt_in_confirmation', true ) ); ?>" size="20" />
                         </p>
 
                         <p>
-                            <label for="submit_text"><?php _e( 'Submit Button Text', 'popup-zen' ); ?></label>
+                            <label for="submit_text"><?php _e( 'Submit Button Text', 'popup-zen-lite' ); ?></label>
                             <input class="widefat" type="text" name="submit_text" id="submit_text" value="<?php echo esc_attr( get_post_meta( $post->ID, 'submit_text', true ) ); ?>" size="20" placeholder="Send" />
                         </p>
 
@@ -841,14 +841,14 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             <div class="pzen-section">
 
-                <p><label><?php _e( 'What pages?', 'popup-zen' ); ?></label></p>
+                <p><label><?php _e( 'What pages?', 'popup-zen-lite' ); ?></label></p>
 
                 <div class="pzen-settings-group">
                     <?php if( is_array( $show_on ) ) echo '<p>We have updated this setting, please re-enter pages and save.</p>'; ?>
                     <input type="radio" name="show_on" value="all" <?php if( $show_on === "all" ) echo 'checked="checked"'; ?>> All pages<br>
                     <input type="radio" name="show_on" value="limited" <?php if( $show_on === "limited" ) echo 'checked="checked"'; ?>> Certain pages<br>
                     <div id="show-certain-pages" class="pzen-hidden-field">
-                    <p><?php  _e('Show on pages', 'popup-zen' ); ?></p>
+                    <p><?php  _e('Show on pages', 'popup-zen-lite' ); ?></p>
                     <input placeholder="Start typing page title" class="widefat" type="text" name="show_on_pages" id="show_on_pages" value="<?php echo get_post_meta( $post->ID, 'show_on_pages', 1 ); ?>" size="20" />
                     </div>
 
@@ -860,37 +860,37 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             <div class="pzen-section">
 
-                <p><label><?php _e( 'Show to these visitors', 'popup-zen' ); ?></label></p>
+                <p><label><?php _e( 'Show to these visitors', 'popup-zen-lite' ); ?></label></p>
 
                 <div class="pzen-settings-group"> 
-                    <input type="radio" name="logged_in" value="all" <?php checked('all', get_post_meta( $post->ID, 'logged_in', true ), true); ?>> <?php _e( 'All visitors', 'popup-zen' ); ?><br>
-                    <input type="radio" name="logged_in" value="logged_in" <?php checked('logged_in', get_post_meta( $post->ID, 'logged_in', true ), true); ?>> <?php _e( 'Logged in only', 'popup-zen' ); ?><br>
-                    <input type="radio" name="logged_in" value="logged_out" <?php checked('logged_out', get_post_meta( $post->ID, 'logged_in', true ), true); ?>> <?php _e( 'Logged out only', 'popup-zen' ); ?><br>
+                    <input type="radio" name="logged_in" value="all" <?php checked('all', get_post_meta( $post->ID, 'logged_in', true ), true); ?>> <?php _e( 'All visitors', 'popup-zen-lite' ); ?><br>
+                    <input type="radio" name="logged_in" value="logged_in" <?php checked('logged_in', get_post_meta( $post->ID, 'logged_in', true ), true); ?>> <?php _e( 'Logged in only', 'popup-zen-lite' ); ?><br>
+                    <input type="radio" name="logged_in" value="logged_out" <?php checked('logged_out', get_post_meta( $post->ID, 'logged_in', true ), true); ?>> <?php _e( 'Logged out only', 'popup-zen-lite' ); ?><br>
                 </div>
             </div>
 
             <div class="pzen-section">
 
-                <p><label for="visitor"><?php _e( 'New or returning', 'popup-zen' ); ?></label></p>
+                <p><label for="visitor"><?php _e( 'New or returning', 'popup-zen-lite' ); ?></label></p>
 
                 <div class="pzen-settings-group">
-                    <input type="radio" name="new_or_returning" value="all" <?php checked('all', get_post_meta( $post->ID, 'new_or_returning', true ), true); ?>> <?php _e( 'All visitors', 'popup-zen' ); ?><br>
-                    <input type="radio" name="new_or_returning" value="new" <?php checked('new', get_post_meta( $post->ID, 'new_or_returning', true ), true); ?>> <?php _e( 'New visitors only', 'popup-zen' ); ?><br>
-                    <input type="radio" name="new_or_returning" value="returning" <?php checked('returning', get_post_meta( $post->ID, 'new_or_returning', true ), true); ?>> <?php _e( 'Returning visitors only', 'popup-zen' ); ?><br>
+                    <input type="radio" name="new_or_returning" value="all" <?php checked('all', get_post_meta( $post->ID, 'new_or_returning', true ), true); ?>> <?php _e( 'All visitors', 'popup-zen-lite' ); ?><br>
+                    <input type="radio" name="new_or_returning" value="new" <?php checked('new', get_post_meta( $post->ID, 'new_or_returning', true ), true); ?>> <?php _e( 'New visitors only', 'popup-zen-lite' ); ?><br>
+                    <input type="radio" name="new_or_returning" value="returning" <?php checked('returning', get_post_meta( $post->ID, 'new_or_returning', true ), true); ?>> <?php _e( 'Returning visitors only', 'popup-zen-lite' ); ?><br>
                 </div>
             </div>
 
             <div class="pzen-section">
 
                 <p>
-                    <label for="visitor"><?php _e( 'When should we show it?', 'popup-zen' ); ?></label>
+                    <label for="visitor"><?php _e( 'When should we show it?', 'popup-zen-lite' ); ?></label>
                 </p>
 
                 <div class="pzen-settings-group">
-                    <input type="radio" name="display_when" value="immediately" <?php checked('immediately', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'Immediately', 'popup-zen' ); ?><br>
-                    <input type="radio" name="display_when" value="delay" <?php checked('delay', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'Delay of', 'popup-zen' ); ?> <input type="number" class="pzen-number-input" id="scroll_delay" name="scroll_delay" size="2" value="<?php echo intval( get_post_meta( $post->ID, 'scroll_delay', true ) ); ?>" /> <?php _e( 'seconds', 'popup-zen' ); ?><br>
-                    <input type="radio" name="display_when" value="scroll" <?php checked('scroll', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'User scrolls halfway down the page', 'popup-zen' ); ?><br>
-                    <!-- <input type="radio" name="display_when" value="exit" <?php checked('exit', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'Exit Detection', 'popup-zen' ); ?><br> -->
+                    <input type="radio" name="display_when" value="immediately" <?php checked('immediately', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'Immediately', 'popup-zen-lite' ); ?><br>
+                    <input type="radio" name="display_when" value="delay" <?php checked('delay', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'Delay of', 'popup-zen-lite' ); ?> <input type="number" class="pzen-number-input" id="scroll_delay" name="scroll_delay" size="2" value="<?php echo intval( get_post_meta( $post->ID, 'scroll_delay', true ) ); ?>" /> <?php _e( 'seconds', 'popup-zen-lite' ); ?><br>
+                    <input type="radio" name="display_when" value="scroll" <?php checked('scroll', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'User scrolls halfway down the page', 'popup-zen-lite' ); ?><br>
+                    <!-- <input type="radio" name="display_when" value="exit" <?php checked('exit', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'Exit Detection', 'popup-zen-lite' ); ?><br> -->
 
                     <?php do_action('pzen_display_when_settings', $post->ID ); ?>
 
@@ -900,12 +900,12 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             <div class="pzen-section" id="pzen-disappear">
 
                 <p>
-                    <label for="hide_after"><?php _e( 'After it displays, when should it disappear?', 'popup-zen' ); ?></label>
+                    <label for="hide_after"><?php _e( 'After it displays, when should it disappear?', 'popup-zen-lite' ); ?></label>
                 </p>
 
                 <div class="pzen-settings-group">
-                    <input type="radio" name="hide_after" value="never" <?php checked('never', get_post_meta( $post->ID, 'hide_after', true ), true); ?>> <?php _e( 'When user clicks hide', 'popup-zen' ); ?><br>
-                    <input type="radio" name="hide_after" value="delay" <?php checked('delay', get_post_meta( $post->ID, 'hide_after', true ), true); ?>> <?php _e( 'Delay of', 'popup-zen' ); ?> <input type="number" class="pzen-number-input" id="hide_after_delay" name="hide_after_delay" size="2" value="<?php echo intval( get_post_meta( $post->ID, 'hide_after_delay', true ) ); ?>" /> <?php _e( 'seconds', 'popup-zen' ); ?><br>
+                    <input type="radio" name="hide_after" value="never" <?php checked('never', get_post_meta( $post->ID, 'hide_after', true ), true); ?>> <?php _e( 'When user clicks hide', 'popup-zen-lite' ); ?><br>
+                    <input type="radio" name="hide_after" value="delay" <?php checked('delay', get_post_meta( $post->ID, 'hide_after', true ), true); ?>> <?php _e( 'Delay of', 'popup-zen-lite' ); ?> <input type="number" class="pzen-number-input" id="hide_after_delay" name="hide_after_delay" size="2" value="<?php echo intval( get_post_meta( $post->ID, 'hide_after_delay', true ) ); ?>" /> <?php _e( 'seconds', 'popup-zen-lite' ); ?><br>
                 </div>
 
             </div>
@@ -913,26 +913,26 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             <div class="pzen-section">
 
                 <p>
-                    <label for="show_settings"><?php _e( 'How often should we show it to each visitor?', 'popup-zen' ); ?></label>
+                    <label for="show_settings"><?php _e( 'How often should we show it to each visitor?', 'popup-zen-lite' ); ?></label>
                 </p>
 
                 <div class="pzen-settings-group">
-                    <input type="radio" name="show_settings" value="interacts" <?php checked('interacts', get_post_meta( $post->ID, 'show_settings', true ), true); ?>> <?php _e( 'Hide after user interacts (Close or email submit)', 'popup-zen' ); ?><br>
-                    <input type="radio" name="show_settings" value="always" <?php checked('always', get_post_meta( $post->ID, 'show_settings', true ), true); ?>> <?php _e( 'Every page load', 'popup-zen' ); ?><br>
-                    <input type="radio" name="show_settings" value="hide_for" <?php checked('hide_for', get_post_meta( $post->ID, 'show_settings', true ), true); ?>> <?php _e( 'Show, then hide for', 'popup-zen' ); ?> <input type="number" class="pzen-number-input" id="hide_for_days" name="hide_for_days" size="2" value="<?php echo intval( get_post_meta( $post->ID, 'hide_for_days', true ) ); ?>" /> <?php _e( 'days', 'popup-zen' ); ?><br>
+                    <input type="radio" name="show_settings" value="interacts" <?php checked('interacts', get_post_meta( $post->ID, 'show_settings', true ), true); ?>> <?php _e( 'Hide after user interacts (Close or email submit)', 'popup-zen-lite' ); ?><br>
+                    <input type="radio" name="show_settings" value="always" <?php checked('always', get_post_meta( $post->ID, 'show_settings', true ), true); ?>> <?php _e( 'Every page load', 'popup-zen-lite' ); ?><br>
+                    <input type="radio" name="show_settings" value="hide_for" <?php checked('hide_for', get_post_meta( $post->ID, 'show_settings', true ), true); ?>> <?php _e( 'Show, then hide for', 'popup-zen-lite' ); ?> <input type="number" class="pzen-number-input" id="hide_for_days" name="hide_for_days" size="2" value="<?php echo intval( get_post_meta( $post->ID, 'hide_for_days', true ) ); ?>" /> <?php _e( 'days', 'popup-zen-lite' ); ?><br>
                 </div>
             </div>
 
             <div class="pzen-section">
 
                 <p>
-                    <label for="hide_after"><?php _e( 'Show on Devices', 'popup-zen' ); ?></label>
+                    <label for="hide_after"><?php _e( 'Show on Devices', 'popup-zen-lite' ); ?></label>
                 </p>
 
                 <div class="pzen-settings-group">
-                    <input type="radio" name="pzen_devices" value="all" <?php checked('all', get_post_meta( $post->ID, 'pzen_devices', true ), true); ?>> <?php _e( 'All devices', 'popup-zen' ); ?><br>
-                    <input type="radio" name="pzen_devices" value="desktop_only" <?php checked('desktop_only', get_post_meta( $post->ID, 'pzen_devices', true ), true); ?>> <?php _e( 'Desktop only', 'popup-zen' ); ?><br>
-                    <input type="radio" name="pzen_devices" value="mobile_only" <?php checked('mobile_only', get_post_meta( $post->ID, 'pzen_devices', true ), true); ?>> <?php _e( 'Mobile only', 'popup-zen' ); ?><br>
+                    <input type="radio" name="pzen_devices" value="all" <?php checked('all', get_post_meta( $post->ID, 'pzen_devices', true ), true); ?>> <?php _e( 'All devices', 'popup-zen-lite' ); ?><br>
+                    <input type="radio" name="pzen_devices" value="desktop_only" <?php checked('desktop_only', get_post_meta( $post->ID, 'pzen_devices', true ), true); ?>> <?php _e( 'Desktop only', 'popup-zen-lite' ); ?><br>
+                    <input type="radio" name="pzen_devices" value="mobile_only" <?php checked('mobile_only', get_post_meta( $post->ID, 'pzen_devices', true ), true); ?>> <?php _e( 'Mobile only', 'popup-zen-lite' ); ?><br>
                 </div>
 
             </div>
@@ -941,7 +941,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
                 <p>
                     <input type="checkbox" id="hide_btn" name="hide_btn" value="1" <?php checked(1, get_post_meta( $post->ID, 'hide_btn', true ), true); ?> />
-                    <label for="hide_btn"><?php _e( 'Hide the floating button? (Appears when box is hidden.)', 'popup-zen' ); ?></label>
+                    <label for="hide_btn"><?php _e( 'Hide the floating button? (Appears when box is hidden.)', 'popup-zen-lite' ); ?></label>
                 </p>
 
             </div>

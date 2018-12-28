@@ -99,7 +99,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
             $array['pluginUrl'] = Popup_Zen_URL;
 
-            $array['pzenNonce'] = wp_create_nonce('popup-zen');
+            $array['pzenNonce'] = wp_create_nonce('popup-zen-lite');
 
             $array['expires'] = '999'; // how long we should show this in num days
 
@@ -125,7 +125,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                     'optinMsg' => get_post_meta($value, 'opt_in_message', 1),
                     'placeholder' => get_post_meta($value, 'opt_in_placeholder', 1),
                     'confirmMsg' => get_post_meta($value, 'opt_in_confirmation', 1),
-                    'emailErr' => __( 'Please enter a valid email address.', 'popup-zen' ),
+                    'emailErr' => __( 'Please enter a valid email address.', 'popup-zen-lite' ),
                     'display_when' => get_post_meta($value, 'display_when', 1),
                     'delay' => get_post_meta($value, 'scroll_delay', 1),
                     'showSettings' => get_post_meta($value, 'show_settings', 1),
@@ -372,7 +372,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                 <div class="pzen-progress">
                   <span style="width: 50%"></span>
                 </div>
-                <span class="pzen-progress-text"><?php _e( '50% Complete', 'popup-zen' ); ?></span>
+                <span class="pzen-progress-text"><?php _e( '50% Complete', 'popup-zen-lite' ); ?></span>
             <?php endif; ?>
 
             <div class="popup-zen-box-inside">
@@ -541,7 +541,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                 
                 <?php self::name_row( $id ); ?>
 
-                <input type="email" value="" id="<?php echo $id . '-email-input'; ?>" name="email" class="pzen-email-input <?php if( get_post_meta( $id, 'dont_show_name', 1 ) === '1' ) echo 'no-name'; ?>" placeholder="<?php _e( 'Enter email', 'popup-zen' ); ?>" autocomplete="fake-value" autocapitalize="off" />
+                <input type="email" value="" id="<?php echo $id . '-email-input'; ?>" name="email" class="pzen-email-input <?php if( get_post_meta( $id, 'dont_show_name', 1 ) === '1' ) echo 'no-name'; ?>" placeholder="<?php _e( 'Enter email', 'popup-zen-lite' ); ?>" autocomplete="fake-value" autocapitalize="off" />
                 <button class="pzen-email-btn"><?php echo $btn_text; ?></button>
                 <?php
             }

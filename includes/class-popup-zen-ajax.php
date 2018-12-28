@@ -91,7 +91,7 @@ if (!class_exists('Popup_Zen_Ajax')) {
          */
         public function pzen_send_email() {
 
-            if (empty($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'popup-zen')) {
+            if (empty($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'popup-zen-lite')) {
                 wp_send_json_error('Verification failed.');
             }
 
@@ -144,7 +144,7 @@ if (!class_exists('Popup_Zen_Ajax')) {
          */
         public function pzen_mc_subscribe() {
 
-            if (empty($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'popup-zen')) {
+            if (empty($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'popup-zen-lite')) {
                 wp_send_json_error('Verification failed.');
             }
 
@@ -275,7 +275,7 @@ if (!class_exists('Popup_Zen_Ajax')) {
          */
         public function pzen_ac_subscribe() {
 
-             if (empty($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'popup-zen')) {
+             if (empty($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'popup-zen-lite')) {
               wp_send_json_error('Verification failed.');
               } 
 
@@ -317,7 +317,7 @@ if (!class_exists('Popup_Zen_Ajax')) {
          */
         public function mailpoet_subscribe() {
 
-            if (empty($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'popup-zen')) {
+            if (empty($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'popup-zen-lite')) {
                 wp_send_json_error('Verification failed.');
             }
 
@@ -357,7 +357,7 @@ if (!class_exists('Popup_Zen_Ajax')) {
 
             $id = $_GET['id'];
 
-            if (empty($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'popup-zen') || empty($id)) {
+            if (empty($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'popup-zen-lite') || empty($id)) {
                 wp_send_json_error('Missing required field.');
             }
 

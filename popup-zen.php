@@ -6,7 +6,7 @@
  * Version:         0.0.1
  * Author:          Scott Bolinger
  * Author URI:      https://scottbolinger.com
- * Text Domain:     popup-zen
+ * Text Domain:     popup-zen-lite
  *
  * @author          Scott Bolinger
  * @copyright       Copyright (c) Scott Bolinger 2019
@@ -114,7 +114,7 @@ if( !class_exists( 'Popup_Zen' ) ) {
          */
         public function load_textdomain() {
 
-            load_plugin_textdomain( 'popup-zen' );
+            load_plugin_textdomain( 'popup-zen-lite' );
             
         }
 

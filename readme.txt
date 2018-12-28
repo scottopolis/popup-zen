@@ -1,4 +1,4 @@
-=== Popup Zen - Popups Are broken, Get Popup Zen ===
+=== Popup Zen Lite - Popups Are broken, Get Popup Zen ===
 
 Contributors: scottopolis
 Tags: popup, optin, lead generation, email opt-in, pop up
