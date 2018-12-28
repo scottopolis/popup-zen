@@ -190,62 +190,6 @@
 	margin-bottom: 5px;
 }
 
-.pzen-box-rows {
-	overflow: hidden;
-}
-
-.pzen-row.pzen-first-row {
-	clear: none;
-}
-
-.pzen-chat {
-	overflow: hidden;
-	clear: both;
-}
-
-.popup-zen-box .avatar {
-	border-radius: 100px;
-	margin-right: 15px;
-	margin-top: 10px;
-	height: 50px;
-	width: 50px;
-	float: left;
-}
-
-.popup-zen-box .pzen-first-row .avatar {
-	margin-top: 0;
-}
-
-.pzen-row {
-    overflow: hidden;
-    background: #fafafa;
-    padding: 5px 10px;
-    border-radius: 3px;
-    margin-top: 10px;
-    clear: both;
-    line-height: 1.5;
-}
-
-.pzen-visitor-row {
-	text-align: right;
-	float: right;
-	background-color: #444;
-	color: #fff;
-	max-width: 100%;
-}
-
-.pzen-away-msg {
-	font-size: 11px;
-	display: block;
-	clear: both;
-}
-
-.pzen-row.pzen-email-row, .pzen-row.pzen-text {
-	padding: 0;
-	background-color: #fff;
-	position: relative;
-}
-
 .popup-zen-box input[type="text"], .popup-zen-box input[type="email"], .popup-zen-box input#s {
 	border: 1px solid #1191cb;
 	border-radius: 3px 0 0 3px;
@@ -378,9 +322,9 @@ input.pzen-name {
 }
 
 /* scale() fixes blurry text in chrome */
-.pzen-popup.pzen-hide {
+/*.pzen-popup.pzen-hide {
 	transform: translate(-50%, -50%) scale(1);
-}
+}*/
 
 .pzen-popup .pzen-row {
 	background-color: transparent;
@@ -394,7 +338,7 @@ input.pzen-name {
 	margin-top: 10px;
 }
 
-.pzen-template-2 .pzen-email-input, .pzen-template-1 .pzen-email-input, .pzen-template-progress .pzen-email-input, .pzen-template-0 .pzen-email-input, .pzen-template-progress input.pzen-name {
+.pzen-email-input {
 	width: 100% !important;
 	float: none;
 	margin-bottom: 10px;
@@ -448,169 +392,10 @@ input.pzen-name {
 	margin-right: 5px;
 }
 
-.pzen-template-2 .pzen-img-wrap, .pzen-template-4 .pzen-img-wrap, .pzen-template-progress .pzen-img-wrap {
-	float: left;
-    width: 28%;
-    display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.pzen-template-2 .pzen-inside, .pzen-template-progress .pzen-inside {
-	text-align: left;
-	float: right;
-    width: 70%;
-}
-
-.pzen-template-2 .pzen-title {
-	text-align: left;
-}
-
-/** above/below **/
-
-.popup-zen-box.pzen-template-3 {
-	overflow: visible;
-	text-align: left;
-}
-
-.pzen-template-3 .pzen-img-wrap {
-	float: right;
-    width: 35%;
-    position: relative;
-    top: -80px;
-    margin-bottom: -75px;
-    margin-left: 15px;
-}
-
-.pzen-template-3 .pzen-title {
-	text-align: left;
-}
-
-.pzen-template-3 input.pzen-name, .pzen-template-3 input.pzen-email-input {
-	width: 36%;
-	float: left;
-}
-
-.pzen-template-3 input.pzen-email-input, .pzen-template-3 input.pzen-name {
-	margin-right: 2%
-}
-
-.pzen-template-3 .pzen-email-btn {
-	width: 24%;
-	float: left;
-	margin-top: 0;
-}
-
-.pzen-template-3 input.pzen-email-input.no-name {
-	width: 74%;
-}
-
-/*
- * Progress bar template
- */
-
-.pzen-template-progress .pzen-title {
-	text-align: left;
-}
-
-.pzen-progress-text {
-	text-align: center;
-	font-size: 10px;
-	border-bottom: 1px solid #eee;
-	padding: 5px 0;
-	display: block;
-}
-
-.pzen-template-progress .pzen-email-btn {
-	font-size: 16px;
-	text-transform: uppercase;
-	font-weight: bold;
-}
-
-.pzen-progress { 
-	height: 10px;  /* Can be anything */
-	position: relative;
-	background: #555;
-	-moz-border-radius: 25px;
-	-webkit-border-radius: 25px;
-	border-radius: 25px;
-	box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
-	margin-top: 10px;
-}
-
-.pzen-progress > span {
-  display: block;
-  height: 100%;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-  background-color: rgb(43,194,83);
-  background-image: linear-gradient(
-    center bottom,
-    rgb(43,194,83) 37%,
-    rgb(84,240,84) 69%
-  );
-  box-shadow: 
-    inset 0 2px 9px  rgba(255,255,255,0.3),
-    inset 0 -2px 6px rgba(0,0,0,0.4);
-  position: relative;
-  overflow: hidden;
-}
-
-.pzen-progress > span:after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  background-image: linear-gradient(
-    -45deg, 
-    rgba(255, 255, 255, .2) 25%, 
-    transparent 25%, 
-    transparent 50%, 
-    rgba(255, 255, 255, .2) 50%, 
-    rgba(255, 255, 255, .2) 75%, 
-    transparent 75%, 
-    transparent
-  );
-  z-index: 1;
-  background-size: 50px 50px;
-  animation: move 2s linear infinite;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-  overflow: hidden;
-}
-
-@media (max-width: 950px) {
-	.popup-zen-box.pzen-template-3 {
-		max-width: 500px;
-	}
-
-	.pzen-template-3 .pzen-img-wrap {
-		float: none;
-		margin-left: auto;
-		margin-right: auto;
-	}
-}
-
 @media (max-width: 400px) {
 
 	.pzen-popup-inside {
 		display: block;
-	}
-
-	.pzen-template-2 .pzen-img-wrap, .pzen-template-progress .pzen-img-wrap {
-		float: none;
-		margin: 10px auto;
-		width: auto;
-		max-height: 150px;
-		overflow: hidden;
-	}
-
-	.pzen-template-2 .pzen-inside, .pzen-template-progress .pzen-inside {
-		float: none;
-		width: 100%;
 	}
 
 	.popup-zen-box.pzen-popup {
@@ -623,12 +408,6 @@ input.pzen-name {
 		transform: translate(0,0) scale(1);
 	}
 
-	.pzen-template-3 input.pzen-email-input, .pzen-template-3 .pzen-email-btn, .pzen-template-3 input.pzen-name, .pzen-template-3 input.pzen-email-input.no-name {
-		float: none;
-		width: 100%;
-		margin-bottom: 10px;
-		margin-left: 0;
-	}
 }
 
 /*

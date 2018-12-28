@@ -8,7 +8,9 @@ Stable tag: 0.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A way to collect emails with popups for people who hate popups.
+Collect high-quality leads without pissing off your site visitors.
+
+Popup Zen is an alternative to the overly-complex, in your face popup software of sleazy marketers. It’s a popup plugin for people who hate popups. 
 
 == Description ==
 

@@ -607,16 +607,18 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
             $type = get_post_meta( $id, 'pzen_type', 1 );
             if( $type === 'pzen-popup' ) {
                 $classes .= 'pzen-popup';
-            } else if( $type != 'pzen-banner' ) {
-                $classes .= get_post_meta( $id, 'position', 1 );
+            } else if( $type === 'pzen_header_bar' ) {
+                $classes .= 'pzen-header-bar';
+            } else if( $type === 'pzen_footer_bar' ) {
+                $classes .= 'pzen-footer-bar';
+            } else {
+                $classes .= $type . ' ' . get_post_meta( $id, 'position', 1 );
             }
 
             $display_when = get_post_meta( $id, 'display_when', 1 );
             if( $display_when === 'exit' ) {
                 $classes .= ' pzen-show-on-exit';
             }
-
-            $classes .= ' ' . $type;
 
             return $classes;
         }

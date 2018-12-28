@@ -883,6 +883,6 @@
     pzen.init();
   });
 
-  window.popupZenFuncs = pzen;
+  window.popupZen = pzen;
 
 })(window, document, jQuery);

@@ -1,6 +1,8 @@
 # Popup Zen
 
-Popup Zen is an alternative to the overly-complex, in your face popup software of sleazy marketers. It’s a popup plugin for people who want high-quality leads without frustrating their potential customers. 
+Collect high-quality leads without pissing off your site visitors.
+
+Popup Zen is an alternative to the overly-complex, in your face popup software of sleazy marketers. It’s a popup plugin for people who hate popups. 
 
 ## FAQ
 

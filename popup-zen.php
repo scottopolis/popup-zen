@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name:     Popup Zen
+ * Plugin Name:     Popup Zen Lite
  * Plugin URI:      https://getpopupzen.com
- * Description:     Popups and email opt-ins for people who don't like popups.
+ * Description:     Collect high-quality leads without pissing off your site visitors.
  * Version:         0.0.1
  * Author:          Scott Bolinger
  * Author URI:      https://scottbolinger.com
@@ -69,8 +69,6 @@ if( !class_exists( 'Popup_Zen' ) ) {
 
             // Plugin URL
             define( 'Popup_Zen_URL', plugin_dir_url( __FILE__ ) );
-
-            define( 'Popup_Zen_Full', 1 );
         }
 
 
@@ -88,11 +86,6 @@ if( !class_exists( 'Popup_Zen' ) ) {
 
             if( is_admin() ) {
                 require_once Popup_Zen_DIR . 'includes/class-popup-zen-admin.php';
-
-                // load full features
-                if( defined( 'Popup_Zen_Full' ) ) {
-                    require_once Popup_Zen_DIR . 'includes/class-popup-zen-full-ajax.php';
-                }
             }
             
         }
