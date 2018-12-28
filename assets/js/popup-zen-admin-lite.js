@@ -43,7 +43,7 @@
     .on('change', '.pzen-switch input', pzen.toggleSwitch )
     .on('change', 'input[name=expiration]', pzen.toggleDatepicker )
     .on('change', 'input[name=show_on]', pzen.toggleShowOn )
-    .on('change', 'input[name=hwp_type]', pzen.toggleTypes )
+    .on('change', 'input[name=pzen_type]', pzen.toggleTypes )
     .on('change', 'select[name=email_provider]', pzen.toggleEmailForm )
     .on('keyup', '#content', pzen.updatePreviewContent )
     .on('focus', 'input#scroll_delay', function() {
@@ -52,7 +52,7 @@
     .on('click', '#pzen-upload-btn', pzen.mediaUpload )
     .on('change', 'select[name=fomo_integration]', pzen.toggleTimeAgo )
 
-    $('#show_on_pages').suggest( window.ajaxurl + "?action=hwp_ajax_page_search", {multiple:true, multipleSep: ","});
+    $('#show_on_pages').suggest( window.ajaxurl + "?action=pzen_ajax_page_search", {multiple:true, multipleSep: ","});
 
   }
 
@@ -93,7 +93,7 @@
   // hide n/a settings when using banner
   pzen.toggleTypes = function() {
 
-    var val = $('input[name=hwp_type]:checked').val();
+    var val = $('input[name=pzen_type]:checked').val();
     var pos = $('#position-settings');
     var popChat = $('#popout_meta_box, #show_chat');
     var hideBtn = $('#hide_btn, label[for=hide_btn]');
@@ -305,7 +305,7 @@
   // Toggle meta value via ajax
   pzen.toggleActiveAjax = function( id ) {
 
-    var params = { action: 'hwp_toggle_active', id: id };
+    var params = { action: 'pzen_toggle_active', id: id };
 
     // store interaction data
     $.ajax({

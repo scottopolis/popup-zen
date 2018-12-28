@@ -71,6 +71,11 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             add_action( 'edit_form_after_title', array( $this, 'type_settings' ) );
 
+            // full version settings
+            if( defined( 'Popup_Zen_Full' ) ) {
+                add_action( 'pzen_mc_settings', array( $this, 'mc_groups' ) );
+            }
+
         }
 
         /**
@@ -105,7 +110,28 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             // Color picker: https://make.wordpress.org/core/2012/11/30/new-color-picker-in-wp-3-5/
             wp_enqueue_style( 'popup-zen-admin', Popup_Zen_URL . 'assets/css/popup-zen-admin' . $suffix . '.css', array( 'wp-color-picker' ), Popup_Zen_VER );
 
-            wp_enqueue_script( 'popup-zen-admin', Popup_Zen_URL . 'assets/js/popup-zen-admin' . $suffix . '.js', array( 'wp-color-picker', 'jquery-ui-datepicker', 'suggest' ), Popup_Zen_VER, true );
+            wp_enqueue_script( 'popup-zen-admin-lite', Popup_Zen_URL . 'assets/js/popup-zen-admin-lite' . $suffix . '.js', array( 'wp-color-picker', 'jquery-ui-datepicker', 'suggest' ), Popup_Zen_VER, true );
+
+            // load full script for extra features
+            if( !defined( 'Popup_Zen_Full' ) )
+                return;
+
+            wp_enqueue_script( 'popup-zen-admin-full', Popup_Zen_URL . 'assets/js/popup-zen-admin-full' . $suffix . '.js', array( 'popup-zen-admin-lite' ), Popup_Zen_VER, true );
+
+            $screen = get_current_screen();
+
+            if( $screen->base === 'post' && $screen->post_type === 'popupzen' ) {
+
+                global $post;
+
+                wp_localize_script( 'popup-zen-admin-full', 'pzenAdmin', array(
+                    'post_id' => $post->ID,
+                    'current_mc_group' => get_post_meta( $post->ID, 'mc_groups', 1 ),
+                    'current_mc_interests' => get_post_meta( $post->ID, 'mc_interests', 1 )
+                    )
+                );
+
+            }
             
         }
 
@@ -117,7 +143,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
          */
         public function settings_page() {
 
-            add_submenu_page( 'edit.php?post_type=popupzen', 'Popup Zen Settings', 'Settings', 'manage_options', 'popup-zen', array( $this, 'render_settings') );
+            add_submenu_page( 'edit.php?post_type=popupzen', 'Popup Zen Settings', 'Settings', 'manage_options', 'popupzen', array( $this, 'render_settings') );
             
         }
 
@@ -151,14 +177,16 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 delete_option( 'pzen_mc_status' );
             }
 
-            if( isset( $_POST['pzen_email_title'] ) ) {
-                update_option( 'pzen_email_title', sanitize_text_field( $_POST['pzen_email_title'] ) );
-            }
-
             if( isset( $_POST['pzen_powered_by'] ) ) {
                 update_option( 'pzen_powered_by', sanitize_text_field( $_POST['pzen_powered_by'] ) );
             } elseif( !empty( $_POST ) && empty( $_POST['pzen_powered_by'] )  ) {
                 delete_option( 'pzen_powered_by' );
+            }
+
+            if( isset( $_POST['pzen_ga_tracking'] ) ) {
+                update_option( 'pzen_ga_tracking', sanitize_text_field( $_POST['pzen_ga_tracking'] ) );
+            } elseif( !empty( $_POST ) && empty( $_POST['pzen_ga_tracking'] )  ) {
+                delete_option( 'pzen_ga_tracking' );
             }
 
             ?>
@@ -169,10 +197,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             <form method="post" action="edit.php?post_type=popupzen&page=popupzen">
 
                 <h3><?php _e('Email Settings', 'popup-zen'); ?></h3>
-
-                <p><?php _e('Email title <em>(only used with "send to email" setting)</em>', 'popup-zen'); ?></p>
-                
-                <input id="pzen_email_title" name="pzen_email_title" value="<?php echo esc_html( get_option( 'pzen_email_title' ) ); ?>" placeholder="New Popup Zen Message" type="text" size="50" />
 
                 <p><?php _e('If you are using ConvertKit, entery your API key. It can be found on your <a href="https://app.convertkit.com/account/edit#account_info" target="_blank">account info page.</a>', 'popup-zen'); ?></p>
                 
@@ -191,6 +215,13 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 <p>
                     <input type="checkbox" id="pzen_mc_status" name="pzen_mc_status" value="1" <?php checked('1', get_option( 'pzen_mc_status' ), true); ?> />
                     <?php _e( 'Disable MailChimp double-opt in? Check to subscribe users to your list without confirmation. If checked, MailChimp will not send a final welcome email.', 'popup-zen' ); ?>
+                </p>
+
+                <h3><?php _e('Google Analytics Tracking', 'popup-zen'); ?></h3>
+
+                <p>
+                    <input type="checkbox" id="pzen_ga_tracking" name="pzen_ga_tracking" value="1" <?php checked('1', get_option( 'pzen_ga_tracking' ), true); ?> />
+                    <?php _e( 'Track popup views with Google Analytics? Must have <a href="https://kinsta.com/blog/add-google-analytics-to-wordpress/" target="_blank">GA tracking code installed.</a>', 'popup-zen' ); ?>
                 </p>
 
                 <h3><?php _e('Miscellaneous', 'popup-zen'); ?></h3>
@@ -349,11 +380,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                         <label for="type"><?php _e( 'Choose a Popup Zen Type' ); ?></label>
                     </h4>
                     <p>
-                        <label class="pzen-radio-withimage">
-                            <span class="text">Zen Box</span>
-                            <img src="<?php echo Popup_Zen_URL . 'assets/img/small-box-icon.png'; ?>" class="pzen-radio-image" />
-                            <input type="radio" name="pzen_type" value="notification" <?php checked( "notification", get_post_meta( $post->ID, 'pzen_type', true ) ); ?> />
-                        </label>
 
                         <label class="pzen-radio-withimage">
                             <span class="text">Header Bar</span>
@@ -362,13 +388,30 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                         </label>
 
                         <label class="pzen-radio-withimage">
+                            <span class="text">Small Box</span>
+                            <img src="<?php echo Popup_Zen_URL . 'assets/img/small-box-icon.png'; ?>" class="pzen-radio-image" />
+                            <input type="radio" name="pzen_type" value="notification" <?php checked( "notification", get_post_meta( $post->ID, 'pzen_type', true ) ); ?> />
+                        </label>
+
+                        <label class="pzen-radio-withimage">
                             <span class="text">Footer Bar</span>
                             <img src="<?php echo Popup_Zen_URL . 'assets/img/footer-bar-icon.png'; ?>" class="pzen-radio-image" />
                             <input type="radio" name="pzen_type" value="footer_bar" <?php checked( "footer_bar", get_post_meta( $post->ID, 'pzen_type', true ) ); ?> />
                         </label>
 
+                        <label class="pzen-radio-withimage">
+                            <span class="text">Popup Link</span>
+                            <img src="<?php echo Popup_Zen_URL . 'assets/img/popup-icon.png'; ?>" class="pzen-radio-image" />
+                            <input type="radio" name="pzen_type" value="popup_link" <?php checked( "popup_link", get_post_meta( $post->ID, 'pzen_type', true ) ); ?> />
+                        </label>
+
                         <?php do_action('pzen_type_settings', $post->ID); ?>
                     </p>
+
+                    <div id="popup-options" style="display:block">
+                        <h3>Popup Options</h3>
+                        <p>Options for each type dynamically show here.</p>
+                    </div>
                 </div>
             </div>
 
@@ -463,46 +506,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             <?php do_action('pzen_after_position_settings', $post->ID); ?>
 
-            <div class="pzen-section" id="popup-templates">
-
-                <h4>
-                    <label for="position"><?php _e( 'Choose a Template' ); ?></label>
-                </h4>
-
-                <label class="pzen-radio-withimage popup-template">
-                    <span class="text">Custom (Displays editor content)</span>
-                    <img src="<?php echo Popup_Zen_URL . 'assets/img/popup-template-0.png'; ?>" class="pzen-template-image" />
-                    <input type="radio" name="pzen_template" value="pzen-template-0" <?php checked( "pzen-template-0", get_post_meta( $post->ID, 'pzen_template', true ) ); ?> />
-                </label>
-
-                <label class="pzen-radio-withimage popup-template">
-                    <span class="text">Standard</span>
-                    <img src="<?php echo Popup_Zen_URL . 'assets/img/popup-template-1.png'; ?>" class="pzen-template-image" />
-                    <input type="radio" name="pzen_template" value="pzen-template-1" <?php checked( "pzen-template-1", get_post_meta( $post->ID, 'pzen_template', true ) ); ?> />
-                </label>
-
-                <label class="pzen-radio-withimage popup-template">
-                    <span class="text">Image Left</span>
-                    <img src="<?php echo Popup_Zen_URL . 'assets/img/popup-template-2.png'; ?>" class="pzen-template-image" />
-                    <input type="radio" name="pzen_template" value="pzen-template-2" <?php checked( "pzen-template-2", get_post_meta( $post->ID, 'pzen_template', true ) ); ?> />
-                </label>
-
-                <label class="pzen-radio-withimage popup-template">
-                    <span class="text">Above/Below</span>
-                    <img src="<?php echo Popup_Zen_URL . 'assets/img/popup-template-3.png'; ?>" class="pzen-template-image" />
-                    <input type="radio" name="pzen_template" value="pzen-template-3" <?php checked( "pzen-template-3", get_post_meta( $post->ID, 'pzen_template', true ) ); ?> />
-                </label>
-
-                <label class="pzen-radio-withimage popup-template">
-                    <span class="text">Progress Bar</span>
-                    <img src="<?php echo Popup_Zen_URL . 'assets/img/popup-template-progress.png'; ?>" class="pzen-template-image" />
-                    <input type="radio" name="pzen_template" value="pzen-template-progress" <?php checked( "pzen-template-progress", get_post_meta( $post->ID, 'pzen_template', true ) ); ?> />
-                </label>
-
-                <?php do_action('pzen_popup_templates', $post->ID); ?>
-
-            </div>
-
             <div class="pzen-section" id="popup-options">
 
                 <h4>
@@ -579,6 +582,11 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
                     </select>
 
+                    <div id="drip-fields">
+                        <?php _e( 'Tags (comma separated)', 'popup-zen' ); ?>
+                        <input id="drip_tags" name="drip_tags" class="widefat" value="<?php echo get_post_meta( $post->ID, 'drip_tags', 1 ); ?>" placeholder="Tag, Tag2" type="text" />
+                    </div>
+
                     <?php do_action( 'pzen_below_provider_select', $post->ID ); ?>
 
                     <p id="convertkit-fields">
@@ -588,7 +596,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     </p>
                     
                     <div id="mailchimp-fields">
-                        <?php _e( 'MailChimp List *required', 'popup-zen' ); ?>
+                        <p><strong><?php _e( 'MailChimp List *required', 'popup-zen' ); ?></strong></p>
 
                             <?php
 
@@ -612,7 +620,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
                             endif;
 
-                            echo apply_filters( 'pzen_mc_upsell', '<small>Want MailChimp groups and interests? <a href="https://getpopupzen.com/pro?utm_source=mc_upsell&utm_medium=link&utm_campaign=pzen_settings" target="_blank">Get Popup Zen Pro.</a></small>' );
+                            // echo apply_filters( 'pzen_mc_upsell', '<small>Want MailChimp groups and interests? <a href="https://getpopupzen.com/pro?utm_source=mc_upsell&utm_medium=link&utm_campaign=pzen_settings" target="_blank">Get Popup Zen Pro.</a></small>' );
 
                             do_action( 'pzen_mc_settings', $post->ID );
 
@@ -621,7 +629,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     </div>
 
                     <div id="ac-fields">
-                        <?php _e( 'Active Campaign List *required', 'popup-zen' ); ?>
+                        <p><strong><?php _e( 'Active Campaign List *required', 'popup-zen' ); ?></strong></p>
 
                             <?php
 
@@ -653,7 +661,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
                         <div id="mailpoet-fields">
 
-                        <?php _e( 'MailPoet List <em>*required</em>', 'popup-zen' ); ?>
+                        <p><strong><?php _e( 'MailPoet List <em>*required</em>', 'popup-zen' ); ?></strong></p>
 
                         <select name="mailpoet_list_id" id="mailpoet_list_id">
                     
@@ -731,6 +739,11 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                             <label for="submit_text"><?php _e( 'Submit Button Text', 'popup-zen' ); ?></label>
                             <input class="widefat" type="text" name="submit_text" id="submit_text" value="<?php echo esc_attr( get_post_meta( $post->ID, 'submit_text', true ) ); ?>" size="20" placeholder="Send" />
                         </p>
+
+                        <p>
+                        <?php _e('Redirect after submission? Enter full url, or leave blank for no redirect.'); ?>
+                        <input type="text" class="widefat" placeholder="https://mysite.com/page" name="pzen_redirect" id="pzen_redirect" value="<?php echo get_post_meta( $post->ID, 'pzen_redirect', 1 ); ?>" size="20" />
+                    </p>
 
                         <?php do_action( 'pzen_email_settings', $post->ID ); ?>
 
@@ -870,6 +883,26 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     <input placeholder="Start typing page title" class="widefat" type="text" name="show_on_pages" id="show_on_pages" value="<?php echo get_post_meta( $post->ID, 'show_on_pages', 1 ); ?>" size="20" />
                     </div>
 
+                    <div id="pzen-tags" class="pzen-hidden-field">
+                        <p><?php _e('Show on tags'); ?></p>
+                        <input type="text" class="widefat" placeholder="Start typing a tag name" name="pzen_show_on_tags" id="pzen_show_on_tags" value="<?php echo get_post_meta( $post->ID, 'pzen_show_on_tags', 1 ); ?>" size="20" />
+                    </div>
+                    
+                    <div id="pzen-cats" class="pzen-hidden-field">
+                        <p><?php _e('Show on categories'); ?></p>
+                        <input type="text" placeholder="Start typing a category name" class="widefat" name="pzen_show_on_cats" id="pzen_show_on_cats" value="<?php echo get_post_meta( $post->ID, 'pzen_show_on_cats', 1 ); ?>" size="20" />
+                    </div>
+
+                    <div id="pzen-types" class="pzen-hidden-field">
+                        <p><?php _e('Show on post types'); ?></p>
+                        <input type="text" placeholder="Start typing a post type name" class="widefat" name="pzen_show_on_types" id="pzen_show_on_types" value="<?php echo get_post_meta( $post->ID, 'pzen_show_on_types', 1 ); ?>" size="20" />
+                    </div>
+
+                    <div id="pzen-exclude" class="pzen-hidden-field">
+                        <p><?php _e('<strong>Do not</strong> show on these pages'); ?></p>
+                        <input type="text" class="widefat" placeholder="Start typing a page name" name="pzen_show_exclude_pages" id="pzen_show_exclude_pages" value="<?php echo get_post_meta( $post->ID, 'pzen_show_exclude_pages', 1 ); ?>" size="20" />
+                    </div>
+
                     <?php do_action('pzen_page_settings', $post->ID ); ?>
 
                 </div>
@@ -908,7 +941,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     <input type="radio" name="display_when" value="immediately" <?php checked('immediately', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'Immediately', 'popup-zen' ); ?><br>
                     <input type="radio" name="display_when" value="delay" <?php checked('delay', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'Delay of', 'popup-zen' ); ?> <input type="number" class="pzen-number-input" id="scroll_delay" name="scroll_delay" size="2" value="<?php echo intval( get_post_meta( $post->ID, 'scroll_delay', true ) ); ?>" /> <?php _e( 'seconds', 'popup-zen' ); ?><br>
                     <input type="radio" name="display_when" value="scroll" <?php checked('scroll', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'User scrolls halfway down the page', 'popup-zen' ); ?><br>
-                    <input type="radio" name="display_when" value="exit" <?php checked('exit', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'Exit Detection', 'popup-zen' ); ?><br>
+                    <!-- <input type="radio" name="display_when" value="exit" <?php checked('exit', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'Exit Detection', 'popup-zen' ); ?><br> -->
 
                     <?php do_action('pzen_display_when_settings', $post->ID ); ?>
 
@@ -965,6 +998,11 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             </div>
 
             <div class="pzen-section noborder">
+
+                <p>
+                    <input type="checkbox" name="expiration" value="1" <?php checked('1', get_post_meta( $post->ID, 'expiration', true ), true); ?>> Automatically deactivate on a certain date?<br>
+                    <input type="text" placeholder="05/28/2018" value="<?php echo get_post_meta( $post->ID, 'pzen_until_date', true ); ?>" name="pzen_until_date" id="pzen-until-datepicker" class="pzen-datepicker" />
+                </p>
 
                 <?php do_action('pzen_advanced_settings_after', $post->ID ); ?>
 
@@ -1072,11 +1110,20 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 'ac_list_id',
                 'mailpoet_list_id',
                 'pzen_type',
-                'pzen_template',
                 'name_placeholder',
                 'dont_show_name',
                 'popup_image',
                 'submit_text' );
+
+            $settings[] = 'pzen_show_on_cats';
+            $settings[] = 'pzen_show_on_tags';
+            $settings[] = 'pzen_show_on_types';
+            $settings[] = 'pzen_show_exclude_pages';
+            $settings[] = 'pzen_popout_editor';
+            $settings[] = 'pzen_popout_btn_text';
+            $settings[] = 'mc_groups';
+            $settings[] = 'drip_tags';
+            $settings[] = 'pzen_redirect';
 
             $keys = apply_filters( 'pzen_settings_array', $keys );
 
@@ -1161,6 +1208,31 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             $links[] = '<a href="https://getpopupzen.com/pro?utm_source=plugin_row&utm_medium=link&utm_campaign=pzen_settings" target="_blank" style="font-weight:bold;color:green;">Upgrade</a>';
             return $links;
 
+        }
+
+        /**
+         * Add MailChimp Groups
+         *
+         * @access      public
+         * @since       0.1
+         */
+        public function mc_groups( $id ) {
+
+            ?>
+            <div id="mailchimp-groups">
+                <p><strong><?php _e('MailChimp Group', 'popup-zen'); ?></strong></p>
+                <select name="mc_groups">
+                    <option>None</option>
+                </select>
+            </div>
+
+            <div id="mailchimp-interests">
+                <p><strong><?php _e('Group Interests', 'popup-zen'); ?></strong></p>
+                <div id="mc_interest_checkboxes"></div>
+            </div>
+            <img src="<?php echo Popup_Zen_URL . 'assets/img/loading.gif'; ?>" class="pzen-loading" />
+            <p id="pzen-no-interests"><?php _e('No interests found.', 'popup-zen'); ?></p>
+            <?php
         }
 
     }

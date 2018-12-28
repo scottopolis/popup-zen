@@ -119,6 +119,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                     'emailProvider' => get_post_meta( $value, 'email_provider', 1 ),
                     'redirect' => get_post_meta( $value, 'pzen_redirect', 1 ),
                     'ckApi' => get_option( 'pzen_ck_api_key' ),
+                    'ga_tracking' => get_option( 'pzen_ga_tracking' ),
                     'visitor' => get_post_meta($value, 'new_or_returning', 1),
                     'hideBtn' => get_post_meta($value, 'hide_btn', 1),
                     'optinMsg' => get_post_meta($value, 'opt_in_message', 1),
@@ -328,7 +329,6 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
         public function display_popup( $id ) {
 
             $img_url = get_post_meta( $id, 'popup_image', 1 );
-            $template = get_post_meta( $id, 'pzen_template', 1 );
             $img = ( !empty( $img_url ) ? $img_url : Popup_Zen_URL . 'assets/img/ebook-mockup-300.png' );
             $bg_color = esc_html( get_post_meta( $id, 'bg_color', 1 ) );
 
@@ -606,7 +606,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
             $type = get_post_meta( $id, 'pzen_type', 1 );
             if( $type === 'pzen-popup' ) {
-                $classes .= ' ' . get_post_meta( $id, 'pzen_template', 1 );
+                $classes .= 'pzen-popup';
             } else if( $type != 'pzen-banner' ) {
                 $classes .= get_post_meta( $id, 'position', 1 );
             }

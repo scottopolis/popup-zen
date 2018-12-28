@@ -69,6 +69,8 @@ if( !class_exists( 'Popup_Zen' ) ) {
 
             // Plugin URL
             define( 'Popup_Zen_URL', plugin_dir_url( __FILE__ ) );
+
+            define( 'Popup_Zen_Full', 1 );
         }
 
 
@@ -84,8 +86,14 @@ if( !class_exists( 'Popup_Zen' ) ) {
             require_once Popup_Zen_DIR . 'includes/class-popup-zen-functions.php';
             require_once Popup_Zen_DIR . 'includes/class-popup-zen-ajax.php';
 
-            if( is_admin() )
+            if( is_admin() ) {
                 require_once Popup_Zen_DIR . 'includes/class-popup-zen-admin.php';
+
+                // load full features
+                if( defined( 'Popup_Zen_Full' ) ) {
+                    require_once Popup_Zen_DIR . 'includes/class-popup-zen-full-ajax.php';
+                }
+            }
             
         }
 
@@ -146,5 +154,16 @@ add_action( 'plugins_loaded', 'Popup_Zen_load' );
  */
 function Popup_Zen_activation() {
     /* Activation functions here */
+
+    // maybe set mailchimp API key from mc4wp plugin
+    if( defined('MC4WP_VERSION') && empty( get_option( 'pzen_mc_api_key' ) ) ) {
+
+        $mc4wp_option = get_option('mc4wp');
+
+        if( $mc4wp_option && $mc4wp_option['api_key'] ) {
+            update_option( 'pzen_mc_api_key', $mc4wp_option['api_key'] );
+        }
+
+    }
 }
 register_activation_hook( __FILE__, 'Popup_Zen_activation' );

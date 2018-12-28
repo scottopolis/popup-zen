@@ -116,9 +116,7 @@ if (!class_exists('Popup_Zen_Ajax')) {
 
             $id = $_GET['id'];
 
-            $title = get_option('pzen_email_title');
-
-            $title = (!empty($title) ? $title : "New Popup Zen Submission" );
+            $title = apply_filters( 'pzen_email_title', "New Popup Zen Submission" );
 
             $sendto = get_post_meta($id, 'opt_in_send_to', 1);
 
