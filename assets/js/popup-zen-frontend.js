@@ -233,29 +233,23 @@
       // if set to show every page load and floating btn is hidden, need to delete hide cookie so it shows properly
       if( options.showSettings === 'always' ) {
 
-        if( options.hideBtn === '1' || options.type == 'pzen-banner' || options.type == 'footer-bar' ) {
+        if( options.hideBtn === '1' || options.type == 'pzen_header_bar' || options.type == 'pzen_footer_bar' ) {
           pzen.setCookie( 'pzen-' + id + '_hide', '', -1 );
         }
         
       }
 
       // show stuff that should always be shown. Includes pzen banner and footer bar if show every page load is selected
-      if( options.hideBtn != '1' && options.type != 'pzen-banner' || options.type == 'pzen-banner' && options.showSettings === 'always' ) {
+      if( options.hideBtn != '1' && options.type != 'pzen_header_bar' || options.type == 'pzen_header_bar' && options.showSettings === 'always' ) {
         pzen.transitionIn( $( '.pzen-btn-' + id ) );
       }
 
     } else {
 
-      if( options.type === 'fomo' && options.fomoLoopTimes ) {
-        pzen.fomoLoopStart( id, item, options.fomoLoopTimes, 1 );
-      } else if( options.type === 'fomo' ) {
-        pzen.fomoContent( id, item );
-      } else {
         // Show the box and what's in it
         pzen.transitionIn( item );
-      }
 
-      if( options.hideBtn != '1' && options.type != 'pzen-banner' )
+      if( options.hideBtn != '1' && options.type != 'pzen_header_bar' )
         pzen.transitionOut( $( '.pzen-btn-' + id ) );
 
       // Show email opt-in
@@ -267,18 +261,8 @@
     if( options.hideBtn === '1' )
       pzen.hide( $( '.pzen-btn-' + id ) );
 
-    if( options.type === 'pzen-banner' && pzen.getCookie( 'pzen-' + id + '_hide' ) != 'true' )
+    if( options.type === 'pzen_header_bar' && pzen.getCookie( 'pzen-' + id + '_hide' ) != 'true' )
       pzen.toggleBnrMargin( id );
-    
-
-    // Should we hide it after a delay? Skip if showing multiple fomos
-    if( options.hide_after === 'delay' && !options.fomoDisplayTime ) {
-
-      setTimeout( function() {
-        pzen.transitionOut( item );
-      }, parseInt( options.hide_after_delay ) * 1000 );
-
-    }
 
   }
 
@@ -346,7 +330,7 @@
 
     pzen.toggleHide( id );
 
-    if( closest.hasClass('pzen-banner') )
+    if( closest.hasClass('pzen_header_bar') )
       pzen.toggleBnrMargin( id, true );
 
     // prevent duplicate firing
@@ -455,8 +439,6 @@
     $('#pzen-' + id ).addClass('has-optin');
 
     emailForm.removeClass('pzen-hide').addClass('pzen-show');
-
-    emailForm.prepend( '<span class="pzen-away-msg">' + options.optinMsg + '</span>' );
 
   }
 
@@ -799,7 +781,7 @@
 
     var msg = ( options.confirmMsg != '' ? options.confirmMsg : "Thanks!" );
 
-    if( options.type === 'pzen-banner' ) {
+    if( options.type === 'pzen_header_bar' ) {
 
       $('#pzen-' + id + ' .popup-zen-box-rows').addClass('pzen-full-width').html(msg);
 

@@ -382,10 +382,42 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                         <?php do_action('pzen_type_settings', $post->ID); ?>
                     </p>
 
-                    <div id="popup-options" style="display:block">
-                        <h3>Popup Options</h3>
-                        <p>Options for each type dynamically show here.</p>
+                    <div id="popup-options">
+
+                        <h3><?php _e( 'Popup Options' ); ?></h3>
+
+                        <div id="header-bar-options">
+                            These are the header bar options.
+                        </div>
+
+                        <div id="footer-bar-options">
+                            These are the footer bar options.
+                        </div>
+
+                        <div id="popup-link-options">
+                            These are the popup link options.
+                        </div>
+
+                        <div id="position-settings">
+
+                            <input type="radio" name="position" value="pzen-bottomright" <?php checked( "pzen-bottomright", get_post_meta( $post->ID, 'position', true ) ); ?> />
+                            <label>Bottom Right</label>
+
+                            <input type="radio" name="position" value="pzen-bottomleft" <?php checked( "pzen-bottomleft", get_post_meta( $post->ID, 'position', 1 ) ); ?> />
+                            <label>Bottom Left</label>
+
+                            <input type="radio" name="position" value="pzen-topright" <?php checked( "pzen-topright", get_post_meta( $post->ID, 'position', 1 ) ); ?> />
+                            <label>Top Right</label>
+
+                            <input type="radio" name="position" value="pzen-topleft" <?php checked( "pzen-topleft", get_post_meta( $post->ID, 'position', 1 ) ); ?> />
+                            <label>Top Left</label>
+
+                            <?php do_action('pzen_position_settings', $post->ID); ?>
+                        </div>
+
+                        <?php do_action('pzen_after_position_settings', $post->ID); ?>
                     </div>
+
                 </div>
             </div>
 
@@ -457,33 +489,12 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             
 
-            <div class="pzen-section" id="position-settings">
+            
+
+            <div class="pzen-section">
 
                 <h4>
-                    <label for="position"><?php _e( 'Position' ); ?></label>
-                </h4>
-
-                <input type="radio" name="position" value="pzen-bottomright" <?php checked( "pzen-bottomright", get_post_meta( $post->ID, 'position', true ) ); ?> />
-                <label>Bottom Right</label>
-
-                <input type="radio" name="position" value="pzen-bottomleft" <?php checked( "pzen-bottomleft", get_post_meta( $post->ID, 'position', 1 ) ); ?> />
-                <label>Bottom Left</label>
-
-                <input type="radio" name="position" value="pzen-topright" <?php checked( "pzen-topright", get_post_meta( $post->ID, 'position', 1 ) ); ?> />
-                <label>Top Right</label>
-
-                <input type="radio" name="position" value="pzen-topleft" <?php checked( "pzen-topleft", get_post_meta( $post->ID, 'position', 1 ) ); ?> />
-                <label>Top Left</label>
-
-                <?php do_action('pzen_position_settings', $post->ID); ?>
-            </div>
-
-            <?php do_action('pzen_after_position_settings', $post->ID); ?>
-
-            <div class="pzen-section" id="popup-options">
-
-                <h4>
-                    <label for="position"><?php _e( 'Popup Options' ); ?></label>
+                    <label for="position"><?php _e( 'Image' ); ?></label>
                 </h4>
                 
                 <p>
@@ -499,7 +510,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             <div class="pzen-section" id="box-colors">
                 
-                <div id="send-btn-color">
+                <div id="accent-color">
                     <p><?php _e( 'Accent color', 'popup-zen-lite' ); ?></p>
                     <input type="text" name="button_color1" value="<?php echo esc_html( get_post_meta( $post->ID, 'button_color1', true ) ); ?>" class="pzen-colors" data-default-color="#1191cb" />
                 </div>
@@ -709,11 +720,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                             <input class="widefat" type="text" name="submit_text" id="submit_text" value="<?php echo esc_attr( get_post_meta( $post->ID, 'submit_text', true ) ); ?>" size="20" placeholder="Send" />
                         </p>
 
-                        <p>
-                        <?php _e('Redirect after submission? Enter full url, or leave blank for no redirect.'); ?>
-                        <input type="text" class="widefat" placeholder="https://mysite.com/page" name="pzen_redirect" id="pzen_redirect" value="<?php echo get_post_meta( $post->ID, 'pzen_redirect', 1 ); ?>" size="20" />
-                    </p>
-
                         <?php do_action( 'pzen_email_settings', $post->ID ); ?>
 
                     </div>
@@ -897,19 +903,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 </div>
             </div>
 
-            <div class="pzen-section" id="pzen-disappear">
-
-                <p>
-                    <label for="hide_after"><?php _e( 'After it displays, when should it disappear?', 'popup-zen-lite' ); ?></label>
-                </p>
-
-                <div class="pzen-settings-group">
-                    <input type="radio" name="hide_after" value="never" <?php checked('never', get_post_meta( $post->ID, 'hide_after', true ), true); ?>> <?php _e( 'When user clicks hide', 'popup-zen-lite' ); ?><br>
-                    <input type="radio" name="hide_after" value="delay" <?php checked('delay', get_post_meta( $post->ID, 'hide_after', true ), true); ?>> <?php _e( 'Delay of', 'popup-zen-lite' ); ?> <input type="number" class="pzen-number-input" id="hide_after_delay" name="hide_after_delay" size="2" value="<?php echo intval( get_post_meta( $post->ID, 'hide_after_delay', true ) ); ?>" /> <?php _e( 'seconds', 'popup-zen-lite' ); ?><br>
-                </div>
-
-            </div>
-
             <div class="pzen-section">
 
                 <p>
@@ -926,7 +919,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             <div class="pzen-section">
 
                 <p>
-                    <label for="hide_after"><?php _e( 'Show on Devices', 'popup-zen-lite' ); ?></label>
+                    <label for="devices"><?php _e( 'Show on Devices', 'popup-zen-lite' ); ?></label>
                 </p>
 
                 <div class="pzen-settings-group">
@@ -989,9 +982,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 update_post_meta( $post->ID, 'scroll_delay', 1 );
                 update_post_meta( $post->ID, 'show_settings', 'interacts' );
                 update_post_meta( $post->ID, 'new_or_returning', 'all' );
-                update_post_meta( $post->ID, 'hide_after', 'never' );
-                update_post_meta( $post->ID, 'hide_after_delay', 3 );
-                update_post_meta( $post->ID, 'hide_for_days', 1 );
                 update_post_meta( $post->ID, 'pzen_devices', 'all' );
                 update_post_meta( $post->ID, 'pzen_active', '1' );
                 update_post_meta( $post->ID, 'pzen_type', 'notification' );
@@ -1039,9 +1029,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 'logged_in',
                 'new_or_returning',
                 'show_settings',
-                'hide_for_days',
-                'hide_after',
-                'hide_after_delay',
                 'display_when',
                 'scroll_delay',
                 'position',

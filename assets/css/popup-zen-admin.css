@@ -27,7 +27,7 @@
 	margin: 10px 0;
 }
 
-#show-certain-pages, #pzen-until-datepicker, #custom-email-options, #default-email-options, #mailchimp-fields, #convertkit-fields, #mailpoet-fields, #popup-templates, #popup-options, #pzen-name-fields {
+#show-certain-pages, #pzen-until-datepicker, #custom-email-options, #default-email-options, #mailchimp-fields, #convertkit-fields, #mailpoet-fields, #pzen-name-fields {
 	display: none;
 }
 
@@ -329,6 +329,7 @@ input:checked + .pzen-slider:before {
 
 input.pzen-number-input {
 	width: 50px;
+	height: 22px;
 }
 
 /* Rounded pzen-sliders */
@@ -391,9 +392,12 @@ input.pzen-number-input {
 	height: 50px;
 }
 
-/* Hide deprecated setting on update */
-#position-settings .pzen-radio-withimage {
-	display: none;
+.pzen-settings-group input[type=radio] {
+	margin: 4px 4px 4px 0;
+}
+
+#position-settings input[type=radio] {
+	margin: 4px;
 }
 
 .pzen-radio-withimage.popup-template {
@@ -409,7 +413,7 @@ input.pzen-number-input {
 	height: auto;
 }
 
-.post-type-hollerbox .postbox select {
+.post-type-popupzen .postbox select {
 	display: block;
 	min-width: 250px;
 	clear: both;

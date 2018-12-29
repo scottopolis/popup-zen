@@ -95,106 +95,54 @@
 
     var val = $('input[name=pzen_type]:checked').val();
     var pos = $('#position-settings');
-    var popChat = $('#popout_meta_box, #show_chat');
     var hideBtn = $('#hide_btn, label[for=hide_btn]');
-    var popMeta = $('#popout_meta_box');
-    var showOptin = $('#show-optin');
-    var avatar = $('.avatar-email');
-    var templates = $('#popup-templates');
-    var pOptions = $('#popup-options');
     var name = $('#pzen-name-fields');
-    var sendBtn = $('#send-btn-color');
-    var fomoSettings = $('#fomo-settings');
-    var editor = $('#postdivrich');
-    var disappear = $('#pzen-disappear');
+    var headerBarOptions = $('#header-bar-options');
+    var footerBarOptions = $('#footer-bar-options');
+    var popupLinkOptions = $('#popup-link-options');
 
     switch( val ) {
-      case 'pzen-banner':
-        popChat.hide();
+      case 'pzen_header_bar':
+        headerBarOptions.fadeIn();
+        footerBarOptions.hide();
+        popupLinkOptions.hide();
         hideBtn.hide();
-        popMeta.hide();
         pos.hide();
-        showOptin.fadeIn();
-        avatar.hide();
-        templates.hide();
-        pOptions.hide();
         name.hide();
-        sendBtn.show();
-        fomoSettings.hide();
-        editor.fadeIn();
-        disappear.fadeIn();
         break;
-      case 'footer-bar':
-        popChat.hide();
+      case 'pzen_footer_bar':
         hideBtn.hide();
-        popMeta.hide();
+        footerBarOptions.fadeIn();
+        headerBarOptions.hide();
+        popupLinkOptions.hide();
         pos.hide();
-        showOptin.fadeIn();
-        avatar.hide();
-        templates.hide();
         pOptions.show();
         name.hide();
-        sendBtn.show();
-        fomoSettings.hide();
-        editor.fadeIn();
-        disappear.fadeIn();
         break;
-      case 'pzen-popup':
-        templates.fadeIn();
+      case 'pzen_popup_link':
         name.fadeIn();
+        footerBarOptions.hide();
+        headerBarOptions.hide();
+        popupLinkOptions.fadeIn();
         hideBtn.hide();
-        popChat.fadeIn();
-        popMeta.hide();
         pos.hide();
-        showOptin.fadeIn();
-        avatar.hide();
         pOptions.fadeIn();
-        sendBtn.show();
-        fomoSettings.hide();
-        editor.fadeIn();
-        disappear.fadeIn();
         break;
-      case 'popout':
-        popMeta.fadeIn();
+      case 'pzen_small_box':
         pos.fadeIn();
-        showOptin.fadeIn();
-        avatar.fadeIn();
-        templates.hide();
-        pOptions.hide();
+        footerBarOptions.hide();
+        headerBarOptions.hide();
+        popupLinkOptions.hide();
         name.show();
-        sendBtn.show();
-        fomoSettings.hide();
-        editor.fadeIn();
-        disappear.fadeIn();
-        break;
-      case 'fomo':
-        fomoSettings.fadeIn();
-        popMeta.hide();
-        popChat.hide();
-        showOptin.hide();
-        avatar.hide();
-        templates.hide();
-        pOptions.hide();
-        name.hide();
-        sendBtn.hide();
-        hideBtn.hide();
-        editor.hide();
-        disappear.hide();
+        hideBtn.fadeIn();
         break;
       default:
-        popChat.fadeIn();
+        headerBarOptions.hide();
+        footerBarOptions.hide();
+        popupLinkOptions.hide();
         hideBtn.fadeIn();
         pos.fadeIn();
-        popMeta.hide();
-        showOptin.fadeIn();
-        avatar.fadeIn();
-        templates.hide();
-        pOptions.hide();
         name.hide();
-        sendBtn.show();
-        fomoSettings.hide();
-        editor.fadeIn();
-        disappear.fadeIn();
     }
   }
 
