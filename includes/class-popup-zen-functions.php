@@ -127,6 +127,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                     'emailErr' => __( 'Please enter a valid email address.', 'popup-zen-lite' ),
                     'display_when' => get_post_meta($value, 'display_when', 1),
                     'delay' => get_post_meta($value, 'scroll_delay', 1),
+                    'scrollPercent' => get_post_meta($value, 'page_scroll_percent', 1),
                     'showSettings' => get_post_meta($value, 'show_settings', 1),
                     'devices' => get_post_meta($value, 'pzen_devices', 1),
                     'bgColor' => get_post_meta($value, 'bg_color', 1),

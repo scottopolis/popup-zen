@@ -196,7 +196,7 @@
       pzen.debounce( function() {
 
         var wintop = $(window).scrollTop(), docheight = $(document).height(), winheight = $(window).height();
-        var  scrolltrigger = 0.5;
+        var  scrolltrigger = ( window.popupZenVars[id].scrollPercent ? parseInt( window.popupZenVars[id].scrollPercent ) / 100 : 0.5 );
 
         // when user scrolls below fold, show it
         if( (wintop/(docheight-winheight)) > scrolltrigger && !pzen.show['pzen-' + id] ) {
@@ -206,7 +206,7 @@
           // track
           pzen.trackingAndListeners(id);
         }
-      }, 250) )
+      }, 150) )
 
   }
 

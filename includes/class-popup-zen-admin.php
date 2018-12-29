@@ -386,12 +386,14 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
                         <h3><?php _e( 'Popup Options' ); ?></h3>
 
-                        <div id="header-bar-options">
-                            These are the header bar options.
-                        </div>
+                        <div id="permission-btns">
 
-                        <div id="footer-bar-options">
-                            These are the footer bar options.
+                            <input type="radio" name="permission_btns" value="no" <?php checked( "no", get_post_meta( $post->ID, 'permission_btns', true ) ); ?> />
+                            <label>Normal</label><br>
+
+                            <input type="radio" name="permission_btns" value="yes" <?php checked( "yes", get_post_meta( $post->ID, 'permission_btns', 1 ) ); ?> />
+                            <label>Click button to show more</label>
+
                         </div>
 
                         <div id="popup-link-options">
@@ -893,9 +895,11 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 </p>
 
                 <div class="pzen-settings-group">
+
+                    <input type="radio" name="display_when" value="scroll" <?php checked('scroll', get_post_meta( $post->ID, 'display_when', true ), true); ?>> 
+                    <?php _e( 'User scrolls...', 'popup-zen-lite' ); ?> <input type="number" class="pzen-number-input" step="25" max="100" id="page_scroll_percent" name="page_scroll_percent" size="2" value="<?php echo intval( get_post_meta( $post->ID, 'page_scroll_percent', true ) ); ?>" /> <?php _e( '% down page. (50 = halfway down page. Max is 100)', 'popup-zen-lite' ); ?><br>
                     <input type="radio" name="display_when" value="immediately" <?php checked('immediately', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'Immediately', 'popup-zen-lite' ); ?><br>
                     <input type="radio" name="display_when" value="delay" <?php checked('delay', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'Delay of', 'popup-zen-lite' ); ?> <input type="number" class="pzen-number-input" id="scroll_delay" name="scroll_delay" size="2" value="<?php echo intval( get_post_meta( $post->ID, 'scroll_delay', true ) ); ?>" /> <?php _e( 'seconds', 'popup-zen-lite' ); ?><br>
-                    <input type="radio" name="display_when" value="scroll" <?php checked('scroll', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'User scrolls halfway down the page', 'popup-zen-lite' ); ?><br>
                     <!-- <input type="radio" name="display_when" value="exit" <?php checked('exit', get_post_meta( $post->ID, 'display_when', true ), true); ?>> <?php _e( 'Exit Detection', 'popup-zen-lite' ); ?><br> -->
 
                     <?php do_action('pzen_display_when_settings', $post->ID ); ?>
@@ -927,10 +931,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     <input type="radio" name="pzen_devices" value="desktop_only" <?php checked('desktop_only', get_post_meta( $post->ID, 'pzen_devices', true ), true); ?>> <?php _e( 'Desktop only', 'popup-zen-lite' ); ?><br>
                     <input type="radio" name="pzen_devices" value="mobile_only" <?php checked('mobile_only', get_post_meta( $post->ID, 'pzen_devices', true ), true); ?>> <?php _e( 'Mobile only', 'popup-zen-lite' ); ?><br>
                 </div>
-
-            </div>
-
-            <div class="pzen-section">
 
                 <p>
                     <input type="checkbox" id="hide_btn" name="hide_btn" value="1" <?php checked(1, get_post_meta( $post->ID, 'hide_btn', true ), true); ?> />
@@ -972,20 +972,18 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 if( !empty( $item_type ) )
                     return;
 
-                $avatar_email = get_option('admin_email');
-
                 // set some defaults
                 update_post_meta( $post->ID, 'show_on', 'all' );
                 update_post_meta( $post->ID, 'logged_in', 'all' );
-                update_post_meta( $post->ID, 'avatar_email', $avatar_email );
-                update_post_meta( $post->ID, 'display_when', 'delay' );
-                update_post_meta( $post->ID, 'scroll_delay', 1 );
+                update_post_meta( $post->ID, 'display_when', 'scroll' );
+                update_post_meta( $post->ID, 'page_scroll_percent', '25' );
+                update_post_meta( $post->ID, 'permission_btns', 'no' );
+                update_post_meta( $post->ID, 'position', 'pzen-bottomright' );
                 update_post_meta( $post->ID, 'show_settings', 'interacts' );
                 update_post_meta( $post->ID, 'new_or_returning', 'all' );
                 update_post_meta( $post->ID, 'pzen_devices', 'all' );
                 update_post_meta( $post->ID, 'pzen_active', '1' );
-                update_post_meta( $post->ID, 'pzen_type', 'notification' );
-                update_post_meta( $post->ID, 'position', 'pzen-bottomright' );
+                update_post_meta( $post->ID, 'pzen_type', 'pzen_header_bar' );
                 update_post_meta( $post->ID, 'opt_in_placeholder', 'Enter your email' );
                 update_post_meta( $post->ID, 'name_placeholder', 'First name' );
 
@@ -1018,10 +1016,8 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             $keys = array(
                 'show_on',
-                'opt_in_message',
                 'opt_in_confirmation',
                 'opt_in_placeholder',
-                'opt_in_send_to',
                 'button_color1',
                 'bg_color',
                 'text_color',
@@ -1030,6 +1026,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 'new_or_returning',
                 'show_settings',
                 'display_when',
+                'page_scroll_percent',
                 'scroll_delay',
                 'position',
                 'pzen_devices',
@@ -1044,7 +1041,8 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 'name_placeholder',
                 'dont_show_name',
                 'popup_image',
-                'submit_text' );
+                'submit_text',
+                'permission_btns' );
 
             $keys = apply_filters( 'pzen_settings_array', $keys );
 

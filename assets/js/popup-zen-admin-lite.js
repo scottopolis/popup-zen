@@ -9,7 +9,6 @@
     pzen.toggleTypes();
     pzen.toggleDatepicker();
     pzen.toggleEmailForm();
-    pzen.toggleTimeAgo();
 
     $('.pzen-datepicker').datepicker({
       dateFormat : 'mm/dd/yy'
@@ -50,7 +49,6 @@
       $('input[name=display_when][value=delay]').prop('checked', 'checked');
     })
     .on('click', '#pzen-upload-btn', pzen.mediaUpload )
-    .on('change', 'select[name=fomo_integration]', pzen.toggleTimeAgo )
 
     $('#show_on_pages').suggest( window.ajaxurl + "?action=pzen_ajax_page_search", {multiple:true, multipleSep: ","});
 
@@ -97,14 +95,12 @@
     var pos = $('#position-settings');
     var hideBtn = $('#hide_btn, label[for=hide_btn]');
     var name = $('#pzen-name-fields');
-    var headerBarOptions = $('#header-bar-options');
-    var footerBarOptions = $('#footer-bar-options');
+    var permissionBtns = $('#permission-btns');
     var popupLinkOptions = $('#popup-link-options');
 
     switch( val ) {
       case 'pzen_header_bar':
-        headerBarOptions.fadeIn();
-        footerBarOptions.hide();
+        permissionBtns.fadeIn();
         popupLinkOptions.hide();
         hideBtn.hide();
         pos.hide();
@@ -112,8 +108,7 @@
         break;
       case 'pzen_footer_bar':
         hideBtn.hide();
-        footerBarOptions.fadeIn();
-        headerBarOptions.hide();
+        permissionBtns.fadeIn();
         popupLinkOptions.hide();
         pos.hide();
         pOptions.show();
@@ -121,8 +116,7 @@
         break;
       case 'pzen_popup_link':
         name.fadeIn();
-        footerBarOptions.hide();
-        headerBarOptions.hide();
+        permissionBtns.hide();
         popupLinkOptions.fadeIn();
         hideBtn.hide();
         pos.hide();
@@ -130,15 +124,13 @@
         break;
       case 'pzen_small_box':
         pos.fadeIn();
-        footerBarOptions.hide();
-        headerBarOptions.hide();
+        permissionBtns.hide();
         popupLinkOptions.hide();
         name.show();
         hideBtn.fadeIn();
         break;
       default:
-        headerBarOptions.hide();
-        footerBarOptions.hide();
+        permissionBtns.hide();
         popupLinkOptions.hide();
         hideBtn.fadeIn();
         pos.fadeIn();
@@ -276,25 +268,6 @@
       $('#pzen-until-datepicker').show();
     } else {
       $('#pzen-until-datepicker').hide();
-    }
-
-  }
-
-  pzen.toggleTimeAgo = function() {
-
-    var fomoIntegration = $('select[name=fomo_integration]').val();
-
-    var timeAgoOptions = $('#fomo-time_ago-settings');
-
-    switch( fomoIntegration ) {
-      case 'edd':
-        timeAgoOptions.fadeIn();
-        break;
-      case 'woo':
-        timeAgoOptions.fadeIn();
-        break;
-      default:
-        timeAgoOptions.hide();
     }
 
   }
