@@ -338,7 +338,7 @@ input.pzen-name {
 	margin-top: 10px;
 }
 
-.pzen-email-input {
+.pzen-popup .pzen-email-input {
 	width: 100% !important;
 	float: none;
 	margin-bottom: 10px;
