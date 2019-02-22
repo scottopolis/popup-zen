@@ -195,6 +195,8 @@
       // debounce so we don't adversely affect scroll performance
       pzen.debounce( function() {
 
+        console.log('scroll debounce')
+
         var wintop = $(window).scrollTop(), docheight = $(document).height(), winheight = $(window).height();
         var  scrolltrigger = ( window.popupZenVars[id].scrollPercent ? parseInt( window.popupZenVars[id].scrollPercent ) / 100 : 0.5 );
 
@@ -206,7 +208,7 @@
           // track
           pzen.trackingAndListeners(id);
         }
-      }, 150) )
+      }, 100) )
 
   }
 

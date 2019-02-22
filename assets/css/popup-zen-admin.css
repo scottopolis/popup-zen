@@ -16,6 +16,83 @@
     margin-right: 0;
 }
 
+/*** Tabs **/
+
+.pzen-tab-box {
+	background-color: #fff;
+	margin-top: 15px;
+	border: 1px solid #ccc;
+}
+
+/* Style the tab */
+.pzen-tab-nav {
+	float: left;
+	border-bottom: none;
+	background-color: #fff;
+	width: 30%;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+/* Style the buttons that are used to open the tab content */
+
+.pzen-tab-nav .pzen-tab-link {
+	display: block;
+	background-color: inherit;
+	color: black;
+	padding: 22px 16px;
+	width: 100%;
+	border: none;
+	outline: none;
+	text-align: left;
+	cursor: pointer;
+	transition: 0.3s;
+	border-bottom: 1px solid #ccc;
+}
+
+.pzen-preview-btn-wrap {
+	padding: 15px;
+}
+
+.pzen-preview-btn {
+	display: block;
+	padding: 10px;
+	text-align: center;
+	background-color: gold;
+	border: 1px solid #999;
+	border-radius: 3px;
+	width: 100%;
+	font-size: 18px;
+	box-sizing: border-box;
+}
+
+/* Change background color of buttons on hover */
+.pzen-tab-nav button:hover {
+  background-color: #fafafa;
+}
+
+/* Create an active/current "tab button" class */
+.pzen-tab-nav button.active {
+  background-color: #eee;
+}
+
+/* Style the tab content */
+.pzen-tab-content {
+	box-sizing: border-box;
+	float: left;
+	padding: 0px 12px;
+	width: 70%;
+	border-left: none;
+	height: 100%;
+	min-height: 350px;
+	border-left: 1px solid #ccc;
+	display: none;
+}
+
+.pzen-tab-content.first {
+	display: block;
+}
+
 /*** Settings **/
 
 #pzen-wrap .form-table {
