@@ -196,7 +196,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                 }
 
                 // if show_it is true, that means we display this notification. $popup_id is popup id
-                $show_it = apply_filters( 'pzen_display_notification', $show_it, $popup_id, $post_id  );
+                $show_it = apply_filters( 'pzen_display_box', $show_it, $popup_id, $post_id  );
 
                 if( $show_it === false )
                     continue;
@@ -220,7 +220,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
             } elseif ( $type === 'pzen_footer_bar' ) {
                 $this->display_footer_bar( $popup_id );
             } else {
-                $this->display_pzen( $popup_id, $is_admin_customizer );
+                $this->display_pzen_box( $popup_id, $is_admin_customizer );
             }
 
         }
@@ -264,31 +264,32 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
          * @param       int $id
          * @return      string
          */
-        public function display_pzen( $id, $is_admin_customizer = false ) {
+        public function display_pzen_box( $id, $is_admin_customizer = false ) {
 
             $type = get_post_meta( $id, 'pzen_type', 1 );
             $bg_color = esc_html( get_post_meta( $id, 'bg_color', 1 ) );
-            $btn_color = esc_html( get_post_meta( $id, 'button_color1', 1 ) );
             ?>
             <style type="text/css">
             #pzen-<?php echo intval( $id ); ?>, #pzen-<?php echo intval( $id ); ?> a, #pzen-<?php echo intval( $id ); ?> i, #pzen-<?php echo intval( $id ); ?> .pzen-inside { color: <?php echo esc_html( get_post_meta( $id, 'text_color', 1 ) ); ?> !important; }
-            #pzen-<?php echo intval( $id ); ?>, #pzen-<?php echo intval( $id ); ?> .pzen-row { background-color: <?php echo $bg_color; ?> }
-            #pzen-<?php echo intval( $id ); ?> .pzen-email-btn, .pzen-floating-btn.pzen-btn-<?php echo intval( $id ); ?> { background-color: <?php echo $btn_color; ?>; }
+            #pzen-<?php echo intval( $id ); ?> { background-color: <?php echo $bg_color; ?> }
+            #pzen-<?php echo intval( $id ); ?> .pzen-email-btn { background-color: <?php echo $btn_color; ?>; }
             </style>
 
-            <?php if( $type != 'pzen-banner' && !$is_admin_customizer ) : ?>
-            <div data-id="<?php echo esc_attr( $id ); ?>" class="pzen-floating-btn pzen-btn-<?php echo esc_attr( $id ); ?> <?php echo esc_attr( get_post_meta( $id, 'position', 1 ) ); ?>"><i class="icon icon-chat"></i></div>
-            <?php endif; ?>
-
-            <div id="pzen-<?php echo esc_attr( $id ); ?>" class="popup-zen-box pzen-hide <?php echo apply_filters( 'pzen_classes', '', $id ); ?>">
+            <div id="pzen-<?php echo esc_attr( $id ); ?>" class="popup-zen-box <?php echo apply_filters( 'pzen_classes', '', $id ); ?>">
 
                 <div class="pzen-inside">
                 
                     <div class="pzen-close"><i class="icon icon-cancel"></i></div>
 
+                    <div class="pzen-image">
+                        <img src="<?php echo get_post_meta( $id, 'pzen_image', 1 ); ?>" class="popup-zen-image" />
+                    </div>
+
                     <?php do_action('pzen_above_content', $id); ?>
 
                     <div class="pzen-content">
+
+                        <div class="pzen-title"><?php echo get_post_meta( $id, 'pzen_title', 1 ); ?></div>
 
                         <?php echo self::get_box_content( $id ); ?>
 
@@ -307,7 +308,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                     $powered_by = get_option( 'pzen_powered_by' );
 
                     if( empty( $powered_by ) ) : ?>
-                        <span class="pzen-powered-by"><a href="https://getpopupzen.com" target="_blank">Popup Zen</a></span>
+                        <div class="pzen-powered-by"><a href="https://getpopupzen.com" target="_blank">Popup Zen</a></div>
                     <?php endif; ?>
 
                 </div>
@@ -482,9 +483,8 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
          */
         public static function get_box_content( $id ) {
 
-            $post_content = get_post($id);
-            $content = $post_content->post_content;
-            $content = apply_filters('pzen_content', $content, $id );
+            $post_content = get_post_meta( $id, 'pzen_content', 1 );
+            $content = apply_filters( 'the_content', $post_content, $id );
             return do_shortcode( $content );
 
         }

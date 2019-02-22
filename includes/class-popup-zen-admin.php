@@ -374,17 +374,17 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 <label for="type"><?php _e( 'Choose a Popup Zen Type', 'popup-zen-lite' ); ?></label>
             </h4>
             <p>
+                
+                <label class="pzen-radio-withimage">
+                    <span class="text">Zen Box</span>
+                    <img src="<?php echo Popup_Zen_URL . 'assets/img/small-box-icon.png'; ?>" class="pzen-radio-image" />
+                    <input type="radio" name="pzen_type" value="pzen_box" <?php checked( "pzen_box", get_post_meta( $post->ID, 'pzen_type', true ) ); ?> />
+                </label>
 
                 <label class="pzen-radio-withimage">
                     <span class="text">Header Bar</span>
                     <img src="<?php echo Popup_Zen_URL . 'assets/img/header-bar-icon.png'; ?>" class="pzen-radio-image" />
                     <input type="radio" name="pzen_type" value="pzen_header_bar" <?php checked( "pzen_header_bar", get_post_meta( $post->ID, 'pzen_type', true ) ); ?> />
-                </label>
-
-                <label class="pzen-radio-withimage">
-                    <span class="text">Small Box</span>
-                    <img src="<?php echo Popup_Zen_URL . 'assets/img/small-box-icon.png'; ?>" class="pzen-radio-image" />
-                    <input type="radio" name="pzen_type" value="pzen_small_box" <?php checked( "pzen_small_box", get_post_meta( $post->ID, 'pzen_type', true ) ); ?> />
                 </label>
 
                 <label class="pzen-radio-withimage">
@@ -453,7 +453,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             <?php wp_nonce_field( basename( __FILE__ ), 'popupzen_meta_box_nonce' ); ?>
 
             <h4>
-                <?php _e( 'Click to edit', 'popup-zen-lite' ); ?>
+                <?php _e( 'Customize', 'popup-zen-lite' ); ?>
             </h4>
 
             <div id="pzen-customize-wrap">
@@ -465,6 +465,23 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
                 ?>
 
+            </div>
+
+            <div class="pzen-section">
+                <p><?php _e( 'Title', 'popup-zen-lite' ); ?></p>
+
+                <?php 
+                // get default title
+                $title = get_post_meta( $post->ID, 'pzen_title', true );
+                $title = ( !empty( $title ) ? $title : get_the_title( $post->ID ) );
+                ?>
+                <input type="text" name="pzen_title" value="<?php echo esc_html( $title ); ?>" class="widefat"  />
+
+                <p><?php _e( 'Content', 'popup-zen-lite' ); ?></p>
+
+                <?php wp_editor( 'Enter your details to get the goods.', 'pzen_content' ); ?>
+
+                <!-- <textarea class="pzen-textarea" name="pzen_content" id="pzen_content"><?php echo esc_html( get_post_meta( $post->ID, 'pzen_content', true ) ); ?></textarea> -->
             </div>
 
             <div class="pzen-section" id="box-colors">
@@ -491,10 +508,8 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 <p>
                     <?php _e( 'Upload a Custom Image', 'popup-zen-lite' ); ?>
                 </p>
-                
-                <img src="<?php echo get_post_meta( $post->ID, 'popup_image', 1 ); ?>" class="pzen-popup-image" />
 
-                <input id="pzen-image-url" size="50" type="text" name="popup_image" value="<?php echo get_post_meta( $post->ID, 'popup_image', 1 ); ?>" />
+                <input id="pzen-image-url" size="50" type="text" name="pzen_image" value="<?php echo get_post_meta( $post->ID, 'pzen_image', 1 ); ?>" />
                 <input id="pzen-upload-btn" type="button" class="button" value="Upload Image" />
 
             </div>
@@ -1055,7 +1070,9 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 'pzen_type',
                 'name_placeholder',
                 'dont_show_name',
-                'popup_image',
+                'pzen_image',
+                'pzen_title',
+                'pzen_content',
                 'submit_text',
                 'permission_btns' );
 

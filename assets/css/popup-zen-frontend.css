@@ -72,16 +72,39 @@
 	opacity: 0;
 	position: fixed;
 	z-index: 99997;
-	width: 300px;
-	height: auto;
-	max-height: 90%;
+	width: 100%;
+	max-width: 400px;
 	border-radius: 3px;
-	padding: 15px;
 	overflow: auto;
 	background-color: #fff;
 	border: 1px solid #eee;
 	transition: all .3s;
 	box-sizing: border-box;
+}
+
+.popup-zen-box .pzen-content, .popup-zen-box .pzen-form {
+	padding: 15px;
+}
+
+.popup-zen-box .pzen-content {
+	text-align: center;
+	color: #999999;
+}
+
+.popup-zen-box .pzen-content p {
+	font-size: 14px;
+}
+
+.popup-zen-box .pzen-title {
+	text-align: center;
+	font-size: 24px;
+	color: #676976;
+	margin-top: 15px;
+}
+
+.popup-zen-box .pzen-form {
+	padding-top: 0;
+	overflow: hidden;
 }
 
 .pzen-floating-btn.pzen-bottomright, .popup-zen-box.pzen-bottomright {
@@ -170,7 +193,7 @@
 
 .pzen-close {
 	position: absolute;
-	top: 5px;
+	top: 15px;
 	right: 5px;
 	cursor: pointer;
 	line-height: 1;
@@ -254,13 +277,16 @@
 	font-size: 12px;
 }
 
-span.pzen-powered-by a {
+.pzen-powered-by {
+	text-align: center;
+	padding: 10px 0;
+}
+
+.pzen-powered-by a {
     font-size: 10px;
     color: #bbb;
     text-decoration: none;
-    position: relative;
-    top: 5px;
-    float: right;
+    text-align: center;
 }
 
 img.pzen-loading {
@@ -339,10 +365,6 @@ input.pzen-name {
 	width: 100% !important;
 	float: none;
 	margin-bottom: 10px;
-}
-
-.pzen-title {
-	text-align: center;
 }
 
 /*

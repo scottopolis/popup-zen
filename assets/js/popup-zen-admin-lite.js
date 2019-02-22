@@ -120,7 +120,7 @@
         hideBtn.hide();
         pos.hide();
         break;
-      case 'pzen_small_box':
+      case 'pzen_box':
         pos.fadeIn();
         permissionBtns.hide();
         popupLinkOptions.hide();
@@ -302,7 +302,7 @@
     mediaUploader.on('select', function() {
       var attachment = mediaUploader.state().get('selection').first().toJSON();
       $('#pzen-image-url').val(attachment.url);
-      $('.pzen-popup-image').attr("src", attachment.url);
+      $('.pzen-image').attr("src", attachment.url);
     });
     // Open the uploader dialog
     mediaUploader.open();

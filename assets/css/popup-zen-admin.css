@@ -120,12 +120,14 @@ a.pzen-preview-btn:hover {
 
 /*** Popup customizer CSS overrides ***/
 
-#pzen-customize-wrap .popup-zen-box.pzen-hide {
+#pzen-customize-wrap .popup-zen-box {
 	display: block;
 	opacity: 1;
-	position: static;
-	width: 100%;
+	position: relative;
+	left: 0;
+	bottom: 0;
 	transform: none;
+	margin: 0 auto;
 }
 
 /*** Settings **/
