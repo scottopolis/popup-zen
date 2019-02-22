@@ -29,7 +29,7 @@
 	float: left;
 	border-bottom: none;
 	background-color: #fff;
-	width: 30%;
+	width: 25%;
 	height: 100%;
 	box-sizing: border-box;
 }
@@ -48,6 +48,7 @@
 	cursor: pointer;
 	transition: 0.3s;
 	border-bottom: 1px solid #ccc;
+	font-size: 14px;
 }
 
 .pzen-preview-btn-wrap {
@@ -64,6 +65,13 @@
 	width: 100%;
 	font-size: 18px;
 	box-sizing: border-box;
+	text-decoration: none;
+	color: #444;
+}
+
+a.pzen-preview-btn:hover {
+	color: #444;
+	background-color: yellow;
 }
 
 /* Change background color of buttons on hover */
@@ -74,14 +82,26 @@
 /* Create an active/current "tab button" class */
 .pzen-tab-nav button.active {
   background-color: #eee;
+  /*position: relative;*/
 }
+
+/*.pzen-tab-nav button.active:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent #eee;
+    position: absolute;
+    right: -10px;
+}*/
 
 /* Style the tab content */
 .pzen-tab-content {
 	box-sizing: border-box;
 	float: left;
-	padding: 0px 12px;
-	width: 70%;
+	padding: 15px 20px;
+	width: 75%;
 	border-left: none;
 	height: 100%;
 	min-height: 350px;
@@ -91,6 +111,21 @@
 
 .pzen-tab-content.first {
 	display: block;
+}
+
+#pzen-customize-wrap {
+	overflow: hidden;
+	padding: 10px 0;
+}
+
+/*** Popup customizer CSS overrides ***/
+
+#pzen-customize-wrap .popup-zen-box.pzen-hide {
+	display: block;
+	opacity: 1;
+	position: static;
+	width: 100%;
+	transform: none;
 }
 
 /*** Settings **/

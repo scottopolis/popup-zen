@@ -65,8 +65,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             // add_action( 'pzen_type_settings', array( $this, 'type_upsell' ), 99 );
 
-            add_action( 'post_submitbox_minor_actions', array( $this, 'preview_link' ) );
-
             add_filter('page_row_actions', array( $this, 'row_actions' ), 10, 2 );
 
             add_action( 'edit_form_after_title', array( $this, 'pzen_cpt_admin_output' ) );
@@ -106,6 +104,8 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             wp_enqueue_style( 'popup-zen-admin', Popup_Zen_URL . 'assets/css/popup-zen-admin' . $suffix . '.css', array( 'wp-color-picker' ), Popup_Zen_VER );
 
             wp_enqueue_script( 'popup-zen-admin-lite', Popup_Zen_URL . 'assets/js/popup-zen-admin-lite' . $suffix . '.js', array( 'wp-color-picker', 'jquery-ui-datepicker', 'suggest' ), Popup_Zen_VER, true );
+
+            wp_enqueue_style( 'popup-zen-frontend', Popup_Zen_URL . 'assets/css/popup-zen-frontend' . $suffix . '.css', array( 'popup-zen-admin' ), Popup_Zen_VER );
             
         }
 
@@ -331,7 +331,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                       <button class="pzen-tab-link" onclick="pzenAdmin.openTab(event, 'pzen-display')"><?php _e( 'Display Settings', 'popup-zen-lite' ); ?></button>
                         
                         <div class="pzen-preview-btn-wrap">
-                            <button class="pzen-preview-btn"><?php _e( 'Preview', 'popup-zen-lite' ); ?></button>
+                            <a href="<?php echo home_url() . '?pzen_preview=' . $post->ID; ?>" target="_blank" class="pzen-preview-btn"><?php _e( 'Preview', 'popup-zen-lite' ); ?></a>
                         </div>
                     </div>
 
@@ -340,7 +340,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     </div>
 
                     <div id="pzen-customize" class="pzen-tab-content">
-                      <h3><?php _e( 'Customize', 'popup-zen-lite' ); ?></h3>
                       <?php $this->customize_settings( $post ); ?>
                     </div>
 
@@ -450,11 +449,41 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             <?php wp_nonce_field( basename( __FILE__ ), 'popupzen_meta_box_nonce' ); ?>
 
+            <h4>
+                <?php _e( 'Click to edit', 'popup-zen-lite' ); ?>
+            </h4>
+
+            <div id="pzen-customize-wrap">
+
+                <?php 
+
+                $pzen_funcs = new Popup_Zen_Functions();
+                $pzen_funcs->show_box_types( $post->ID, true );
+
+                ?>
+
+            </div>
+
+            <div class="pzen-section" id="box-colors">
+
+                <h4><?php _e( 'Colors', 'popup-zen-lite' ); ?></h4>
+                
+                <div id="accent-color">
+                    <p><?php _e( 'Accent color', 'popup-zen-lite' ); ?></p>
+                    <input type="text" name="button_color1" value="<?php echo esc_html( get_post_meta( $post->ID, 'button_color1', true ) ); ?>" class="pzen-colors" data-default-color="#1191cb" />
+                </div>
+                
+                <p><?php _e( 'Background color', 'popup-zen-lite' ); ?></p>
+                <input type="text" name="bg_color" value="<?php echo esc_html( get_post_meta( $post->ID, 'bg_color', true ) ); ?>" class="pzen-colors" data-default-color="#ffffff" />
+                
+                <p><?php _e( 'Text color', 'popup-zen-lite' ); ?></p>
+                <input type="text" name="text_color" value="<?php echo esc_html( get_post_meta( $post->ID, 'text_color', true ) ); ?>" class="pzen-colors" data-default-color="#333333" />
+
+            </div>
+
             <div class="pzen-section">
 
-                <h4>
-                    <label for="position"><?php _e( 'Image', 'popup-zen-lite' ); ?></label>
-                </h4>
+                <h4><?php _e( 'Image', 'popup-zen-lite' ); ?></h4>
                 
                 <p>
                     <?php _e( 'Upload a Custom Image', 'popup-zen-lite' ); ?>
@@ -467,18 +496,39 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             </div>
 
-            <div class="pzen-section" id="box-colors">
-                
-                <div id="accent-color">
-                    <p><?php _e( 'Accent color', 'popup-zen-lite' ); ?></p>
-                    <input type="text" name="button_color1" value="<?php echo esc_html( get_post_meta( $post->ID, 'button_color1', true ) ); ?>" class="pzen-colors" data-default-color="#1191cb" />
-                </div>
-                
-                <p><?php _e( 'Background color', 'popup-zen-lite' ); ?></p>
-                <input type="text" name="bg_color" value="<?php echo esc_html( get_post_meta( $post->ID, 'bg_color', true ) ); ?>" class="pzen-colors" data-default-color="#ffffff" />
-                
-                <p><?php _e( 'Text color', 'popup-zen-lite' ); ?></p>
-                <input type="text" name="text_color" value="<?php echo esc_html( get_post_meta( $post->ID, 'text_color', true ) ); ?>" class="pzen-colors" data-default-color="#333333" />
+            <div class="pzen-section">
+
+                <h4><?php _e( 'Fields', 'popup-zen-lite' ); ?></h4>
+
+                <p>
+                    <?php _e( 'Name Field Placeholder', 'popup-zen-lite' ); ?>
+                    <input id="name_placeholder" name="name_placeholder" class="widefat" value="<?php echo get_post_meta( $post->ID, 'name_placeholder', 1 ); ?>" placeholder="First Name" type="text" />
+                </p>
+
+                <p>
+                    <input type="checkbox" id="dont_show_name" name="dont_show_name" value="1" <?php checked('1', get_post_meta( $post->ID, 'dont_show_name', true ), true); ?> />
+                    <?php _e( 'Don\'t show first name field', 'popup-zen-lite' ); ?>
+                </p>
+
+                <p>
+                    <label for="opt_in_message"><?php _e( 'Small text above email field', 'popup-zen-lite' ); ?></label>
+                    <input class="widefat" type="text" name="opt_in_message" id="opt_in_message" placeholder="We don't spam or share your information." value="<?php echo esc_attr( get_post_meta( $post->ID, 'opt_in_message', true ) ); ?>" size="20" />
+                </p>
+
+                <p>
+                    <label for="opt_in_placeholder"><?php _e( 'Placeholder', 'popup-zen-lite' ); ?></label>
+                    <input class="widefat" type="text" name="opt_in_placeholder" id="opt_in_placeholder" value="<?php echo esc_attr( get_post_meta( $post->ID, 'opt_in_placeholder', true ) ); ?>" size="20" />
+                </p>
+
+                <p>
+                    <label for="opt_in_confirmation"><?php _e( 'Confirmation Message', 'popup-zen-lite' ); ?></label>
+                    <input class="widefat" type="text" name="opt_in_confirmation" id="opt_in_confirmation" value="<?php echo esc_attr( get_post_meta( $post->ID, 'opt_in_confirmation', true ) ); ?>" size="20" />
+                </p>
+
+                <p>
+                    <label for="submit_text"><?php _e( 'Submit Button Text', 'popup-zen-lite' ); ?></label>
+                    <input class="widefat" type="text" name="submit_text" id="submit_text" value="<?php echo esc_attr( get_post_meta( $post->ID, 'submit_text', true ) ); ?>" size="20" placeholder="Send" />
+                </p>
 
             </div>
 
@@ -653,45 +703,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                         </p>
                     </div>
 
-                    <div id="default-email-options">
-
-                        <div id="pzen-name-fields">
-
-                        <p>
-                            <?php _e( 'Name Field Placeholder', 'popup-zen-lite' ); ?>
-                            <input id="name_placeholder" name="name_placeholder" class="widefat" value="<?php echo get_post_meta( $post->ID, 'name_placeholder', 1 ); ?>" placeholder="First Name" type="text" />
-                        </p>
-
-                        <p>
-                            <input type="checkbox" id="dont_show_name" name="dont_show_name" value="1" <?php checked('1', get_post_meta( $post->ID, 'dont_show_name', true ), true); ?> />
-                            <?php _e( 'Don\'t show first name field', 'popup-zen-lite' ); ?>
-                        </p>
-
-                        </div>
-
-                        <p>
-                            <label for="opt_in_message"><?php _e( 'Small text above email field', 'popup-zen-lite' ); ?></label>
-                            <input class="widefat" type="text" name="opt_in_message" id="opt_in_message" placeholder="We don't spam or share your information." value="<?php echo esc_attr( get_post_meta( $post->ID, 'opt_in_message', true ) ); ?>" size="20" />
-                        </p>
-
-                        <p>
-                            <label for="opt_in_placeholder"><?php _e( 'Placeholder', 'popup-zen-lite' ); ?></label>
-                            <input class="widefat" type="text" name="opt_in_placeholder" id="opt_in_placeholder" value="<?php echo esc_attr( get_post_meta( $post->ID, 'opt_in_placeholder', true ) ); ?>" size="20" />
-                        </p>
-
-                        <p>
-                            <label for="opt_in_confirmation"><?php _e( 'Confirmation Message', 'popup-zen-lite' ); ?></label>
-                            <input class="widefat" type="text" name="opt_in_confirmation" id="opt_in_confirmation" value="<?php echo esc_attr( get_post_meta( $post->ID, 'opt_in_confirmation', true ) ); ?>" size="20" />
-                        </p>
-
-                        <p>
-                            <label for="submit_text"><?php _e( 'Submit Button Text', 'popup-zen-lite' ); ?></label>
-                            <input class="widefat" type="text" name="submit_text" id="submit_text" value="<?php echo esc_attr( get_post_meta( $post->ID, 'submit_text', true ) ); ?>" size="20" placeholder="Send" />
-                        </p>
-
-                        <?php do_action( 'pzen_email_settings', $post->ID ); ?>
-
-                    </div>
+                    <?php do_action( 'pzen_email_settings', $post->ID ); ?>
 
                 </div>
 
@@ -833,24 +845,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             ?>
             <p style="clear:both;"><small><a href="https://getpopupzen.com/pro?utm_source=template_settings&utm_medium=link&utm_campaign=pzen_settings" target="_blank" style="color:#999">Get banners, sale notification popups, and more with Pro</a></small></p>
             <?php
-        }
-
-        /**
-         * Add preview link to submit box
-         *
-         */
-        public function preview_link( $post ) {
-
-            $status = $post->post_status;
-            $type = $post->post_type;
-
-            if( $type != 'popupzen' )
-                return;
-
-            if( $status === 'draft' || $status === 'publish' ) {
-                echo '<a href="' . home_url() . '?pzen_preview=' . $post->ID . '" target="_blank" class="button">Preview Box</a>';
-            }
-
         }
 
         /**

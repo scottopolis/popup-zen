@@ -80,9 +80,6 @@
 	overflow: auto;
 	background-color: #fff;
 	border: 1px solid #eee;
-	-webkit-box-shadow: 2px 2px 15px 2px rgba(0,0,0,0.06);
-	-moz-box-shadow: 2px 2px 15px 2px rgba(0,0,0,0.06);
-	box-shadow: 2px 2px 15px 2px rgba(0,0,0,0.06);
 	transition: all .3s;
 	box-sizing: border-box;
 }

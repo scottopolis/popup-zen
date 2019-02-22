@@ -140,7 +140,6 @@
   pzen.toggleEmailForm = function() {
 
     var noneSelected = $('#none-selected');
-    var defaultDiv = $('#default-email-options');
     var custom = $('#custom-email-options');
     var checkedVal = $('select[name=email_provider]').val();
     var itemTypeVal = $('input[name=item_type]:checked').val();
@@ -159,7 +158,6 @@
 
     if( checkedVal === 'default' ) {
       noneSelected.fadeIn();
-      defaultDiv.hide();
       custom.hide();
       ckFields.hide();
       mcFields.hide();
@@ -168,7 +166,6 @@
       drip.hide();
     } else if( checkedVal === 'custom' ) {
       custom.fadeIn();
-      defaultDiv.hide();
       noneSelected.hide();
       ckFields.hide();
       mcFields.hide();
@@ -177,7 +174,6 @@
       drip.hide();
     } else if( checkedVal === 'mc' ) {
       mcFields.fadeIn();
-      defaultDiv.fadeIn();
       ckFields.hide();
       custom.hide();
       noneSelected.hide();
@@ -186,7 +182,6 @@
       drip.hide();
     } else if( checkedVal === 'ck' ) {
       ckFields.fadeIn();
-      defaultDiv.fadeIn();
       mcFields.hide();
       custom.hide();
       noneSelected.hide();
@@ -195,7 +190,6 @@
       drip.hide();
     } else if( checkedVal === 'mailpoet' ) {
       mailpoet.fadeIn();
-      defaultDiv.fadeIn();
       mcFields.hide();
       custom.hide();
       noneSelected.hide();
@@ -204,7 +198,6 @@
       drip.hide();
     } else if( checkedVal === 'ac' ) {
       ckFields.hide();
-      defaultDiv.fadeIn();
       mcFields.hide();
       custom.hide();
       noneSelected.hide();
@@ -214,7 +207,6 @@
     } else if( checkedVal === 'drip' ) {
       drip.fadeIn();
       ckFields.hide();
-      defaultDiv.fadeIn();
       mcFields.hide();
       custom.hide();
       noneSelected.hide();

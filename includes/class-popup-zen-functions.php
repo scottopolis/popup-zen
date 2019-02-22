@@ -211,16 +211,16 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
          * Show box based on what type it is
          *
          */
-        public function show_box_types( $popup_id ) {
+        public function show_box_types( $popup_id, $is_admin_customizer = false ) {
 
             $type = get_post_meta( $popup_id, 'pzen_type', 1 );
 
-            if( $type === 'pzen-popup' ) {
+            if( $type === 'pzen_popup_link' ) {
                 $this->display_popup( $popup_id );
-            } elseif ( $type === 'footer-bar' ) {
+            } elseif ( $type === 'pzen_footer_bar' ) {
                 $this->display_footer_bar( $popup_id );
             } else {
-                $this->display_notification_box( $popup_id );
+                $this->display_pzen( $popup_id, $is_admin_customizer );
             }
 
         }
@@ -264,7 +264,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
          * @param       int $id
          * @return      string
          */
-        public function display_notification_box( $id ) {
+        public function display_pzen( $id, $is_admin_customizer = false ) {
 
             $type = get_post_meta( $id, 'pzen_type', 1 );
             $bg_color = esc_html( get_post_meta( $id, 'bg_color', 1 ) );
@@ -276,7 +276,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
             #pzen-<?php echo intval( $id ); ?> .pzen-email-btn, .pzen-floating-btn.pzen-btn-<?php echo intval( $id ); ?> { background-color: <?php echo $btn_color; ?>; }
             </style>
 
-            <?php if( $type != 'pzen-banner' ) : ?>
+            <?php if( $type != 'pzen-banner' && !$is_admin_customizer ) : ?>
             <div data-id="<?php echo esc_attr( $id ); ?>" class="pzen-floating-btn pzen-btn-<?php echo esc_attr( $id ); ?> <?php echo esc_attr( get_post_meta( $id, 'position', 1 ) ); ?>"><i class="icon icon-chat"></i></div>
             <?php endif; ?>
 
@@ -602,7 +602,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
         public static function add_pzen_classes( $classes, $id ) {
 
             $type = get_post_meta( $id, 'pzen_type', 1 );
-            if( $type === 'pzen-popup' ) {
+            if( $type === 'pzen_popup_link' ) {
                 $classes .= 'pzen-popup';
             } else if( $type === 'pzen_header_bar' ) {
                 $classes .= 'pzen-header-bar';
