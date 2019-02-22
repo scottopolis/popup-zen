@@ -95,17 +95,20 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
          */
         public function enqueue_scripts() {
 
-            // Use minified libraries if SCRIPT_DEBUG is turned off
-            $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+            if( get_current_screen()->post_type === 'popupzen' ) {
 
-            // Date picker: https://gist.github.com/slushman/8fd9e1cc8161c395ec5b
+                // Use minified libraries if SCRIPT_DEBUG is turned off
+                $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
-            // Color picker: https://make.wordpress.org/core/2012/11/30/new-color-picker-in-wp-3-5/
-            wp_enqueue_style( 'popup-zen-admin', Popup_Zen_URL . 'assets/css/popup-zen-admin' . $suffix . '.css', array( 'wp-color-picker' ), Popup_Zen_VER );
+                // Date picker: https://gist.github.com/slushman/8fd9e1cc8161c395ec5b
 
-            wp_enqueue_script( 'popup-zen-admin-lite', Popup_Zen_URL . 'assets/js/popup-zen-admin-lite' . $suffix . '.js', array( 'wp-color-picker', 'jquery-ui-datepicker', 'suggest' ), Popup_Zen_VER, true );
+                // Color picker: https://make.wordpress.org/core/2012/11/30/new-color-picker-in-wp-3-5/
+                wp_enqueue_style( 'popup-zen-admin', Popup_Zen_URL . 'assets/css/popup-zen-admin' . $suffix . '.css', array( 'wp-color-picker' ), Popup_Zen_VER );
 
-            wp_enqueue_style( 'popup-zen-frontend', Popup_Zen_URL . 'assets/css/popup-zen-frontend' . $suffix . '.css', array( 'popup-zen-admin' ), Popup_Zen_VER );
+                wp_enqueue_script( 'popup-zen-admin-lite', Popup_Zen_URL . 'assets/js/popup-zen-admin-lite' . $suffix . '.js', array( 'wp-color-picker', 'jquery-ui-datepicker', 'suggest' ), Popup_Zen_VER, true );
+            
+                wp_enqueue_style( 'popup-zen-frontend', Popup_Zen_URL . 'assets/css/popup-zen-frontend' . $suffix . '.css', array( 'popup-zen-admin' ), Popup_Zen_VER );
+            }
             
         }
 
