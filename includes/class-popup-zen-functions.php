@@ -131,7 +131,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                     'showSettings' => get_post_meta($value, 'show_settings', 1),
                     'devices' => get_post_meta($value, 'pzen_devices', 1),
                     'bgColor' => get_post_meta($value, 'bg_color', 1),
-                    'btnColor1' => get_post_meta($value, 'button_color1', 1),
+                    'accentColor' => get_post_meta($value, 'accent_color', 1),
                     'position' => get_post_meta($value, 'position', 1)
                 );
 
@@ -268,11 +268,12 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
             $type = get_post_meta( $id, 'pzen_type', 1 );
             $bg_color = esc_html( get_post_meta( $id, 'bg_color', 1 ) );
+            $accent_color = esc_html( get_post_meta( $id, 'accent_color', 1 ) );
             ?>
             <style type="text/css">
-            #pzen-<?php echo intval( $id ); ?>, #pzen-<?php echo intval( $id ); ?> a, #pzen-<?php echo intval( $id ); ?> i, #pzen-<?php echo intval( $id ); ?> .pzen-inside { color: <?php echo esc_html( get_post_meta( $id, 'text_color', 1 ) ); ?> !important; }
+            #pzen-<?php echo intval( $id ); ?> .pzen-content, #pzen-<?php echo intval( $id ); ?> .pzen-title { color: <?php echo esc_html( get_post_meta( $id, 'text_color', 1 ) ); ?> !important; }
             #pzen-<?php echo intval( $id ); ?> { background-color: <?php echo $bg_color; ?> }
-            #pzen-<?php echo intval( $id ); ?> .pzen-email-btn { background-color: <?php echo $btn_color; ?>; }
+            #pzen-<?php echo intval( $id ); ?> .pzen-email-btn { background-color: <?php echo $accent_color; ?>; }
             </style>
 
             <div id="pzen-<?php echo esc_attr( $id ); ?>" class="popup-zen-box <?php echo apply_filters( 'pzen_classes', '', $id ); ?>">
@@ -334,9 +335,9 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
             <style type="text/css">
             #pzen-<?php echo intval( $id ); ?>, #pzen-<?php echo intval( $id ); ?> a, #pzen-<?php echo intval( $id ); ?> i, #pzen-<?php echo intval( $id ); ?> .pzen-inside, #pzen-<?php echo intval( $id ); ?> .pzen-title { color: <?php echo esc_html( get_post_meta( $id, 'text_color', 1 ) ); ?> !important; }
-            #pzen-<?php echo intval( $id ); ?>.pzen-template-4 { border-top-color: <?php echo esc_html( get_post_meta( $id, 'button_color1', 1 ) ); ?>; }
+            #pzen-<?php echo intval( $id ); ?>.pzen-template-4 { border-top-color: <?php echo esc_html( get_post_meta( $id, 'accent_color', 1 ) ); ?>; }
             #pzen-<?php echo intval( $id ); ?>, #pzen-<?php echo intval( $id ); ?> .pzen-first-row { background-color: <?php echo $bg_color; ?> }
-            #pzen-<?php echo intval( $id ); ?> .pzen-email-btn, #pzen-<?php echo intval( $id ); ?> .pzen-progress > span, #pzen-<?php echo intval( $id ); ?> .pzen-email-btn { background-color: <?php echo esc_html( get_post_meta( $id, 'button_color1', 1 ) ); ?> }
+            #pzen-<?php echo intval( $id ); ?> .pzen-email-btn, #pzen-<?php echo intval( $id ); ?> .pzen-progress > span, #pzen-<?php echo intval( $id ); ?> .pzen-email-btn { background-color: <?php echo esc_html( get_post_meta( $id, 'accent_color', 1 ) ); ?> }
             <?php if( $template === 'pzen-template-5' ) : ?>
             #pzen-<?php echo intval( $id ); ?>.pzen-template-5 { background: url( <?php echo '"' . esc_url( $img ) . '"'; ?> ) no-repeat center; background-size: cover; }
             <?php endif; ?>
@@ -431,7 +432,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
             $img_url = get_post_meta( $id, 'popup_image', 1 );
             $img = ( !empty( $img_url ) ? $img_url : Popup_Zen_URL . 'assets/img/ebook-mockup-cropped.png' );
             $bg_color = esc_html( get_post_meta( $id, 'bg_color', 1 ) );
-            $btn_color = esc_html( get_post_meta( $id, 'button_color1', 1 ) );
+            $btn_color = esc_html( get_post_meta( $id, 'accent_color', 1 ) );
             ?>
 
             <style type="text/css">
@@ -537,8 +538,9 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                 <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="pzen_hp" tabindex="-1" value=""></div>
                 
                 <?php self::name_row( $id ); ?>
-
-                <input type="email" value="" id="<?php echo $id . '-email-input'; ?>" name="email" class="pzen-email-input <?php if( get_post_meta( $id, 'dont_show_name', 1 ) === '1' ) echo 'no-name'; ?>" placeholder="<?php _e( 'Enter email', 'popup-zen-lite' ); ?>" autocomplete="fake-value" autocapitalize="off" />
+                
+                <label for="email"><?php _e( 'Email', 'popup-zen-lite' ); ?></label>
+                <input type="email" value="" id="<?php echo $id . '-email-input'; ?>" name="email" class="pzen-email-input <?php if( get_post_meta( $id, 'dont_show_name', 1 ) === '1' ) echo 'no-name'; ?>" autocomplete="fake-value" autocapitalize="off" />
                 <button class="pzen-email-btn"><?php echo $btn_text; ?></button>
                 <?php
             }
@@ -555,11 +557,12 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
             $type = get_post_meta( $id, 'pzen_type', 1 );
 
-            if( get_post_meta( $id, 'dont_show_name', 1 ) === '1' || $type != 'pzen-popup' && $type != 'popout' )
+            if( get_post_meta( $id, 'dont_show_name', 1 ) === '1' )
                 return;
 
             ?>
-            <input type="text" placeholder="<?php echo esc_attr( get_post_meta( $id, 'name_placeholder', 1 ) ); ?>" class="pzen-name" />
+            <label for="pzen-name"><?php _e( 'First Name', 'popup-zen-lite' ); ?></label>
+            <input type="text" name="pzen-name" class="pzen-name" />
             <?php
         }
 

@@ -9,12 +9,35 @@
     pzen.toggleTypes();
     pzen.toggleDatepicker();
     pzen.toggleEmailForm();
+    pzen.colors();
 
     $('.pzen-datepicker').datepicker({
       dateFormat : 'mm/dd/yy'
     });
 
     $('.pzen-colors').wpColorPicker();
+
+  }
+
+  pzen.colors = function() {
+     
+    $('.pzen-accent-color').wpColorPicker( {
+        change: function( event, ui ) {
+          $( '#pzen-customize-wrap .pzen-email-btn' ).css('background-color', event.target.value );
+        },
+    } );
+
+    $('.pzen-bg-color').wpColorPicker( {
+        change: function( event, ui ) {
+          $( '#pzen-customize-wrap .popup-zen-box' ).css('background-color', event.target.value );
+        },
+    } );
+
+    $('.pzen-text-color').wpColorPicker( {
+        change: function( event, ui ) {
+          $( '.pzen-content, .pzen-title, .pzen-content p' ).css('color', event.target.value );
+        },
+    } );
 
   }
 

@@ -21,14 +21,14 @@
 .pzen-tab-box {
 	background-color: #fff;
 	margin-top: 15px;
-	border: 1px solid #ccc;
+	border: 1px solid #ddd;
 }
 
 /* Style the tab */
 .pzen-tab-nav {
 	float: left;
 	border-bottom: none;
-	background-color: #fff;
+	background-color: #f1f1f1;
 	width: 25%;
 	height: 100%;
 	box-sizing: border-box;
@@ -47,12 +47,16 @@
 	text-align: left;
 	cursor: pointer;
 	transition: 0.3s;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #ddd;
 	font-size: 14px;
+	font-weight: 500;
+	text-transform: uppercase;
+	color: #999;
 }
 
 .pzen-preview-btn-wrap {
 	padding: 15px;
+	background-color: #fff;
 }
 
 .pzen-preview-btn {
@@ -81,8 +85,11 @@ a.pzen-preview-btn:hover {
 
 /* Create an active/current "tab button" class */
 .pzen-tab-nav button.active {
-  background-color: #eee;
-  /*position: relative;*/
+  background-color: #fff;
+  border-right: none;
+  position: relative;
+  right: -1px;
+  color: #444;
 }
 
 /*.pzen-tab-nav button.active:after {
@@ -105,7 +112,7 @@ a.pzen-preview-btn:hover {
 	border-left: none;
 	height: 100%;
 	min-height: 350px;
-	border-left: 1px solid #ccc;
+	border-left: 1px solid #ddd;
 	display: none;
 }
 

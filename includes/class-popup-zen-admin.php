@@ -467,6 +467,23 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             </div>
 
+            <div class="pzen-section" id="box-colors">
+
+                <h4><?php _e( 'Colors', 'popup-zen-lite' ); ?></h4>
+                
+                <div id="accent-color">
+                    <p><?php _e( 'Accent Color', 'popup-zen-lite' ); ?></p>
+                    <input type="text" name="accent_color" value="<?php echo esc_html( get_post_meta( $post->ID, 'accent_color', true ) ); ?>" class="pzen-accent-color" data-default-color="#1191cb" />
+                </div>
+                
+                <p><?php _e( 'Background color', 'popup-zen-lite' ); ?></p>
+                <input type="text" name="bg_color" value="<?php echo esc_html( get_post_meta( $post->ID, 'bg_color', true ) ); ?>" class="pzen-bg-color" data-default-color="#ffffff" />
+                
+                <p><?php _e( 'Text color', 'popup-zen-lite' ); ?></p>
+                <input type="text" name="text_color" value="<?php echo esc_html( get_post_meta( $post->ID, 'text_color', true ) ); ?>" class="pzen-text-color" data-default-color="#333333" />
+
+            </div>
+
             <div class="pzen-section">
                 <p><?php _e( 'Title', 'popup-zen-lite' ); ?></p>
 
@@ -480,25 +497,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 <p><?php _e( 'Content', 'popup-zen-lite' ); ?></p>
 
                 <?php wp_editor( 'Enter your details to get the goods.', 'pzen_content' ); ?>
-
-                <!-- <textarea class="pzen-textarea" name="pzen_content" id="pzen_content"><?php echo esc_html( get_post_meta( $post->ID, 'pzen_content', true ) ); ?></textarea> -->
-            </div>
-
-            <div class="pzen-section" id="box-colors">
-
-                <h4><?php _e( 'Colors', 'popup-zen-lite' ); ?></h4>
-                
-                <div id="accent-color">
-                    <p><?php _e( 'Accent color', 'popup-zen-lite' ); ?></p>
-                    <input type="text" name="button_color1" value="<?php echo esc_html( get_post_meta( $post->ID, 'button_color1', true ) ); ?>" class="pzen-colors" data-default-color="#1191cb" />
-                </div>
-                
-                <p><?php _e( 'Background color', 'popup-zen-lite' ); ?></p>
-                <input type="text" name="bg_color" value="<?php echo esc_html( get_post_meta( $post->ID, 'bg_color', true ) ); ?>" class="pzen-colors" data-default-color="#ffffff" />
-                
-                <p><?php _e( 'Text color', 'popup-zen-lite' ); ?></p>
-                <input type="text" name="text_color" value="<?php echo esc_html( get_post_meta( $post->ID, 'text_color', true ) ); ?>" class="pzen-colors" data-default-color="#333333" />
-
             </div>
 
             <div class="pzen-section">
@@ -1048,7 +1046,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 'show_on',
                 'opt_in_confirmation',
                 'opt_in_placeholder',
-                'button_color1',
+                'accent_color',
                 'bg_color',
                 'text_color',
                 'show_on_pages',
