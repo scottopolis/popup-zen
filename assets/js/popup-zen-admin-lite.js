@@ -35,7 +35,8 @@
 
     $('.pzen-text-color').wpColorPicker( {
         change: function( event, ui ) {
-          $( '.pzen-content, .pzen-title, .pzen-content p' ).css('color', event.target.value );
+          $( '.pzen-content, .pzen-content .pzen-title, .pzen-content p, .popup-zen-box label, .popup-zen-box input' ).css( 'cssText', 'color:' + event.target.value + ' !important' );
+          $( '.popup-zen-box input[type=text], .popup-zen-box input[type=email]' ).css( 'cssText', 'border-bottom-color: ' + event.target.value + ' !important' );
         },
     } );
 

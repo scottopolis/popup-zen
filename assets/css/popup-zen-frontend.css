@@ -90,11 +90,16 @@
 	bottom: 25px;
 }
 
+.pzen-image.pzen-padding {
+	padding: 15px;
+}
+
 .popup-zen-box img {
 	display: block;
 	max-width: 100%;
 	height: auto;
 	border: none;
+	margin: 0 auto;
 }
 
 .popup-zen-box img.alignleft {
@@ -171,6 +176,7 @@
 
 .popup-zen-box label {
 	color: #999;
+	opacity: .8;
 }
 
 .popup-zen-box input[type="text"], .popup-zen-box input[type="email"] {

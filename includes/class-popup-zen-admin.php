@@ -510,6 +510,11 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 <input id="pzen-image-url" size="50" type="text" name="pzen_image" value="<?php echo get_post_meta( $post->ID, 'pzen_image', 1 ); ?>" />
                 <input id="pzen-upload-btn" type="button" class="button" value="Upload Image" />
 
+                <p>
+                    <input type="checkbox" id="image_padding" name="image_padding" value="1" <?php checked('1', get_post_meta( $post->ID, 'image_padding', true ), true); ?> />
+                    <?php _e( 'Add padding around the image (default is edge to edge)', 'popup-zen-lite' ); ?>
+                </p>
+
             </div>
 
             <div class="pzen-section">
@@ -517,8 +522,8 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 <h4><?php _e( 'Fields', 'popup-zen-lite' ); ?></h4>
 
                 <p>
-                    <?php _e( 'Name Field Placeholder', 'popup-zen-lite' ); ?>
-                    <input id="name_placeholder" name="name_placeholder" class="widefat" value="<?php echo get_post_meta( $post->ID, 'name_placeholder', 1 ); ?>" placeholder="First Name" type="text" />
+                    <?php _e( 'Name Field Label', 'popup-zen-lite' ); ?>
+                    <input id="name_label" name="name_label" class="widefat" value="<?php echo get_post_meta( $post->ID, 'name_label', 1 ); ?>" placeholder="First Name" type="text" />
                 </p>
 
                 <p>
@@ -532,8 +537,8 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 </p>
 
                 <p>
-                    <label for="opt_in_placeholder"><?php _e( 'Placeholder', 'popup-zen-lite' ); ?></label>
-                    <input class="widefat" type="text" name="opt_in_placeholder" id="opt_in_placeholder" value="<?php echo esc_attr( get_post_meta( $post->ID, 'opt_in_placeholder', true ) ); ?>" size="20" />
+                    <label for="email_label"><?php _e( 'Email Field Label', 'popup-zen-lite' ); ?></label>
+                    <input class="widefat" type="text" name="email_label" id="email_label" value="<?php echo esc_attr( get_post_meta( $post->ID, 'email_label', true ) ); ?>" size="20" />
                 </p>
 
                 <p>
@@ -1012,8 +1017,8 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 update_post_meta( $post->ID, 'pzen_devices', 'all' );
                 update_post_meta( $post->ID, 'pzen_active', '1' );
                 update_post_meta( $post->ID, 'pzen_type', 'pzen_header_bar' );
-                update_post_meta( $post->ID, 'opt_in_placeholder', 'Enter your email' );
-                update_post_meta( $post->ID, 'name_placeholder', 'First name' );
+                update_post_meta( $post->ID, 'email_label', 'Email' );
+                update_post_meta( $post->ID, 'name_label', 'First Name' );
 
             }
 
@@ -1045,7 +1050,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             $keys = array(
                 'show_on',
                 'opt_in_confirmation',
-                'opt_in_placeholder',
+                'email_label',
                 'accent_color',
                 'bg_color',
                 'text_color',
@@ -1066,9 +1071,10 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 'ac_list_id',
                 'mailpoet_list_id',
                 'pzen_type',
-                'name_placeholder',
+                'name_label',
                 'dont_show_name',
                 'pzen_image',
+                'image_padding',
                 'pzen_title',
                 'pzen_content',
                 'submit_text',

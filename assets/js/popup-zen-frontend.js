@@ -434,9 +434,6 @@
       return;
 
     // Setup localized vars
-    var textInput = document.querySelector('#pzen-' + id + ' .pzen-email-input');
-    
-    textInput.setAttribute('placeholder', options.placeholder );
 
     $('#pzen-' + id ).addClass('has-optin');
 
