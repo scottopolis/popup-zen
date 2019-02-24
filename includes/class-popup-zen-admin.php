@@ -496,7 +496,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
                 <p><?php _e( 'Content', 'popup-zen-lite' ); ?></p>
 
-                <?php wp_editor( 'Enter your details to get the goods.', 'pzen_content' ); ?>
+                <?php wp_editor( get_post_meta( $post->ID, 'pzen_content', true ), 'pzen_content' ); ?>
             </div>
 
             <div class="pzen-section">
@@ -1025,6 +1025,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 update_post_meta( $post->ID, 'email_label', 'Email' );
                 update_post_meta( $post->ID, 'name_label', 'First Name' );
                 update_post_meta( $post->ID, 'expand_btn_text', 'Learn More' );
+                update_post_meta( $post->ID, 'pzen_content', 'Enter your information to get the goods.' );
 
             }
 
@@ -1084,7 +1085,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 'expand_btn_text',
                 'image_padding',
                 'pzen_title',
-                'pzen_content',
                 'submit_text',
                 'permission_btns' );
 
@@ -1151,10 +1151,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 update_post_meta( $post_id, 'expiration', $_POST[ 'expiration' ] );
             }
 
-            // Check for type. If it's popup, delete the avatar.
-            $type = get_post_meta( $post_id, 'pzen_type', 1 );
-            if( $type === 'pzen-popup' )
-                delete_post_meta( $post_id, 'avatar_email' );
+            update_post_meta( $post_id, 'pzen_content', $_POST['pzen_content'] );
 
             do_action( 'pzen_custom_settings_save', $post_id );
             
