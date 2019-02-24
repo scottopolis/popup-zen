@@ -47,7 +47,7 @@
 	position: fixed;
 	z-index: 99997;
 	width: 100%;
-	max-width: 400px;
+	max-width: 350px;
 	overflow: auto;
 	background-color: #fff;
 	border: 1px solid #eee;
@@ -85,8 +85,8 @@
 }
 
 .popup-zen-box.pzen-bottomright {
-	right: 25px;
-	bottom: 25px;
+	right: 45px;
+	bottom: 0;
 }
 
 .popup-zen-box.pzen-bottomleft {
@@ -104,6 +104,7 @@
 	height: auto;
 	border: none;
 	margin: 0 auto;
+	border-radius: 0;
 }
 
 .popup-zen-box img.alignleft {
@@ -196,6 +197,10 @@
     width: 100%;
 }
 
+.popup-zen-box input[type="text"]:focus, .popup-zen-box input[type="email"]:focus {
+	background-color: transparent;
+}
+
 .popup-zen-box input.pzen-name {
 	margin-bottom: 10px;
 }
@@ -231,12 +236,13 @@
 	cursor: pointer;
 	padding: 0;
 	margin: 15px 0 0;
-	font-size: 12px;
+	font-size: 14px;
 }
 
 .pzen-powered-by {
 	text-align: center;
-	padding: 10px 0;
+	padding: 0 0 5px 0;
+	font-size: 10px;
 }
 
 .pzen-powered-by a {

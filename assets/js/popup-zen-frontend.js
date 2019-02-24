@@ -197,9 +197,9 @@
 
     var id = $(e.target).closest('.popup-zen-box').attr('id').split('-')[1];
 
-    $('#pzen-' + id + ' .pzen-image, #pzen-' + id + ' .pzen-form' ).show();
+    $('#pzen-' + id + ' .pzen-image, #pzen-' + id + ' .pzen-form' ).fadeIn();
 
-    $(e.target).hide();
+    $('.pzen-expand').hide();
 
   }
 

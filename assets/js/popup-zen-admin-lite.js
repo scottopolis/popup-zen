@@ -23,7 +23,7 @@
      
     $('.pzen-accent-color').wpColorPicker( {
         change: function( event, ui ) {
-          $( '#pzen-customize-wrap .pzen-email-btn' ).css('background-color', event.target.value );
+          $( '#pzen-customize-wrap .pzen-btn' ).css('background-color', event.target.value );
         },
     } );
 
@@ -40,9 +40,22 @@
         },
     } );
 
+    $('.pzen-btn-text-color').wpColorPicker( {
+        change: function( event, ui ) {
+          $( '.popup-zen-box .pzen-btn' ).css( 'color', event.target.value );
+        },
+    } );
+
   }
 
   pzen.listeners = function() {
+
+    $('.pzen-preview-btn').on( 'click', function(e) {
+      e.preventDefault();
+      $('#pzen-customize-wrap .popup-zen-box').toggleClass('pzen-show');
+    });
+
+    $('.pzen-expand').on('click', pzen.expand )
 
     // Handle live preview update with visual editor
     $(document).on( 'tinymce-editor-init', function( event, editor ) {
@@ -75,6 +88,18 @@
     .on('click', '#pzen-upload-btn', pzen.mediaUpload )
 
     $('#show_on_pages').suggest( window.ajaxurl + "?action=pzen_ajax_page_search", {multiple:true, multipleSep: ","});
+
+  }
+
+  pzen.expand = function(e) {
+
+    e.preventDefault();
+
+    var id = $(e.target).closest('.popup-zen-box').attr('id').split('-')[1];
+
+    $('#pzen-' + id + ' .pzen-image, #pzen-' + id + ' .pzen-form' ).fadeIn();
+
+    $(e.target).hide();
 
   }
 

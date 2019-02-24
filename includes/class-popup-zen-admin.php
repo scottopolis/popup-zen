@@ -334,7 +334,9 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                       <button class="pzen-tab-link" onclick="pzenAdmin.openTab(event, 'pzen-display')"><?php _e( 'Display Settings', 'popup-zen-lite' ); ?></button>
                         
                         <div class="pzen-preview-btn-wrap">
-                            <a href="<?php echo home_url() . '?pzen_preview=' . $post->ID; ?>" target="_blank" class="pzen-preview-btn"><?php _e( 'Preview', 'popup-zen-lite' ); ?></a>
+                            <a href="#" target="_blank" class="pzen-preview-btn"><?php _e( 'Preview', 'popup-zen-lite' ); ?></a>
+
+                            <a class="pzen-site-preview-link" href="<?php echo home_url() . '?pzen_preview=' . $post->ID; ?>" target="_blank"><?php _e( 'View on site', 'popup-zen-lite' ); ?></a>
                         </div>
                     </div>
 
@@ -357,6 +359,17 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     </div>
 
                 <br style="clear:both"/>
+
+            </div>
+
+            <div id="pzen-customize-wrap">
+
+                <?php 
+
+                $pzen_funcs = new Popup_Zen_Functions();
+                $pzen_funcs->show_box_types( $post->ID, true );
+
+                ?>
 
             </div>
 
@@ -452,29 +465,16 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             <?php wp_nonce_field( basename( __FILE__ ), 'popupzen_meta_box_nonce' ); ?>
 
-            <h4>
-                <?php _e( 'Customize', 'popup-zen-lite' ); ?>
-            </h4>
-
-            <div id="pzen-customize-wrap">
-
-                <?php 
-
-                $pzen_funcs = new Popup_Zen_Functions();
-                $pzen_funcs->show_box_types( $post->ID, true );
-
-                ?>
-
-            </div>
-
             <div class="pzen-section" id="box-colors">
 
                 <h4><?php _e( 'Colors', 'popup-zen-lite' ); ?></h4>
                 
-                <div id="accent-color">
-                    <p><?php _e( 'Accent Color', 'popup-zen-lite' ); ?></p>
-                    <input type="text" name="accent_color" value="<?php echo esc_html( get_post_meta( $post->ID, 'accent_color', true ) ); ?>" class="pzen-accent-color" data-default-color="#1191cb" />
-                </div>
+
+                <p><?php _e( 'Button Background', 'popup-zen-lite' ); ?></p>
+                <input type="text" name="accent_color" value="<?php echo esc_html( get_post_meta( $post->ID, 'accent_color', true ) ); ?>" class="pzen-accent-color" data-default-color="#1191cb" />
+
+                <p><?php _e( 'Button Text Color', 'popup-zen-lite' ); ?></p>
+                <input type="text" name="btn_text_color" value="<?php echo esc_html( get_post_meta( $post->ID, 'btn_text_color', true ) ); ?>" class="pzen-btn-text-color" data-default-color="#ffffff" />
                 
                 <p><?php _e( 'Background color', 'popup-zen-lite' ); ?></p>
                 <input type="text" name="bg_color" value="<?php echo esc_html( get_post_meta( $post->ID, 'bg_color', true ) ); ?>" class="pzen-bg-color" data-default-color="#ffffff" />
@@ -1058,6 +1058,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 'opt_in_confirmation',
                 'email_label',
                 'accent_color',
+                'btn_text_color',
                 'bg_color',
                 'text_color',
                 'show_on_pages',

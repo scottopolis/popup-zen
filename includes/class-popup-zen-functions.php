@@ -269,6 +269,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
             $type = get_post_meta( $id, 'pzen_type', 1 );
             $bg_color = esc_html( get_post_meta( $id, 'bg_color', 1 ) );
             $accent_color = esc_html( get_post_meta( $id, 'accent_color', 1 ) );
+            $btn_text_color = esc_html( get_post_meta( $id, 'btn_text_color', 1 ) );
             $image_padding = esc_html( get_post_meta( $id, 'image_padding', 1 ) );
             ?>
             <style type="text/css">
@@ -276,6 +277,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
             #pzen-<?php echo intval( $id ); ?> input[type="text"], #pzen-<?php echo intval( $id ); ?> input[type="email"] { border-bottom-color: <?php echo esc_html( get_post_meta( $id, 'text_color', 1 ) ); ?>; }
             #pzen-<?php echo intval( $id ); ?> { background-color: <?php echo $bg_color; ?> }
             #pzen-<?php echo intval( $id ); ?> .pzen-btn { background-color: <?php echo $accent_color; ?>; }
+            #pzen-<?php echo intval( $id ); ?> .pzen-btn { color: <?php echo $btn_text_color; ?>; }
             </style>
 
             <div id="pzen-<?php echo esc_attr( $id ); ?>" class="popup-zen-box <?php echo apply_filters( 'pzen_classes', '', $id ); ?>">
@@ -313,7 +315,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                     $powered_by = get_option( 'pzen_powered_by' );
 
                     if( empty( $powered_by ) ) : ?>
-                        <div class="pzen-powered-by"><a href="https://getpopupzen.com" target="_blank">Popup Zen</a></div>
+                        <div class="pzen-powered-by"><a href="https://getpopupzen.com" target="_blank">Powered by Popup Zen</a></div>
                     <?php endif; ?>
 
                 </div>
