@@ -59,6 +59,10 @@
 	padding: 15px;
 }
 
+.popup-zen-box .pzen-form, .popup-zen-box .pzen-image {
+	display: none;
+}
+
 .popup-zen-box .pzen-content {
 	text-align: center;
 	color: #999999;
@@ -217,14 +221,13 @@
 	cursor: pointer;
 }
 
-.pzen-email-btn {
+.pzen-btn {
 	width: 100%;
 	height: 40px;
 	background-color: #1191cb;
 	color: #fff;
 	border-radius: 0;
 	border: none;
-	float: right;
 	cursor: pointer;
 	padding: 0;
 	margin: 15px 0 0;

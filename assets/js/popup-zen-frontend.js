@@ -39,7 +39,9 @@
 
     if( pzenGetUrlParameter( 'pzen_preview' ) ) {
 
-      var id = pzenGetUrlParameter( 'pzen_preview' )
+      var id = pzenGetUrlParameter( 'pzen_preview' );
+
+      pzen.setCookie( 'pzen-' + id + '_hide', '', -1 );
 
       pzen.showItem( id );
 
@@ -184,6 +186,20 @@
     $('#pzen-' + id + ' .pzen-email-input').on('keypress', pzen.submitEmailOnEnter );
 
     $('#pzen-' + id + ' a').on('click', pzen.interactionLink )
+
+    $('.pzen-expand').on('click', pzen.expand )
+
+  }
+
+  pzen.expand = function(e) {
+
+    e.preventDefault();
+
+    var id = $(e.target).closest('.popup-zen-box').attr('id').split('-')[1];
+
+    $('#pzen-' + id + ' .pzen-image, #pzen-' + id + ' .pzen-form' ).show();
+
+    $(e.target).hide();
 
   }
 

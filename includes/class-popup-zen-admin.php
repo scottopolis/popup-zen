@@ -522,6 +522,11 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 <h4><?php _e( 'Fields', 'popup-zen-lite' ); ?></h4>
 
                 <p>
+                    <label for="expand_btn_text"><?php _e( 'Expand Button Text', 'popup-zen-lite' ); ?></label>
+                    <input class="widefat" type="text" name="expand_btn_text" id="expand_btn_text" value="<?php echo esc_attr( get_post_meta( $post->ID, 'expand_btn_text', true ) ); ?>" size="20" />
+                </p>
+
+                <p>
                     <?php _e( 'Name Field Label', 'popup-zen-lite' ); ?>
                     <input id="name_label" name="name_label" class="widefat" value="<?php echo get_post_meta( $post->ID, 'name_label', 1 ); ?>" placeholder="First Name" type="text" />
                 </p>
@@ -1019,6 +1024,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 update_post_meta( $post->ID, 'pzen_type', 'pzen_header_bar' );
                 update_post_meta( $post->ID, 'email_label', 'Email' );
                 update_post_meta( $post->ID, 'name_label', 'First Name' );
+                update_post_meta( $post->ID, 'expand_btn_text', 'Learn More' );
 
             }
 
@@ -1074,6 +1080,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 'name_label',
                 'dont_show_name',
                 'pzen_image',
+                'expand_btn_text',
                 'image_padding',
                 'pzen_title',
                 'pzen_content',
