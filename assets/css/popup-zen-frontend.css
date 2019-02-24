@@ -98,6 +98,11 @@
 	padding: 15px;
 }
 
+.popup-zen-box .pzen-image {
+	max-height: 40vh;
+	overflow: hidden;
+}
+
 .popup-zen-box img {
 	display: block;
 	max-width: 100%;
@@ -371,6 +376,8 @@ input.pzen-name {
 @media (max-width: 600px) {
 	.popup-zen-box.pzen-bottomright, .popup-zen-box.pzen-bottomleft {
 		width: 100%;
+		max-width: 100%;
+		max-height: 94%;
 		bottom: 0;
 		left: 0;
 		right: 0;
@@ -380,6 +387,10 @@ input.pzen-name {
 		-o-transform: translateX(0px) translateY(0px);
 		-ms-transform: translateX(0px) translateY(0px);
 		transform: translateX(0px) translateY(0px);
+	}
+
+	.popup-zen-box .pzen-image {
+		max-height: 30vh;
 	}
 }
 

@@ -34,6 +34,10 @@
 	box-sizing: border-box;
 }
 
+#pzen-customize-wrap .popup-zen-box {
+	display: none;
+}
+
 /* Style the buttons that are used to open the tab content */
 
 .pzen-tab-nav .pzen-tab-link {
