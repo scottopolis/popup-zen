@@ -388,7 +388,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             <h4><?php _e( 'Popup Options', 'popup-zen-lite' ); ?></h4>
 
             <p>
-                <?php _e( 'Where do you want the button your visitor will click to open the popup?', 'popup-zen-lite' ); ?>
+                <?php _e( 'Choose a position for the teaser box.', 'popup-zen-lite' ); ?>
             </p>
 
             <div id="position-settings">
@@ -410,7 +410,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             </div>
 
             <p>
-                <?php _e( 'Choose what the popup should look like.', 'popup-zen-lite' ); ?>
+                <?php _e( 'Choose what the expanded popup should look like.', 'popup-zen-lite' ); ?>
             </p>
 
             <p>
@@ -493,7 +493,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 <h4><?php _e( 'Image', 'popup-zen-lite' ); ?></h4>
                 
                 <p>
-                    <?php _e( 'Upload a Custom Image', 'popup-zen-lite' ); ?>
+                    <?php _e( 'Upload a Custom Image (440px wide by 360px tall)', 'popup-zen-lite' ); ?>
                 </p>
 
                 <input id="pzen-image-url" size="50" type="text" name="pzen_image" value="<?php echo get_post_meta( $post->ID, 'pzen_image', 1 ); ?>" />
