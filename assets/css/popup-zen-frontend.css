@@ -63,7 +63,9 @@
 }
 
 .popup-zen-box .pzen-form, .popup-zen-box .pzen-image {
-	display: none;
+	transition: all .6s;
+	max-height: 0px;
+	opacity: 0;
 }
 
 .popup-zen-box .pzen-content {
@@ -93,8 +95,8 @@
 }
 
 .popup-zen-box.pzen-bottomleft {
-	left: 25px;
-	bottom: 25px;
+	left: 45px;
+	bottom: 0;
 }
 
 .pzen-image.pzen-padding {
@@ -102,7 +104,6 @@
 }
 
 .popup-zen-box .pzen-image {
-	max-height: 40vh;
 	overflow: hidden;
 }
 
@@ -264,7 +265,8 @@ img.pzen-loading {
  */
 
 .popup-zen-box.pzen-expanded .pzen-form, .popup-zen-box.pzen-expanded .pzen-image {
-	display: block;
+	max-height: 40vh;
+	opacity: 1;
 }
 
 .popup-zen-box.pzen-expanded .pzen-expand-btn {

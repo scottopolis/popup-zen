@@ -552,9 +552,9 @@ input.pzen-number-input {
 	float: left;
 }
 
-/*#minor-publishing .pzen-switch {
-	margin: 8px;
-}*/
+#minor-publishing .pzen-switch {
+	margin-bottom: 10px;
+}
 
 @media (max-width: 782px) {
 	#pzen-upgrade-box {
