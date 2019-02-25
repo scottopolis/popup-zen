@@ -818,11 +818,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     <input type="radio" name="pzen_devices" value="mobile_only" <?php checked('mobile_only', get_post_meta( $post->ID, 'pzen_devices', true ), true); ?>> <?php _e( 'Mobile only', 'popup-zen-lite' ); ?><br>
                 </div>
 
-                <p>
-                    <input type="checkbox" id="hide_btn" name="hide_btn" value="1" <?php checked(1, get_post_meta( $post->ID, 'hide_btn', true ), true); ?> />
-                    <label for="hide_btn"><?php _e( 'Hide the floating button? (Appears when box is hidden.)', 'popup-zen-lite' ); ?></label>
-                </p>
-
             </div>
 
             <div class="pzen-section noborder">
@@ -999,13 +994,12 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 update_post_meta( $post->ID, 'logged_in', 'all' );
                 update_post_meta( $post->ID, 'display_when', 'scroll' );
                 update_post_meta( $post->ID, 'page_scroll_percent', '25' );
-                update_post_meta( $post->ID, 'permission_btns', 'no' );
                 update_post_meta( $post->ID, 'position', 'pzen-bottomright' );
                 update_post_meta( $post->ID, 'show_settings', 'interacts' );
                 update_post_meta( $post->ID, 'new_or_returning', 'all' );
                 update_post_meta( $post->ID, 'pzen_devices', 'all' );
                 update_post_meta( $post->ID, 'pzen_active', '1' );
-                update_post_meta( $post->ID, 'pzen_type', 'pzen_header_bar' );
+                update_post_meta( $post->ID, 'pzen_type', 'pzen_box' );
                 update_post_meta( $post->ID, 'email_label', 'Email' );
                 update_post_meta( $post->ID, 'name_label', 'First Name' );
                 update_post_meta( $post->ID, 'expand_btn_text', 'Learn More' );
@@ -1055,7 +1049,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 'scroll_delay',
                 'position',
                 'pzen_devices',
-                'hide_btn',
                 'email_provider',
                 'custom_email_form',
                 'ck_id',
@@ -1069,12 +1062,12 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 'expand_btn_text',
                 'image_padding',
                 'pzen_title',
-                'submit_text',
-                'permission_btns' );
+                'submit_text' );
 
             $keys = apply_filters( 'pzen_settings_array', $keys );
 
             global $allowedposttags;
+
             $allowedposttags["iframe"] = array(
 
                 'align' => true,
@@ -1106,6 +1099,12 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 'class' => true,
                 'align' => true
             );
+            $allowedposttags["p"] = array(
+                'style' => true,
+                'id' => true,
+                'class' => true,
+                'align' => true
+            );
 
             // sanitize data
             foreach ($keys as $key => $value) {
@@ -1121,6 +1120,8 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 update_post_meta( $post_id, $value, $sanitized );
             }
 
+            update_post_meta( $post_id, 'pzen_content', wp_kses_post( $_POST['pzen_content'] ) );
+
             // notification expiration date
             if( empty( $_POST[ 'expiration' ] ) ) {
                 delete_post_meta( $post_id, 'expiration' );
@@ -1134,8 +1135,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             } else {
                 update_post_meta( $post_id, 'expiration', $_POST[ 'expiration' ] );
             }
-
-            update_post_meta( $post_id, 'pzen_content', $_POST['pzen_content'] );
 
             do_action( 'pzen_custom_settings_save', $post_id );
             

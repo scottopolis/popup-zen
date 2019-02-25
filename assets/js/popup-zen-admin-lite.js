@@ -144,21 +144,16 @@
 
     var val = $('input[name=pzen_type]:checked').val();
     var pos = $('#position-settings');
-    var hideBtn = $('#hide_btn, label[for=hide_btn]');
     var name = $('#pzen-name-fields');
-    var permissionBtns = $('#permission-btns');
     var popupLinkOptions = $('#popup-link-options');
 
     switch( val ) {
       case 'pzen_header_bar':
-        permissionBtns.fadeIn();
         popupLinkOptions.hide();
-        hideBtn.hide();
         pos.hide();
         name.hide();
         break;
       case 'pzen_footer_bar':
-        hideBtn.hide();
         permissionBtns.fadeIn();
         popupLinkOptions.hide();
         pos.hide();
@@ -166,22 +161,16 @@
         break;
       case 'pzen_popup_link':
         name.fadeIn();
-        permissionBtns.hide();
         popupLinkOptions.fadeIn();
-        hideBtn.hide();
         pos.hide();
         break;
       case 'pzen_box':
         pos.fadeIn();
-        permissionBtns.hide();
         popupLinkOptions.hide();
         name.show();
-        hideBtn.fadeIn();
         break;
       default:
-        permissionBtns.hide();
         popupLinkOptions.hide();
-        hideBtn.fadeIn();
         pos.fadeIn();
         name.hide();
     }

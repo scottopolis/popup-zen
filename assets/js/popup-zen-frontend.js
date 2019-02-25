@@ -179,7 +179,6 @@
 
     $('body')
     .on('click', '.pzen-close', pzen.closeClick )
-    .on('click', '.pzen-floating-btn', pzen.btnClick )
     .on('click', '#pzen-' + id + ' .pzen-email-btn', pzen.emailSubmitClick )
     .on('click', '.pzen-backdrop', pzen.bdClick );
 
@@ -325,17 +324,6 @@
 
     // prevent duplicate firing
     return false;
-
-  }
-
-  // floating button clicked
-  pzen.btnClick = function(e) {
-
-    e.stopImmediatePropagation();
-
-    var id = $(this).data('id');
-
-    pzen.hideItem( id );
 
   }
 

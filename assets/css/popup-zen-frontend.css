@@ -384,7 +384,7 @@ img.pzen-loading {
   font-style: normal;
 }
  
-.popup-zen-box [class^="icon-"]:before, .popup-zen-box [class*=" icon-"]:before, .pzen-floating-btn [class^="icon-"]:before, .pzen-floating-btn [class*=" icon-"]:before {
+.popup-zen-box [class^="icon-"]:before, .popup-zen-box [class*=" icon-"]:before {
   font-family: "pzenfontello";
   font-style: normal;
   font-weight: normal;

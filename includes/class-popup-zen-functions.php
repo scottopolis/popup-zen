@@ -119,7 +119,6 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                     'ckApi' => get_option( 'pzen_ck_api_key' ),
                     'ga_tracking' => get_option( 'pzen_ga_tracking' ),
                     'visitor' => get_post_meta($value, 'new_or_returning', 1),
-                    'hideBtn' => get_post_meta($value, 'hide_btn', 1),
                     'email_label' => get_post_meta($value, 'email_label', 1),
                     'confirmMsg' => get_post_meta($value, 'opt_in_confirmation', 1),
                     'emailErr' => __( 'Please enter a valid email address.', 'popup-zen-lite' ),
