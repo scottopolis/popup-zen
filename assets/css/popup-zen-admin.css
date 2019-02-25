@@ -508,7 +508,7 @@ input.pzen-number-input {
 }
 
 .pzen-radio-withimage input[type=radio] {
-	margin: 3px auto;
+	margin: 5px auto;
     clear: both;
     display: block;
 }
@@ -522,16 +522,6 @@ input.pzen-number-input {
 
 .pzen-settings-group input[type=radio] {
 	margin: 4px 4px 4px 0;
-}
-
-#position-settings input[type=radio] {
-	margin: 4px;
-}
-
-.pzen-radio-withimage.popup-template {
-	width: auto;
-	padding: 0;
-	margin-bottom: 15px;
 }
 
 .pzen-template-image {

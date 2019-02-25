@@ -367,7 +367,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 <?php 
 
                 $pzen_funcs = new Popup_Zen_Functions();
-                $pzen_funcs->show_box_types( $post->ID, true );
+                $pzen_funcs->display_pzen_box( $post->ID, true );
 
                 ?>
 
@@ -383,18 +383,43 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             ?>
 
-            <h4>
-                <label for="type"><?php _e( 'Choose a Popup Zen Type', 'popup-zen-lite' ); ?></label>
-            </h4>
+            <h4><?php _e( 'Popup Options', 'popup-zen-lite' ); ?></h4>
+
+            <p>
+                <?php _e( 'Where do you want the button your visitor will click to open the popup?', 'popup-zen-lite' ); ?>
+            </p>
+
+            <div id="position-settings">
+
+                <label class="pzen-radio-withimage">
+                    <span class="text">Bottom Right</span>
+                    <img src="<?php echo Popup_Zen_URL . 'assets/img/bottomright-icon.png'; ?>" class="pzen-radio-image" />
+                    <input type="radio" name="position" value="pzen-bottomright" <?php checked( "pzen-bottomright", get_post_meta( $post->ID, 'position', true ) ); ?> />
+                </label>
+
+               <label class="pzen-radio-withimage">
+                    <span class="text">Bottom Left</span>
+                    <img src="<?php echo Popup_Zen_URL . 'assets/img/bottomleft-icon.png'; ?>" class="pzen-radio-image" />
+                    <input type="radio" name="position" value="pzen-bottomleft" <?php checked( "pzen-bottomleft", get_post_meta( $post->ID, 'position', true ) ); ?> />
+                </label>
+
+                <?php do_action('pzen_position_settings', $post->ID); ?>
+
+            </div>
+
+            <p>
+                <?php _e( 'Choose what the popup should look like.', 'popup-zen-lite' ); ?>
+            </p>
+
             <p>
                 
                 <label class="pzen-radio-withimage">
                     <span class="text">Zen Box</span>
-                    <img src="<?php echo Popup_Zen_URL . 'assets/img/small-box-icon.png'; ?>" class="pzen-radio-image" />
+                    <img src="<?php echo Popup_Zen_URL . 'assets/img/box-expanded-icon.png'; ?>" class="pzen-radio-image" />
                     <input type="radio" name="pzen_type" value="pzen_box" <?php checked( "pzen_box", get_post_meta( $post->ID, 'pzen_type', true ) ); ?> />
                 </label>
 
-                <label class="pzen-radio-withimage">
+                <!-- <label class="pzen-radio-withimage">
                     <span class="text">Header Bar</span>
                     <img src="<?php echo Popup_Zen_URL . 'assets/img/header-bar-icon.png'; ?>" class="pzen-radio-image" />
                     <input type="radio" name="pzen_type" value="pzen_header_bar" <?php checked( "pzen_header_bar", get_post_meta( $post->ID, 'pzen_type', true ) ); ?> />
@@ -404,54 +429,16 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     <span class="text">Footer Bar</span>
                     <img src="<?php echo Popup_Zen_URL . 'assets/img/footer-bar-icon.png'; ?>" class="pzen-radio-image" />
                     <input type="radio" name="pzen_type" value="pzen_footer_bar" <?php checked( "pzen_footer_bar", get_post_meta( $post->ID, 'pzen_type', true ) ); ?> />
-                </label>
+                </label> -->
 
                 <label class="pzen-radio-withimage">
-                    <span class="text">Popup Link</span>
+                    <span class="text">Popup</span>
                     <img src="<?php echo Popup_Zen_URL . 'assets/img/popup-icon.png'; ?>" class="pzen-radio-image" />
-                    <input type="radio" name="pzen_type" value="pzen_popup_link" <?php checked( "pzen_popup_link", get_post_meta( $post->ID, 'pzen_type', true ) ); ?> />
+                    <input type="radio" name="pzen_type" value="pzen_popup" <?php checked( "pzen_popup", get_post_meta( $post->ID, 'pzen_type', true ) ); ?> />
                 </label>
 
                 <?php do_action('pzen_type_settings', $post->ID); ?>
             </p>
-
-            <div id="popup-options">
-
-                <h4><?php _e( 'Popup Options' ); ?></h4>
-
-                <div id="permission-btns">
-
-                    <input type="radio" name="permission_btns" value="no" <?php checked( "no", get_post_meta( $post->ID, 'permission_btns', true ) ); ?> />
-                    <label>Normal</label><br>
-
-                    <input type="radio" name="permission_btns" value="yes" <?php checked( "yes", get_post_meta( $post->ID, 'permission_btns', 1 ) ); ?> />
-                    <label>Click button to show more</label>
-
-                </div>
-
-                <div id="popup-link-options">
-                    These are the popup link options.
-                </div>
-
-                <div id="position-settings">
-
-                    <input type="radio" name="position" value="pzen-bottomright" <?php checked( "pzen-bottomright", get_post_meta( $post->ID, 'position', true ) ); ?> />
-                    <label>Bottom Right</label>
-
-                    <input type="radio" name="position" value="pzen-bottomleft" <?php checked( "pzen-bottomleft", get_post_meta( $post->ID, 'position', 1 ) ); ?> />
-                    <label>Bottom Left</label>
-
-                    <input type="radio" name="position" value="pzen-topright" <?php checked( "pzen-topright", get_post_meta( $post->ID, 'position', 1 ) ); ?> />
-                    <label>Top Right</label>
-
-                    <input type="radio" name="position" value="pzen-topleft" <?php checked( "pzen-topleft", get_post_meta( $post->ID, 'position', 1 ) ); ?> />
-                    <label>Top Left</label>
-
-                    <?php do_action('pzen_position_settings', $post->ID); ?>
-                </div>
-
-                <?php do_action('pzen_after_position_settings', $post->ID); ?>
-            </div>
 
             <?php
         }

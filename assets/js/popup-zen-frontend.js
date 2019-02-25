@@ -195,7 +195,11 @@
 
     e.preventDefault();
 
-    var id = $(e.target).closest('.popup-zen-box').attr('id').split('-')[1];
+    var $getBox = $(e.target).closest('.popup-zen-box');
+
+    var id = $getBox.attr('id').split('-')[1];
+
+    $getBox.addClass('pzen-expanded');
 
     $('#pzen-' + id + ' .pzen-image, #pzen-' + id + ' .pzen-form' ).fadeIn();
 

@@ -282,21 +282,14 @@ input.pzen-name {
 	margin-bottom: 10px;
 }
 
-.pzen-floating-btn.pzen-popup {
-	display: none;
-}
-
 .pzen-popup-inside {
 	display: flex;
 	align-items: stretch;
 }
 
-.pzen-popup .pzen-inside {
-	width: 100%;
-	padding: 20px;
-}
+/** Popup Styles **/
 
-.popup-zen-box.pzen-popup {
+.pzen-popup.pzen-expanded {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%) scale(1.1);
@@ -307,10 +300,30 @@ input.pzen-name {
 	margin: auto;
 	text-align: center;
 	overflow: auto;
+	height: auto;
+	bottom: auto;
+	right: auto;
 }
 
-.pzen-popup .pzen-name, .pzen-popup .pzen-email-input {
-	width: 100%;
+.pzen-popup.pzen-expanded .pzen-image {
+	width: 50%;
+	float: left;
+	margin-right: 20px;
+	text-align: center;
+	overflow: hidden;
+}
+
+.pzen-popup.pzen-expanded .pzen-image img {
+	height: 100%;
+	max-width: none;
+}
+
+.pzen-popup.pzen-expanded .pzen-content {
+	display: inline-block;
+}
+
+.pzen-popup.pzen-expanded .pzen-form {
+	text-align: left;
 }
 
 /* scale() fixes blurry text in chrome */
@@ -318,7 +331,7 @@ input.pzen-name {
 	transform: translate(-50%, -50%) scale(1);
 }*/
 
-.pzen-popup .pzen-row {
+/*.pzen-popup .pzen-row {
 	background-color: transparent;
 	padding: 0;
 }
@@ -336,9 +349,7 @@ input.pzen-name {
 	margin-bottom: 10px;
 }
 
-/*
- * Styles for Popup Templates
- */
+
 
  .pzen-popup ul {
 	list-style: none;
@@ -367,7 +378,7 @@ input.pzen-name {
 		transform: translate(0,0) scale(1);
 	}
 
-}
+}*/
 
 /*
  * Media Queries

@@ -105,8 +105,6 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
             $array['isMobile'] = wp_is_mobile();
 
-            $array['disable_tracking'] = get_option('pzen_disable_tracking');
-
             // active notification IDs
             $array['active'] = self::$active;
 
@@ -201,26 +199,8 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                 if( $show_it === false )
                     continue;
 
-                self::$instance->show_box_types( $popup_id );
+                $this->display_pzen_box( $popup_id );
                 
-            }
-
-        }
-
-        /**
-         * Show box based on what type it is
-         *
-         */
-        public function show_box_types( $popup_id, $is_admin_customizer = false ) {
-
-            $type = get_post_meta( $popup_id, 'pzen_type', 1 );
-
-            if( $type === 'pzen_popup_link' ) {
-                $this->display_popup( $popup_id );
-            } elseif ( $type === 'pzen_footer_bar' ) {
-                $this->display_footer_bar( $popup_id );
-            } else {
-                $this->display_pzen_box( $popup_id, $is_admin_customizer );
             }
 
         }
@@ -317,162 +297,6 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                     if( empty( $powered_by ) ) : ?>
                         <div class="pzen-powered-by"><a href="https://getpopupzen.com" target="_blank">Powered by Popup Zen</a></div>
                     <?php endif; ?>
-
-                </div>
- 
-            </div>
-            <?php
-        }
-
-        /**
-         * Output popup markup
-         *
-         * @since       1.0.0
-         * @param       int $id
-         * @return      string
-         */
-        public function display_popup( $id ) {
-
-            $img_url = get_post_meta( $id, 'popup_image', 1 );
-            $img = ( !empty( $img_url ) ? $img_url : Popup_Zen_URL . 'assets/img/ebook-mockup-300.png' );
-            $bg_color = esc_html( get_post_meta( $id, 'bg_color', 1 ) );
-
-            ?>
-
-            <style type="text/css">
-            #pzen-<?php echo intval( $id ); ?>, #pzen-<?php echo intval( $id ); ?> a, #pzen-<?php echo intval( $id ); ?> i, #pzen-<?php echo intval( $id ); ?> .pzen-inside, #pzen-<?php echo intval( $id ); ?> .pzen-title { color: <?php echo esc_html( get_post_meta( $id, 'text_color', 1 ) ); ?> !important; }
-            #pzen-<?php echo intval( $id ); ?>.pzen-template-4 { border-top-color: <?php echo esc_html( get_post_meta( $id, 'accent_color', 1 ) ); ?>; }
-            #pzen-<?php echo intval( $id ); ?>, #pzen-<?php echo intval( $id ); ?> .pzen-first-row { background-color: <?php echo $bg_color; ?> }
-            #pzen-<?php echo intval( $id ); ?> .pzen-btn, #pzen-<?php echo intval( $id ); ?> .pzen-progress > span, #pzen-<?php echo intval( $id ); ?> .pzen-btn { background-color: <?php echo esc_html( get_post_meta( $id, 'accent_color', 1 ) ); ?> }
-            <?php if( $template === 'pzen-template-5' ) : ?>
-            #pzen-<?php echo intval( $id ); ?>.pzen-template-5 { background: url( <?php echo '"' . esc_url( $img ) . '"'; ?> ) no-repeat center; background-size: cover; }
-            <?php endif; ?>
-            <?php if( $template === 'pzen-template-6' && $bg_color ) : ?>
-            #pzen-<?php echo intval( $id ); ?>.pzen-template-6 .pzen-email-row:before { border-color: <?php echo $bg_color; ?> transparent transparent transparent; }
-            <?php endif; ?>
-            </style>
-
-            <div id="pzen-bd-<?php echo esc_attr( $id ); ?>" data-id="<?php echo esc_attr( $id ); ?>" class="pzen-backdrop pzen-hide"></div>
-            
-            <div id="pzen-<?php echo esc_attr( $id ); ?>" class="popup-zen-box pzen-hide <?php echo apply_filters( 'pzen_classes', '', $id ); ?>">
-
-            <?php self::get_popup_template( $template, $id, $img ); ?>
- 
-            </div>
-            <?php
-        }
-
-        /**
-         * Returns the desired template markup
-         *
-         * @since       1.0.0
-         * @param       int $id
-         * @return      string
-         */
-        public function get_popup_template( $template, $id, $img ) {
-
-            ?>
-
-            <?php if( $template === 'pzen-template-progress' ) : ?>
-                <div class="pzen-progress">
-                  <span style="width: 50%"></span>
-                </div>
-                <span class="pzen-progress-text"><?php _e( '50% Complete', 'popup-zen-lite' ); ?></span>
-            <?php endif; ?>
-
-            <div class="popup-zen-box-inside">
-
-                <?php if( $template === 'pzen-template-2' || $template === 'pzen-template-progress' ) : ?>
-                    <div class="pzen-img-wrap">
-                        <img src="<?php echo $img; ?>" class="popup-zen-box-image" />
-                    </div>
-                <?php endif; ?>
-                
-                <div class="pzen-close"><i class="icon icon-cancel"></i></div>
-
-                <?php if( $template === 'pzen-template-3' ) : ?>
-                    <div class="pzen-img-wrap">
-                        <img src="<?php echo $img; ?>" class="popup-zen-box-image" />
-                    </div>
-                <?php endif; ?>
-
-                <h2 class="pzen-title"><?php echo get_the_title( $id ); ?></h2>
-
-                <?php do_action('pzen_above_content', $id); ?>
-
-                <?php echo self::get_box_content( $id ); ?>
-
-                <?php if( $template === 'pzen-template-4' ) : ?>
-                    <div class="pzen-img-wrap">
-                        <img src="<?php echo $img; ?>" class="popup-zen-box-image" />
-                    </div>
-                <?php endif; ?>
-
-                <?php do_action('pzen_email_form', $id); ?>
-
-                <?php do_action('pzen_below_content', $id); ?>
-
-                <?php 
-
-                $powered_by = get_option( 'pzen_powered_by' );
-
-                if( empty( $powered_by ) ) : ?>
-                    <span class="pzen-powered-by"><a href="https://getpopupzen.com" target="_blank">Popup Zen</a></span>
-                <?php endif; ?>
-
-            </div>
-
-            <?php
-
-        }
-
-        /**
-         * Output footer bar markup
-         *
-         * @since       1.0.1
-         * @param       int $id
-         * @return      string
-         */
-        public function display_footer_bar( $id ) {
-
-            $img_url = get_post_meta( $id, 'popup_image', 1 );
-            $img = ( !empty( $img_url ) ? $img_url : Popup_Zen_URL . 'assets/img/ebook-mockup-cropped.png' );
-            $bg_color = esc_html( get_post_meta( $id, 'bg_color', 1 ) );
-            $btn_color = esc_html( get_post_meta( $id, 'accent_color', 1 ) );
-            ?>
-
-            <style type="text/css">
-            #pzen-<?php echo intval( $id ); ?>, #pzen-<?php echo intval( $id ); ?> a, #pzen-<?php echo intval( $id ); ?> i, #pzen-<?php echo intval( $id ); ?> .pzen-inside, #pzen-<?php echo intval( $id ); ?> .pzen-title { color: <?php echo esc_html( get_post_meta( $id, 'text_color', 1 ) ); ?> !important; }
-            #pzen-<?php echo intval( $id ); ?>.pzen-template-4 { border-top-color: <?php echo $btn_color; ?>; }
-            #pzen-<?php echo intval( $id ); ?> .pzen-btn { background-color: <?php echo $btn_color; ?>; }
-            #pzen-<?php echo intval( $id ); ?>, #pzen-<?php echo intval( $id ); ?> .pzen-first-row { background-color: <?php echo $bg_color; ?> }
-            </style>
-            
-            <div id="pzen-<?php echo esc_attr( $id ); ?>" class="popup-zen-box pzen-hide <?php echo apply_filters( 'pzen_classes', '', $id ); ?>">                
-
-                <div class="pzen-inside">
-
-                    <div class="pzen-img-wrap">
-                        <img src="<?php echo $img; ?>" class="popup-zen-box-image" />
-                    </div>
-                
-                    <div class="pzen-close"><i class="icon icon-cancel"></i></div>
-
-                    <div class="pzen-content-wrap">
-
-                        <?php do_action('pzen_above_content', $id); ?>
-
-                        <h2 class="pzen-title"><?php echo get_the_title( $id ); ?></h2>
-
-                        <?php echo self::get_box_content( $id ); ?>
-
-                    </div>
-
-                    <div class="pzen-row pzen-note-optin pzen-email-row pzen-hide">
-                        <?php do_action('pzen_email_form', $id); ?>
-                    </div>
-
-                    <?php do_action('pzen_below_content', $id); ?>
 
                 </div>
  
@@ -611,15 +435,13 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
         public static function add_pzen_classes( $classes, $id ) {
 
             $type = get_post_meta( $id, 'pzen_type', 1 );
-            if( $type === 'pzen_popup_link' ) {
+            if( $type === 'pzen_popup' ) {
                 $classes .= 'pzen-popup';
-            } else if( $type === 'pzen_header_bar' ) {
-                $classes .= 'pzen-header-bar';
-            } else if( $type === 'pzen_footer_bar' ) {
-                $classes .= 'pzen-footer-bar';
             } else {
-                $classes .= $type . ' ' . get_post_meta( $id, 'position', 1 );
+                $classes .= $type;
             }
+
+            $classes .= ' ' . get_post_meta( $id, 'position', 1 );
 
             $display_when = get_post_meta( $id, 'display_when', 1 );
             if( $display_when === 'exit' ) {
@@ -647,7 +469,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
             self::$active[] = $popup_id;
 
-            self::$instance->show_box_types( $popup_id );
+            $this->display_pzen_box( $popup_id );
 
         }
 
