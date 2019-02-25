@@ -65,6 +65,8 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             // add_action( 'pzen_type_settings', array( $this, 'type_upsell' ), 99 );
 
+            add_action( 'post_submitbox_misc_actions', array( $this, 'active_switch' ) );
+
             add_filter('page_row_actions', array( $this, 'row_actions' ), 10, 2 );
 
             add_action( 'edit_form_after_title', array( $this, 'pzen_cpt_admin_output' ) );
@@ -521,11 +523,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 <p>
                     <input type="checkbox" id="dont_show_name" name="dont_show_name" value="1" <?php checked('1', get_post_meta( $post->ID, 'dont_show_name', true ), true); ?> />
                     <?php _e( 'Don\'t show first name field', 'popup-zen-lite' ); ?>
-                </p>
-
-                <p>
-                    <label for="opt_in_message"><?php _e( 'Small text above email field', 'popup-zen-lite' ); ?></label>
-                    <input class="widefat" type="text" name="opt_in_message" id="opt_in_message" placeholder="We don't spam or share your information." value="<?php echo esc_attr( get_post_meta( $post->ID, 'opt_in_message', true ) ); ?>" size="20" />
                 </p>
 
                 <p>
@@ -1154,6 +1151,19 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             $links[] = '<a href="https://getpopupzen.com/pro?utm_source=plugin_row&utm_medium=link&utm_campaign=pzen_settings" target="_blank" style="font-weight:bold;color:green;">Upgrade</a>';
             return $links;
+
+        }
+
+        /**
+         * Add active switch to submit box
+         *
+         */
+        public function active_switch( $post ) {
+
+            if( $post->post_type != 'popupzen' )
+                return;
+
+            echo '<span class="pzen-activate-text">' . __('Activate popup', 'popup-zen-lite') . '</span> <label class="pzen-switch"><input data-id="' . $post->ID . '" type="checkbox" value="1" ' . checked(1, get_post_meta( $post->ID, 'pzen_active', true ), false) . ' /><div class="pzen-slider pzen-round"></div></label>';
 
         }
 

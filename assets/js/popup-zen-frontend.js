@@ -178,7 +178,7 @@
   pzen.noteListeners = function( id ) {
 
     $('body')
-    .on('click', '.pzen-close', pzen.hideItem )
+    .on('click', '.pzen-close', pzen.closeClick )
     .on('click', '.pzen-floating-btn', pzen.btnClick )
     .on('click', '#pzen-' + id + ' .pzen-email-btn', pzen.emailSubmitClick )
     .on('click', '.pzen-backdrop', pzen.bdClick );
@@ -240,45 +240,8 @@
 
     var item = document.getElementById( 'pzen-' + id );
 
-    // visitor has hidden this item, don't show box unless it's a popup
-    if( pzen.getCookie( 'pzen-' + id + '_hide' ) === 'true' ) {
-
-      // hide box, show btn
-      pzen.transitionOut( item );
-
-      // if set to show every page load and floating btn is hidden, need to delete hide cookie so it shows properly
-      if( options.showSettings === 'always' ) {
-
-        if( options.hideBtn === '1' || options.type == 'pzen_header_bar' || options.type == 'pzen_footer_bar' ) {
-          pzen.setCookie( 'pzen-' + id + '_hide', '', -1 );
-        }
-        
-      }
-
-      // show stuff that should always be shown. Includes pzen banner and footer bar if show every page load is selected
-      if( options.hideBtn != '1' && options.type != 'pzen_header_bar' || options.type == 'pzen_header_bar' && options.showSettings === 'always' ) {
-        pzen.transitionIn( $( '.pzen-btn-' + id ) );
-      }
-
-    } else {
-
-        // Show the box and what's in it
-        pzen.transitionIn( item );
-
-      if( options.hideBtn != '1' && options.type != 'pzen_header_bar' )
-        pzen.transitionOut( $( '.pzen-btn-' + id ) );
-
-      // Show email opt-in
-      pzen.showEmailSubmit( id );
-
-    }
-
-    // Button should not be shown
-    if( options.hideBtn === '1' )
-      pzen.hide( $( '.pzen-btn-' + id ) );
-
-    if( options.type === 'pzen_header_bar' && pzen.getCookie( 'pzen-' + id + '_hide' ) != 'true' )
-      pzen.toggleBnrMargin( id );
+    // Show the box and what's in it
+    pzen.transitionIn( item );
 
   }
 
@@ -335,8 +298,8 @@
     
   }
 
-  // User clicked hide
-  pzen.hideItem = function( e ) {
+  // clicked close btn
+  pzen.closeClick = function(e) {
 
     e.stopImmediatePropagation();
 
@@ -344,11 +307,21 @@
 
     var id = closest.attr('id').split('-')[1];
 
-    pzen.toggleHide( id );
+    pzen.hideItem( id );
 
-    if( closest.hasClass('pzen-popup') ) {
+  }
+
+  // User clicked hide
+  pzen.hideItem = function( id ) {
+
+    pzen.transitionOut( $('#pzen-' + id ) );
+
+    if( $('#pzen-' + id ).hasClass('pzen-popup') ) {
       pzen.transitionOut( $('#pzen-bd-' + id) );
     }
+
+    pzen.setCookie( 'pzen-' + id + '_hide', 'true', 1 );
+    pzen.setCookie('pzen_' + id + '_int', 'true', 1 );
 
     // prevent duplicate firing
     return false;
@@ -362,24 +335,7 @@
 
     var id = $(this).data('id');
 
-    pzen.toggleHide( id );
-
-  }
-
-  // Handle show/hide storage items, then run showItem func. Used when floating btn is clicked
-  pzen.toggleHide = function( id ) {
-
-    var hide = pzen.getCookie( 'pzen-' + id + '_hide');
-
-    console.log('hide ' + id, hide)
-
-    if( hide === 'true' ) {
-      pzen.setCookie( 'pzen-' + id + '_hide', 'true', -1 );
-    } else {
-      pzen.setCookie( 'pzen-' + id + '_hide', 'true', 1 );
-    }
-
-    pzen.showItem( id );
+    pzen.hideItem( id );
 
   }
 
@@ -434,25 +390,6 @@
       pzen.emailSubmitted( id );
 
     }
-
-  }
-
-  // Show email field
-  pzen.showEmailSubmit = function( id ) {
-
-    var emailForm = $('#pzen-' + id + ' .pzen-form');
-
-    var options = window.popupZenVars[id];
-
-    // don't show duplicates
-    if( emailForm.hasClass('pzen-show') )
-      return;
-
-    // Setup localized vars
-
-    $('#pzen-' + id ).addClass('has-optin');
-
-    emailForm.removeClass('pzen-hide').addClass('pzen-show');
 
   }
 
@@ -854,7 +791,7 @@
 
     var id = $(e.currentTarget).data('id');
 
-    pzen.toggleHide( id );
+    pzen.hideItem( id );
 
     pzen.transitionOut( $('#pzen-bd-' + id ) );
 

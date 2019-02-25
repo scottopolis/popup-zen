@@ -547,6 +547,15 @@ input.pzen-number-input {
 	max-width: 150px;
 }
 
+.pzen-activate-text {
+	margin: 8px;
+	float: left;
+}
+
+/*#minor-publishing .pzen-switch {
+	margin: 8px;
+}*/
+
 @media (max-width: 782px) {
 	#pzen-upgrade-box {
 		float: none;

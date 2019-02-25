@@ -53,6 +53,9 @@
 	border: 1px solid #eee;
 	transition: all .3s;
 	box-sizing: border-box;
+	-webkit-box-shadow: 2px 2px 15px 2px rgba(106,106,106,.1);
+	-moz-box-shadow: 2px 2px 15px 2px rgba(106,106,106,.1);
+	box-shadow: 2px 2px 15px 2px rgba(106,106,106,.1);
 }
 
 .popup-zen-box .pzen-content, .popup-zen-box .pzen-form {
@@ -140,14 +143,6 @@
 	-o-transform: translateX(0px) translateY(15px);
 	-ms-transform: translateX(0px) translateY(15px);
 	transform: translateX(0px) translateY(15px);
-}
-
-.pzen-banner.pzen-transition-out {
-	-moz-transform: translateX(0px) translateY(0px);
-	-webkit-transform: translateX(0px) translateY(0px);
-	-o-transform: translateX(0px) translateY(0px);
-	-ms-transform: translateX(0px) translateY(0px);
-	transform: translateX(0px) translateY(0px);
 }
 
 .pzen-hide {
