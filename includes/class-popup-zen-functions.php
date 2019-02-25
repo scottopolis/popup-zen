@@ -59,7 +59,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
             add_filter( 'pzen_classes', array( $this, 'add_pzen_classes'), 10, 2 );
 
-            add_action( 'init', array( $this, 'preview_box' ) );
+            add_action( 'wp_footer', array( $this, 'preview_box' ) );
 
         }
 
@@ -199,6 +199,10 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                 if( $show_it === false )
                     continue;
 
+                if( isset( $_GET['pzen_preview'] ) ) {
+                    return;
+                }
+
                 $this->display_pzen_box( $popup_id );
                 
             }
@@ -260,6 +264,8 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
             #pzen-<?php echo intval( $id ); ?> .pzen-btn { color: <?php echo $btn_text_color; ?>; }
             </style>
 
+            <div id="pzen-bd-<?php echo esc_attr( $id ); ?>" data-id="<?php echo esc_attr( $id ); ?>" class="pzen-backdrop pzen-hide"></div>
+
             <div id="pzen-<?php echo esc_attr( $id ); ?>" class="popup-zen-box <?php echo apply_filters( 'pzen_classes', '', $id ); ?>">
 
                 <div class="pzen-inside">
@@ -278,7 +284,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
                         <?php echo self::get_box_content( $id ); ?>
 
-                        <button class="pzen-expand pzen-btn"><?php echo get_post_meta( $id, 'expand_btn_text', 1 ); ?></button>
+                        <button class="pzen-expand-btn pzen-btn"><?php echo get_post_meta( $id, 'expand_btn_text', 1 ); ?></button>
 
                     </div>
 

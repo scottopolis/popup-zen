@@ -50,12 +50,14 @@
 
   pzen.listeners = function() {
 
-    $('.pzen-preview-btn').on( 'click', function(e) {
+    $('.pzen-preview-btn, .pzen-close').on( 'click', function(e) {
       e.preventDefault();
       $('#pzen-customize-wrap .popup-zen-box').toggleClass('pzen-show');
+
+      $(e.target).closest('.popup-zen-box').removeClass('pzen-expanded')
     });
 
-    $('.pzen-expand').on('click', pzen.expand )
+    $('.pzen-expand-btn').on('click', pzen.expand )
 
     // Handle live preview update with visual editor
     $(document).on( 'tinymce-editor-init', function( event, editor ) {
@@ -100,10 +102,6 @@
     var id = $getBox.attr('id').split('-')[1];
 
     $getBox.addClass('pzen-expanded');
-
-    $('#pzen-' + id + ' .pzen-image, #pzen-' + id + ' .pzen-form' ).fadeIn();
-
-    $(e.target).hide();
 
   }
 

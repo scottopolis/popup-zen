@@ -187,7 +187,7 @@
 
     $('#pzen-' + id + ' a').on('click', pzen.interactionLink )
 
-    $('.pzen-expand').on('click', pzen.expand )
+    $('.pzen-expand-btn').on('click', pzen.expand )
 
   }
 
@@ -197,13 +197,14 @@
 
     var $getBox = $(e.target).closest('.popup-zen-box');
 
-    var id = $getBox.attr('id').split('-')[1];
-
     $getBox.addClass('pzen-expanded');
 
-    $('#pzen-' + id + ' .pzen-image, #pzen-' + id + ' .pzen-form' ).fadeIn();
+    var id = $getBox.attr('id').split('-')[1];
 
-    $('.pzen-expand').hide();
+    // maybe show backdrop
+    if( $getBox.hasClass('pzen-popup') ) {
+      pzen.transitionIn( $('#pzen-bd-' + id) );
+    }
 
   }
 
@@ -238,13 +239,6 @@
     var options = window.popupZenVars[id];
 
     var item = document.getElementById( 'pzen-' + id );
-
-    // show/hide backdrop for popups
-    if( options.type === 'pzen-popup' && $(item).hasClass('pzen-show') ) {
-      pzen.transitionOut( $('#pzen-bd-' + id) );
-    } else if( options.type === 'pzen-popup' ) {
-      pzen.transitionIn( $('#pzen-bd-' + id) );
-    }
 
     // visitor has hidden this item, don't show box unless it's a popup
     if( pzen.getCookie( 'pzen-' + id + '_hide' ) === 'true' ) {
@@ -352,8 +346,9 @@
 
     pzen.toggleHide( id );
 
-    if( closest.hasClass('pzen_header_bar') )
-      pzen.toggleBnrMargin( id, true );
+    if( closest.hasClass('pzen-popup') ) {
+      pzen.transitionOut( $('#pzen-bd-' + id) );
+    }
 
     // prevent duplicate firing
     return false;
@@ -860,6 +855,8 @@
     var id = $(e.currentTarget).data('id');
 
     pzen.toggleHide( id );
+
+    pzen.transitionOut( $('#pzen-bd-' + id ) );
 
   }
 
