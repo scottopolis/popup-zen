@@ -200,6 +200,12 @@
 
     var id = $getBox.attr('id').split('-')[1];
 
+    if( $('input.pzen-name') ) {
+      $('input.pzen-name').focus();
+    } else {
+      $('input.pzen-email-input').focus();
+    }
+
     // maybe show backdrop
     if( $getBox.hasClass('pzen-popup') ) {
       pzen.transitionIn( $('#pzen-bd-' + id) );
@@ -408,7 +414,7 @@
 
     // validate email
     if( email.indexOf('@') === -1 || email.indexOf('.') === -1 ) {
-      alert( window.popupZenVars.emailErr + ' err2' + email)
+      alert( window.popupZenVars.emailErr + ' err2')
       return;
     }
 

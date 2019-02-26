@@ -330,7 +330,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             <div class="pzen-tab-box">
 
                     <div class="pzen-tab-nav">
-                      <button class="pzen-tab-link active" onclick="pzenAdmin.openTab(event, 'pzen-type')"><?php _e( 'Type', 'popup-zen-lite' ); ?></button>
+                      <button class="pzen-tab-link active" onclick="pzenAdmin.openTab(event, 'pzen-type')"><?php _e( 'Options', 'popup-zen-lite' ); ?></button>
                       <button class="pzen-tab-link" onclick="pzenAdmin.openTab(event, 'pzen-customize')"><?php _e( 'Customize', 'popup-zen-lite' ); ?></button>
                       <button class="pzen-tab-link" onclick="pzenAdmin.openTab(event, 'pzen-email')"><?php _e( 'Email Integrations', 'popup-zen-lite' ); ?></button>
                       <button class="pzen-tab-link" onclick="pzenAdmin.openTab(event, 'pzen-display')"><?php _e( 'Display Settings', 'popup-zen-lite' ); ?></button>

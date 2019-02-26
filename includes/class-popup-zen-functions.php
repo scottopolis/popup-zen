@@ -105,6 +105,8 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
             $array['isMobile'] = wp_is_mobile();
 
+            $array['emailErr'] = __( 'Please enter a valid email address.', 'popup-zen-lite' );
+
             // active notification IDs
             $array['active'] = self::$active;
 
@@ -121,7 +123,6 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                     'visitor' => get_post_meta($value, 'new_or_returning', 1),
                     'email_label' => get_post_meta($value, 'email_label', 1),
                     'confirmMsg' => get_post_meta($value, 'opt_in_confirmation', 1),
-                    'emailErr' => __( 'Please enter a valid email address.', 'popup-zen-lite' ),
                     'display_when' => get_post_meta($value, 'display_when', 1),
                     'delay' => get_post_meta($value, 'scroll_delay', 1),
                     'scrollPercent' => get_post_meta($value, 'page_scroll_percent', 1),

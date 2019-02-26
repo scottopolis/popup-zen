@@ -63,9 +63,7 @@
 }
 
 .popup-zen-box .pzen-form, .popup-zen-box .pzen-image {
-	transition: all .3s;
-	max-height: 0px;
-	opacity: 0;
+	display: none;
 }
 
 .popup-zen-box .pzen-content {
@@ -266,7 +264,7 @@ img.pzen-loading {
 
 .popup-zen-box.pzen-expanded .pzen-form, .popup-zen-box.pzen-expanded .pzen-image {
 	max-height: 40vh;
-	opacity: 1;
+	display: block;
 }
 
 .popup-zen-box.pzen-expanded .pzen-expand-btn {
