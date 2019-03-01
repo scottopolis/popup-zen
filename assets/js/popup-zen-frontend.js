@@ -484,7 +484,7 @@
       })
       .fail(function(err) {
         console.log(err);
-        pzen.hideSpinner();
+        pzen.resetForm( id );
       });
   }
 
@@ -514,7 +514,7 @@
       })
       .fail(function(err) {
 
-        pzen.hideSpinner();
+        pzen.resetForm( id );
 
         $('#pzen-' + id + ' .pzen-form').prepend('<span id="pzen-err">There seems to be a problem, can you try again?</span>');
 
@@ -539,7 +539,7 @@
 
     if( !listId ) {
       alert("MailChimp list ID is missing.");
-      pzen.hideSpinner();
+      pzen.resetForm( id );
       return;
     }
 
@@ -557,7 +557,7 @@
       })
       .fail(function(err) {
         console.log(err);
-        pzen.hideSpinner();
+        pzen.resetForm( id );
       });
 
   }
@@ -570,7 +570,7 @@
 
     if( !listId ) {
       alert("List ID is missing.");
-      pzen.hideSpinner();
+      pzen.resetForm( id );
       return;
     }
 
@@ -592,13 +592,13 @@
         } else {
           console.warn(msg)
           $('#pzen-' + id + ' .pzen-content').html('<p>' + msg.data + '</p>');
-          pzen.hideSpinner();
+          pzen.resetForm( id );
         }
 
       })
       .fail(function(err) {
         console.warn(err);
-        pzen.hideSpinner();
+        pzen.resetForm( id );
       });
 
   }
@@ -608,7 +608,7 @@
 
     if( !window._dcq ) {
       alert("Drip code not installed properly.");
-      pzen.hideSpinner();
+      pzen.resetForm( id );
       return;
     }
 
@@ -631,7 +631,7 @@
 
   pzen.dripResponse = function( response ) {
 
-    pzen.hideSpinner();
+    pzen.resetForm( id );
 
     if( response.success == true ) {
 
@@ -674,7 +674,7 @@
       })
       .fail(function(err) {
         console.log(err);
-        pzen.hideSpinner();
+        pzen.resetForm( id );
       });
 
   }
@@ -730,7 +730,7 @@
 
     $('#pzen-' + id ).addClass('pzen-loading');
 
-    pzen.hideSpinner();
+    pzen.resetForm( id );
 
     var options = window.popupZenVars[id];
 
@@ -776,14 +776,8 @@
 
   }
 
-  pzen.showSpinner = function( id ) {
-
-    $( '#pzen-' + id + ' .pzen-email-btn' ).before( '<img src="' + window.popupZenVars.pluginUrl + 'assets/img/loading.gif" class="pzen-loading" />');
-
-  }
-
-  pzen.hideSpinner = function() {
-    $('img.pzen-loading').remove();
+  pzen.resetForm = function( id ) {
+    $( '#pzen-' + id ).removeClass('pzen-loading');
   }
 
   pzen.bdClick = function(e) {
