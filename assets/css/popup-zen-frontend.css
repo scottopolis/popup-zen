@@ -255,6 +255,13 @@ img.pzen-loading {
  * Popup
  */
 
+.pzen-popup.pzen-expanded .pzen-inside {
+	width: 50%;
+	float: right;
+	overflow: hidden;
+	position: relative;
+}
+
 .popup-zen-box.pzen-popup.pzen-expanded, .popup-zen-box.pzen-popup .pzen-image, .popup-zen-box.pzen-popup .pzen-form {
 	transition: opacity .3s;
 }
@@ -387,6 +394,10 @@ img.pzen-loading {
 	text-align: center;
 }
 
+.pzen-popup.pzen-expanded .pzen-confirmation-message {
+	top: 30%;
+}
+
 .pzen-confirmation-message i {
 	clear: both;
 	font-size: 24px;
@@ -424,6 +435,11 @@ img.pzen-loading {
 		-o-transform: translateX(0px) translateY(0px);
 		-ms-transform: translateX(0px) translateY(0px);
 		transform: translateX(0px) translateY(0px);
+	}
+
+	.pzen-popup.pzen-expanded .pzen-inside {
+		float: none;
+		width: 100%;
 	}
 
 	.pzen-popup.pzen-expanded .pzen-image {

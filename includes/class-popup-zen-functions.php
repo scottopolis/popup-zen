@@ -267,18 +267,18 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
             <div id="pzen-bd-<?php echo esc_attr( $id ); ?>" data-id="<?php echo esc_attr( $id ); ?>" class="pzen-backdrop pzen-hide"></div>
 
             <div id="pzen-<?php echo esc_attr( $id ); ?>" class="popup-zen-box <?php echo apply_filters( 'pzen_classes', '', $id ); ?>">
+                    
+                <div class="pzen-collapse"><i class="icon icon-down-open"></i></div>
+
+                <div class="pzen-close"><i class="icon icon-cancel"></i></div>
+
+                <div class="pzen-image <?php if( !empty( $image_padding ) ) { echo ' pzen-padding'; } ?>">
+                    <img src="<?php echo get_post_meta( $id, 'pzen_image', 1 ); ?>" class="popup-zen-image" />
+                </div>
+
+                <?php do_action('pzen_above_content', $id); ?>
 
                 <div class="pzen-inside">
-                    
-                    <div class="pzen-collapse"><i class="icon icon-down-open"></i></div>
-
-                    <div class="pzen-close"><i class="icon icon-cancel"></i></div>
-
-                    <div class="pzen-image <?php if( !empty( $image_padding ) ) { echo ' pzen-padding'; } ?>">
-                        <img src="<?php echo get_post_meta( $id, 'pzen_image', 1 ); ?>" class="popup-zen-image" />
-                    </div>
-
-                    <?php do_action('pzen_above_content', $id); ?>
 
                     <div class="pzen-content">
 
