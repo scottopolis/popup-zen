@@ -180,6 +180,9 @@
     $('body')
     .on('click', '.pzen-close', pzen.closeClick )
     .on('click', '#pzen-' + id + ' .pzen-email-btn', pzen.emailSubmitClick )
+    .on('focus', '.pzen-input input', function(e) {
+      $( e.currentTarget ).addClass('input-filled');
+    })
     .on('click', '.pzen-backdrop', pzen.bdClick );
 
     $('#pzen-' + id + ' .pzen-email-input').on('keypress', pzen.submitEmailOnEnter );
@@ -187,6 +190,8 @@
     $('#pzen-' + id + ' a').on('click', pzen.interactionLink )
 
     $('.pzen-expand-btn').on('click', pzen.expand )
+
+    $('.pzen-collapse').on('click', pzen.collapse )
 
   }
 
@@ -196,20 +201,34 @@
 
     var $getBox = $(e.target).closest('.popup-zen-box');
 
-    $getBox.addClass('pzen-expanded');
-
     var id = $getBox.attr('id').split('-')[1];
 
+    $getBox.addClass('pzen-expanded');
+
     if( $('input.pzen-name') ) {
-      $('input.pzen-name').focus();
+      $('input.pzen-name').focus().addClass('input-filled');
     } else {
-      $('input.pzen-email-input').focus();
+      $('input.pzen-email-input').focus().addClass('input-filled');
     }
 
     // maybe show backdrop
     if( $getBox.hasClass('pzen-popup') ) {
       pzen.transitionIn( $('#pzen-bd-' + id) );
     }
+
+  }
+
+  pzen.collapse = function(e) {
+
+    e.preventDefault();
+
+    var $getBox = $(e.target).closest('.popup-zen-box');
+
+    $getBox.removeClass('pzen-expanded');
+
+    var id = $getBox.attr('id').split('-')[1];
+
+    $( '#pzen-' + id + ' input' ).val('').removeClass('input-filled');
 
   }
 
@@ -401,7 +420,7 @@
   // User submitted email, send to server
   pzen.emailSubmitted = function( id ) {
 
-    var email = $('#pzen-' + id + ' .pzen-email-input').val();
+    var email = $('#pzen-' + id + ' .pzen-email-input input[type=email]').val();
 
     if( !email ) {
       alert( window.popupZenVars.emailErr + ' err1' );
@@ -421,6 +440,8 @@
     // honeypot
     if( $( '#pzen-' + id + ' input[name=pzen_hp]').val() != "" )
       return;
+
+    $( '#pzen-' + id ).addClass('pzen-loading');
 
     // do different things for email providers
     if( window.popupZenVars[id].emailProvider === 'ck' ) {
@@ -447,8 +468,6 @@
 
   // Send email
   pzen.sendEmail = function( email, id ) {
-
-    pzen.showSpinner( id );
 
     $.ajax({
       method: "GET",
@@ -479,8 +498,6 @@
     var apiUrl = 'https://api.convertkit.com/v3/forms/' + formId + '/subscribe';
 
     var name = $('#pzen-' + id + ' .pzen-name').val();
-
-    pzen.showSpinner( id );
 
     $.ajax({
       method: "POST",
@@ -522,10 +539,9 @@
 
     if( !listId ) {
       alert("MailChimp list ID is missing.");
+      pzen.hideSpinner();
       return;
     }
-
-    pzen.showSpinner( id );
 
     $.ajax({
       method: "GET",
@@ -536,7 +552,6 @@
 
         // reset to defaults
         pzen.showConfirmation( id );
-        $('#pzen-' + id + ' .pzen-form').hide();
         pzen.conversion( id );
 
       })
@@ -555,10 +570,9 @@
 
     if( !listId ) {
       alert("List ID is missing.");
+      pzen.hideSpinner();
       return;
     }
-
-    pzen.showSpinner( id );
 
     $.ajax({
       method: "GET",
@@ -573,7 +587,6 @@
 
           // reset to defaults
           pzen.showConfirmation( id );
-          $('#pzen-' + id + ' .pzen-form').hide();
           pzen.conversion( id );
 
         } else {
@@ -595,6 +608,7 @@
 
     if( !window._dcq ) {
       alert("Drip code not installed properly.");
+      pzen.hideSpinner();
       return;
     }
 
@@ -602,8 +616,6 @@
     var name = $('#pzen-' + id + ' .pzen-name').val();
 
     var tagArr = tags.split(",");
-
-    pzen.showSpinner( id );
 
     pzen.dripid = id;
 
@@ -625,7 +637,6 @@
 
       // reset to defaults
       pzen.showConfirmation( pzen.dripid );
-      $('#pzen-' + pzen.dripid + ' .pzen-form').hide();
       pzen.conversion( pzen.dripid );
 
     } else {
@@ -647,8 +658,6 @@
 
     var name = $('#pzen-' + id + ' .pzen-name').val();
 
-    pzen.showSpinner( id );
-
     $.ajax({
       method: "GET",
       url: window.popupZenVars.ajaxurl,
@@ -660,7 +669,6 @@
 
         // reset to defaults
         pzen.showConfirmation( id );
-        $('#pzen-' + id + ' .pzen-form').hide();
         pzen.conversion( id );
 
       })
@@ -720,23 +728,23 @@
   // show confirmation message after email submitted
   pzen.showConfirmation = function( id ) {
 
+    $('#pzen-' + id ).addClass('pzen-loading');
+
     pzen.hideSpinner();
 
     var options = window.popupZenVars[id];
 
     var msg = ( options.confirmMsg != '' ? options.confirmMsg : "Thanks!" );
 
-    if( options.type === 'pzen_header_bar' ) {
+    $('#pzen-' + id + ' .pzen-form').after('<div class="pzen-confirmation-message"><i class="icon icon-ok"></i>' + msg + '</div>');
 
-      $('#pzen-' + id + ' .popup-zen-box-rows').addClass('pzen-full-width').html(msg);
+    setTimeout( function() {
+      $('#pzen-' + id ).removeClass('pzen-loading').addClass('pzen-success');
+    }, 500);
 
-      pzen.toggleBnrMargin( id );
-
-    } else {
-
-      $('#pzen-' + id + ' .pzen-content').html(msg);
-
-    }
+    setTimeout( function() {
+      $('#pzen-' + id + ' .pzen-close').click();
+    }, 4000 );
 
   }
 
@@ -770,8 +778,7 @@
 
   pzen.showSpinner = function( id ) {
 
-    $( '#pzen-' + id + ' .pzen-form' ).html( '<img src="' + window.popupZenVars.pluginUrl + 'assets/img/loading.gif" class="pzen-loading" />');
-    $('#pzen-' + id + ' .pzen-name-row').hide();
+    $( '#pzen-' + id + ' .pzen-email-btn' ).before( '<img src="' + window.popupZenVars.pluginUrl + 'assets/img/loading.gif" class="pzen-loading" />');
 
   }
 

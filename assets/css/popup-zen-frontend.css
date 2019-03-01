@@ -58,11 +58,15 @@
 	box-shadow: 2px 2px 15px 2px rgba(106,106,106,.1);
 }
 
-.popup-zen-box .pzen-content, .popup-zen-box .pzen-form {
+.popup-zen-box .pzen-content, .pzen-form {
 	padding: 15px;
 }
 
-.popup-zen-box .pzen-form, .popup-zen-box .pzen-image {
+.pzen-form {
+	display: none;
+}
+
+.popup-zen-box .pzen-image {
 	display: none;
 }
 
@@ -79,11 +83,7 @@
 	text-align: center;
 	font-size: 24px;
 	color: #676976;
-}
-
-.popup-zen-box .pzen-form {
-	padding-top: 0;
-	overflow: hidden;
+	margin-top: 10px;
 }
 
 .popup-zen-box.pzen-bottomright {
@@ -158,7 +158,7 @@
 	opacity: 1 !important;
 }
 
-.pzen-close {
+.pzen-close, .pzen-collapse {
 	position: absolute;
 	top: 15px;
 	right: 5px;
@@ -167,7 +167,11 @@
 	text-align: center;
 }
 
-.pzen-close i {
+.pzen-collapse {
+	right: 25px;
+}
+
+.pzen-close i, .pzen-collapse i {
 	color: #ccc;
 	font-size: 12px;
 	float: right;
@@ -175,44 +179,6 @@
 
 .popup-zen-box p {
 	margin-bottom: 5px;
-}
-
-.popup-zen-box label {
-	color: #999;
-	opacity: .8;
-}
-
-.popup-zen-box input[type="text"], .popup-zen-box input[type="email"] {
-	border: none;
-	border-bottom: 1px solid #ccc;
-	height: 40px;
-    background-color: transparent;
-    box-shadow: none;
-	box-sizing: border-box;
-	padding: 8px 0;
-	margin: 0;
-    font-size: 16px;
-    width: 100%;
-}
-
-.popup-zen-box input[type="text"]:focus, .popup-zen-box input[type="email"]:focus {
-	background-color: transparent;
-}
-
-.popup-zen-box input.pzen-name {
-	margin-bottom: 10px;
-}
-
-.popout input.pzen-name {
-	width: 100%;
-}
-
-.pzen-text-input {
-	height: 40px;
-    border: none;
-    box-shadow: none;
-	box-sizing: border-box;
-	width: 100%;
 }
 
 .pzen-text i {
@@ -236,6 +202,8 @@
 	margin: 15px 0 0;
 	font-size: 16px;
 	font-weight: 400;
+	position: relative;
+	overflow: hidden;
 }
 
 .pzen-powered-by {
@@ -257,6 +225,12 @@ img.pzen-loading {
     display: block;
     margin: 10px auto;
     clear: both;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 9;
 }
 
 /*
@@ -266,6 +240,7 @@ img.pzen-loading {
 .popup-zen-box.pzen-expanded .pzen-form, .popup-zen-box.pzen-expanded .pzen-image {
 	max-height: 40vh;
 	display: block;
+	opacity: 1;
 }
 
 .popup-zen-box.pzen-expanded .pzen-expand-btn {
@@ -338,6 +313,92 @@ img.pzen-loading {
 }
 
 /*
+ * Form with loading and success states
+ */
+
+.pzen-content {
+	transition: transform .3s;
+}
+
+.pzen-email-btn:before {
+	font-family: 'pzen-fontello';
+	content: '\e838';
+	position: absolute;
+	height: 16px;
+	width: 20px;
+	margin: auto;
+	top: -10px;
+	bottom: 0;
+	transition: all .3s;
+	opacity: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+	line-height: 1em;
+	animation: pspin 1.5s linear infinite;
+}
+
+@keyframes pspin {
+	0% { 
+	transform: rotate(0); 
+	}
+	100% { 
+	transform: rotate(360deg);
+	}
+}
+
+.pzen-loading .pzen-email-btn:before {
+	top: 0;
+	opacity: 1;
+}
+
+.pzen-loading .pzen-email-btn span {
+	text-indent: -999em;
+	opacity: 0;
+}
+
+.pzen-loading .pzen-form, .pzen-success .pzen-form {
+	opacity: .5 !important;
+}
+
+.pzen-success .pzen-form, .pzen-success .pzen-content {
+	-webkit-transform: translate3d(-100%, 0, 0);
+	transform: translate3d(-100%, 0, 0);
+}
+
+.pzen-loading .pzen-form:before {
+	opacity: 1;
+	top: 0;
+}
+
+.pzen-confirmation-message {
+	position: absolute;
+	top: 40%;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	padding: 20px;
+	margin: auto;
+	transition: all .3s;
+	-webkit-transform: translate3d(100%, 0, 0);
+	transform: translate3d(100%, 0, 0);
+	height: 150px;
+	width: 100%;
+	text-align: center;
+}
+
+.pzen-confirmation-message i {
+	clear: both;
+	font-size: 24px;
+	display: block;
+}
+
+.pzen-success .pzen-confirmation-message {
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+}
+
+/*
  * Media Queries
  */
 
@@ -377,19 +438,29 @@ img.pzen-loading {
 }
 
 @font-face {
-  font-family: 'pzenfontello';
-  src: url('../font/fontello.eot?57130597');
-  src: url('../font/fontello.eot?57130597#iefix') format('embedded-opentype'),
-       url('../font/fontello.woff2?57130597') format('woff2'),
-       url('../font/fontello.woff?57130597') format('woff'),
-       url('../font/fontello.ttf?57130597') format('truetype'),
-       url('../font/fontello.svg?57130597#fontello') format('svg');
+  font-family: 'pzen-fontello';
+  src: url('../font/pzen-fontello.eot?1543697');
+  src: url('../font/pzen-fontello.eot?1543697#iefix') format('embedded-opentype'),
+       url('../font/pzen-fontello.woff2?1543697') format('woff2'),
+       url('../font/pzen-fontello.woff?1543697') format('woff'),
+       url('../font/pzen-fontello.ttf?1543697') format('truetype'),
+       url('../font/pzen-fontello.svg?1543697#pzen-fontello') format('svg');
   font-weight: normal;
   font-style: normal;
 }
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'pzen-fontello';
+    src: url('../font/pzen-fontello.svg?1543697#pzen-fontello') format('svg');
+  }
+}
+*/
  
 .popup-zen-box [class^="icon-"]:before, .popup-zen-box [class*=" icon-"]:before {
-  font-family: "pzenfontello";
+  font-family: "pzen-fontello";
   font-style: normal;
   font-weight: normal;
   speak: none;
@@ -423,12 +494,103 @@ img.pzen-loading {
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
  
-.icon-search:before { content: '\e800'; } /* '' */
-.icon-cancel:before { content: '\e801'; } /* '' */
+.icon-cancel:before { content: '\e800'; } /* '' */
+.icon-down-open:before { content: '\e801'; } /* '' */
 .icon-mail:before { content: '\e802'; } /* '' */
-.icon-chat:before { content: '\e803'; } /* '' */
-.icon-comment:before { content: '\e804'; } /* '' */
-.icon-comment-empty:before { content: '\f0e5'; } /* '' */
-.icon-chat-empty:before { content: '\f0e6'; } /* '' */
-.icon-help:before { content: '\f128'; } /* '' */
-.icon-info:before { content: '\f129'; } /* '' */
+.icon-ok:before { content: '\e803'; } /* '' */
+.icon-spin5:before { content: '\e838'; } /* '' */
+
+/*
+ * Input animations
+ */
+
+.pzen-input {
+	position: relative;
+	z-index: 1;
+	display: inline-block;
+	vertical-align: top;
+	width: 100%;
+	margin-bottom: 30px;
+}
+
+.pzen-input.pzen-email-input {
+	margin-bottom: 10px;
+}
+
+.pzen-input input[type=text], .pzen-input input[type=email] {
+	border: none;
+	border-bottom: 1px solid #ccc;
+	height: 40px;
+    background-color: transparent;
+    box-shadow: none;
+	box-sizing: border-box;
+	padding: 8px 0;
+	margin: 0;
+    font-size: 16px;
+    width: 100%;
+}
+
+.pzen-input input[type=text]:focus, .pzen-input input[type=email]:focus {
+	background-color: transparent;
+}
+
+.pzen-field-animated {
+	position: relative;
+	display: block;
+	float: right;
+	border: none;
+	border-radius: 0;
+	-webkit-appearance: none; /* for box shadows to show on iOS */
+}
+
+.pzen-field-animated:focus {
+	outline: none;
+}
+
+.pzen-label-animated {
+	display: inline-block;
+	float: right;
+	padding: 0;
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.pzen-label-animated-content {
+	position: relative;
+	display: block;
+	padding: .5em 0;
+	width: 100%;
+}
+
+/* Individual styles */
+
+/* animated */
+
+.pzen-field-animated {
+	padding: 0.4em 0.25em;
+	width: 100%;
+}
+
+.pzen-label-animated {
+	position: absolute;
+	width: 100%;
+	text-align: left;
+	pointer-events: none;
+}
+
+.pzen-label-animated-content {
+	-webkit-transition: -webkit-transform 0.3s;
+	transition: all 0.3s;
+}
+
+.pzen-field-animated:focus + .pzen-label-animated .pzen-label-animated-content, .input-filled + .pzen-label-animated .pzen-label-animated-content {
+	-webkit-transform: translate3d(0, -70%, 0);
+	transform: translate3d(0, -70%, 0);
+	font-size: 80%;
+}

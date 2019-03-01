@@ -59,6 +59,8 @@
 
     $('.pzen-expand-btn').on('click', pzen.expand )
 
+    $('.pzen-collapse').on('click', pzen.collapse )
+
     // Handle live preview update with visual editor
     $(document).on( 'tinymce-editor-init', function( event, editor ) {
 
@@ -102,6 +104,16 @@
     var id = $getBox.attr('id').split('-')[1];
 
     $getBox.addClass('pzen-expanded');
+
+  }
+
+  pzen.collapse = function(e) {
+
+    e.preventDefault();
+
+    var $getBox = $(e.target).closest('.popup-zen-box');
+
+    $getBox.removeClass('pzen-expanded');
 
   }
 

@@ -269,7 +269,9 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
             <div id="pzen-<?php echo esc_attr( $id ); ?>" class="popup-zen-box <?php echo apply_filters( 'pzen_classes', '', $id ); ?>">
 
                 <div class="pzen-inside">
-                
+                    
+                    <div class="pzen-collapse"><i class="icon icon-down-open"></i></div>
+
                     <div class="pzen-close"><i class="icon icon-cancel"></i></div>
 
                     <div class="pzen-image <?php if( !empty( $image_padding ) ) { echo ' pzen-padding'; } ?>">
@@ -374,10 +376,17 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                 <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="pzen_hp" tabindex="-1" value=""></div>
                 
                 <?php self::name_row( $id ); ?>
+
+                <span class="pzen-input pzen-email-input">
+                    <input class="pzen-field-animated <?php if( get_post_meta( $id, 'dont_show_name', 1 ) === '1' ) echo 'no-name'; ?>" id="<?php echo $id . '-email-input'; ?>" type="email" name="email"  autocomplete="fake-value" autocapitalize="off" />
+                    <label class="pzen-label-animated" for="email">
+                        <span class="pzen-label-animated-content"><?php echo esc_attr( get_post_meta( $id, 'email_label', 1 ) ); ?></span>
+                    </label>
+                </span>
                 
-                <label for="email"><?php echo esc_attr( get_post_meta( $id, 'email_label', 1 ) ); ?></label>
-                <input type="email" value="" id="<?php echo $id . '-email-input'; ?>" name="email" class="pzen-email-input <?php if( get_post_meta( $id, 'dont_show_name', 1 ) === '1' ) echo 'no-name'; ?>" autocomplete="fake-value" autocapitalize="off" />
-                <button class="pzen-email-btn pzen-btn"><?php echo $btn_text; ?></button>
+                <!-- <label for="email"><?php echo esc_attr( get_post_meta( $id, 'email_label', 1 ) ); ?></label>
+                <input type="email" value="" id="<?php echo $id . '-email-input'; ?>" name="email" class="pzen-email-input <?php if( get_post_meta( $id, 'dont_show_name', 1 ) === '1' ) echo 'no-name'; ?>" autocomplete="fake-value" autocapitalize="off" /> -->
+                <button class="pzen-email-btn pzen-btn"><span><?php echo $btn_text; ?></span></button>
                 <?php
             }
         }
@@ -397,8 +406,14 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                 return;
 
             ?>
-            <label for="pzen-name"><?php echo esc_attr( get_post_meta( $id, 'name_label', 1 ) ); ?></label>
-            <input type="text" name="pzen-name" class="pzen-name" />
+
+            <span class="pzen-input">
+                <input class="pzen-field-animated pzen-name" type="text" name="pzen-name" autocomplete="fake-value" autocapitalize="on" />
+                <label class="pzen-label-animated" for="name">
+                    <span class="pzen-label-animated-content"><?php echo esc_attr( get_post_meta( $id, 'name_label', 1 ) ); ?></span>
+                </label>
+            </span>
+
             <?php
         }
 
