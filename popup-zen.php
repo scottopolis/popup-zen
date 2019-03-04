@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     Popup Zen Lite
  * Plugin URI:      https://getpopupzen.com
- * Description:     Collect high-quality leads without pissing off your site visitors.
+ * Description:     Ridding the web of obnoxious popups, one site at a time.
  * Version:         0.0.1
  * Author:          Scott Bolinger
  * Author URI:      https://scottbolinger.com

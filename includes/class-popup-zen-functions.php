@@ -260,8 +260,8 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
             #pzen-<?php echo intval( $id ); ?> .pzen-content, #pzen-<?php echo intval( $id ); ?> .pzen-title, #pzen-<?php echo intval( $id ); ?> label, #pzen-<?php echo intval( $id ); ?> input { color: <?php echo esc_html( get_post_meta( $id, 'text_color', 1 ) ); ?>; }
             #pzen-<?php echo intval( $id ); ?> input[type="text"], #pzen-<?php echo intval( $id ); ?> input[type="email"] { border-bottom-color: <?php echo esc_html( get_post_meta( $id, 'text_color', 1 ) ); ?>; }
             #pzen-<?php echo intval( $id ); ?> { background-color: <?php echo $bg_color; ?> }
-            #pzen-<?php echo intval( $id ); ?> .pzen-btn { background-color: <?php echo $accent_color; ?>; }
-            #pzen-<?php echo intval( $id ); ?> .pzen-btn { color: <?php echo $btn_text_color; ?>; }
+            #pzen-<?php echo intval( $id ); ?> .pzen-btn, #pzen-<?php echo intval( $id ); ?> .pzen-btn:hover { background-color: <?php echo $accent_color; ?>; }
+            #pzen-<?php echo intval( $id ); ?> .pzen-btn, #pzen-<?php echo intval( $id ); ?> .pzen-btn:hover { color: <?php echo $btn_text_color; ?>; }
             </style>
 
             <div id="pzen-bd-<?php echo esc_attr( $id ); ?>" data-id="<?php echo esc_attr( $id ); ?>" class="pzen-backdrop pzen-hide"></div>

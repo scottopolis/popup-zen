@@ -90,6 +90,7 @@
 
 .popup-zen-box .pzen-content p {
 	font-size: 14px;
+	margin-top: 0;
 }
 
 .popup-zen-box .pzen-title {
@@ -183,6 +184,7 @@
 
 .pzen-collapse {
 	right: 25px;
+	display: none;
 }
 
 .pzen-close i, .pzen-collapse i {
@@ -220,6 +222,10 @@
 	overflow: hidden;
 }
 
+.pzen-btn:hover {
+	background-color: #1191cb;
+}
+
 .pzen-powered-by {
 	opacity: 0;
 	text-align: center;
@@ -233,6 +239,10 @@
     color: #bbb;
     text-decoration: none;
     text-align: center;
+}
+
+.pzen-powered-by a:visited, .pzen-powered-by a:hover {
+	color: #bbb;
 }
 
 img.pzen-loading {
@@ -263,6 +273,10 @@ img.pzen-loading {
 
 .pzen-expanded .pzen-powered-by {
 	opacity: 1;
+}
+
+.pzen-expanded .pzen-collapse {
+	display: block;
 }
 
 /*
@@ -586,7 +600,7 @@ img.pzen-loading {
 }
 
 .pzen-field-animated:focus {
-	outline: none;
+	outline: none !important;
 }
 
 .pzen-label-animated {
@@ -601,7 +615,8 @@ img.pzen-loading {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	font-size: 80%;
+	font-size: 12px;
+	color: #999;
 }
 
 .pzen-label-animated-content {
