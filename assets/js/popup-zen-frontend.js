@@ -476,7 +476,6 @@
       })
       .done(function(msg) {
 
-        $('#pzen-' + id + ' .pzen-form').hide();
         pzen.showConfirmation( id );
 
         pzen.conversion( id );
@@ -508,7 +507,6 @@
 
         // reset to defaults
         pzen.showConfirmation( id );
-        $('#pzen-' + id + ' .pzen-form').hide();
         pzen.conversion( id );
 
       })
@@ -728,19 +726,18 @@
   // show confirmation message after email submitted
   pzen.showConfirmation = function( id ) {
 
-    $('#pzen-' + id ).addClass('pzen-loading');
-
     pzen.resetForm( id );
 
     var options = window.popupZenVars[id];
 
     var msg = ( options.confirmMsg != '' ? options.confirmMsg : "Thanks!" );
 
-    $('#pzen-' + id + ' .pzen-form').after('<div class="pzen-confirmation-message"><i class="icon icon-ok"></i>' + msg + '</div>');
+    $('#pzen-' + id + ' .pzen-form').after('<div class="pzen-confirmation-message"><svg class="pzen-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="pzen-checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="pzen-checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>' + msg + '</div>');
 
     setTimeout( function() {
       $('#pzen-' + id ).removeClass('pzen-loading').addClass('pzen-success');
-    }, 500);
+
+    }, 100);
 
     setTimeout( function() {
       $('#pzen-' + id + ' .pzen-close').click();
