@@ -5,6 +5,7 @@
   pzen.init = function() {
 
     pzen.listeners();
+    pzen.disableInputs();
     pzen.toggleShowOn();
     pzen.toggleTypes();
     pzen.toggleDatepicker();
@@ -92,6 +93,13 @@
     .on('click', '#pzen-upload-btn', pzen.mediaUpload )
 
     $('#show_on_pages').suggest( window.ajaxurl + "?action=pzen_ajax_page_search", {multiple:true, multipleSep: ","});
+
+  }
+
+  // disable inputs to prevent form submissions
+  pzen.disableInputs = function() {
+
+    $('.popup-zen-box input, .popup-zen-box .pzen-email-btn').prop('disabled', true);
 
   }
 

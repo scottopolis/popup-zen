@@ -60,6 +60,7 @@
 
 .popup-zen-box .pzen-content, .pzen-form {
 	padding: 15px;
+	overflow: hidden;
 }
 
 .pzen-form {
