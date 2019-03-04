@@ -272,9 +272,18 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
                 <div class="pzen-close"><i class="icon icon-cancel"></i></div>
 
-                <div class="pzen-image <?php if( !empty( $image_padding ) ) { echo ' pzen-padding'; } ?>">
-                    <img src="<?php echo get_post_meta( $id, 'pzen_image', 1 ); ?>" class="popup-zen-image" />
-                </div>
+                <?php 
+
+                $no_crop = get_post_meta( $id, 'image_no_crop', 1 );
+                $src = get_post_meta( $id, 'pzen_image', 1 );
+
+                if( $no_crop ) {
+                    echo '<div class="pzen-image no-crop"><img src="' . $src . '" class="popup-zen-image" /></div>';
+                } else {
+                    echo '<div class="pzen-image bg-cover" style="background-image: url(' . $src . ')"></div>';
+                }
+
+                ?>
 
                 <?php do_action('pzen_above_content', $id); ?>
 

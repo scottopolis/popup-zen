@@ -500,8 +500,8 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 <input id="pzen-upload-btn" type="button" class="button" value="Upload Image" />
 
                 <p>
-                    <input type="checkbox" id="image_padding" name="image_padding" value="1" <?php checked('1', get_post_meta( $post->ID, 'image_padding', true ), true); ?> />
-                    <?php _e( 'Add padding around the image (default is edge to edge)', 'popup-zen-lite' ); ?>
+                    <input type="checkbox" id="image_no_crop" name="image_no_crop" value="no-crop" <?php checked('no-crop', get_post_meta( $post->ID, 'image_no_crop', true ), true); ?> />
+                    <?php _e( 'Do not crop (shows white space around image)', 'popup-zen-lite' ); ?>
                 </p>
 
             </div>
@@ -1060,7 +1060,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 'dont_show_name',
                 'pzen_image',
                 'expand_btn_text',
-                'image_padding',
+                'image_no_crop',
                 'pzen_title',
                 'submit_text' );
 
