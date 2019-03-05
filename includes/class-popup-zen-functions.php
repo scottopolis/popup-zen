@@ -260,7 +260,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
             #pzen-<?php echo intval( $id ); ?> .pzen-content, #pzen-<?php echo intval( $id ); ?> .pzen-title, #pzen-<?php echo intval( $id ); ?> label, #pzen-<?php echo intval( $id ); ?> input { color: <?php echo esc_html( get_post_meta( $id, 'text_color', 1 ) ); ?>; }
             #pzen-<?php echo intval( $id ); ?> input[type="text"], #pzen-<?php echo intval( $id ); ?> input[type="email"] { border-bottom-color: <?php echo esc_html( get_post_meta( $id, 'text_color', 1 ) ); ?>; }
             #pzen-<?php echo intval( $id ); ?> { background-color: <?php echo $bg_color; ?> }
-            #pzen-<?php echo intval( $id ); ?> .pzen-btn, #pzen-<?php echo intval( $id ); ?> .pzen-btn:hover { background-color: <?php echo $accent_color; ?>; }
+            #pzen-<?php echo intval( $id ); ?> .pzen-btn, #pzen-<?php echo intval( $id ); ?> .pzen-btn:hover { background: <?php echo $accent_color; ?>; }
             #pzen-<?php echo intval( $id ); ?> .pzen-btn, #pzen-<?php echo intval( $id ); ?> .pzen-btn:hover { color: <?php echo $btn_text_color; ?>; }
             </style>
 
@@ -291,7 +291,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
                     <div class="pzen-content">
 
-                        <div class="pzen-title"><?php echo get_post_meta( $id, 'pzen_title', 1 ); ?></div>
+                        <h3 class="pzen-title"><?php echo get_post_meta( $id, 'pzen_title', 1 ); ?></h3>
 
                         <?php echo self::get_box_content( $id ); ?>
 
@@ -393,8 +393,6 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                     </label>
                 </span>
                 
-                <!-- <label for="email"><?php echo esc_attr( get_post_meta( $id, 'email_label', 1 ) ); ?></label>
-                <input type="email" value="" id="<?php echo $id . '-email-input'; ?>" name="email" class="pzen-email-input <?php if( get_post_meta( $id, 'dont_show_name', 1 ) === '1' ) echo 'no-name'; ?>" autocomplete="fake-value" autocapitalize="off" /> -->
                 <button class="pzen-email-btn pzen-btn"><span><?php echo $btn_text; ?></span></button>
                 <?php
             }

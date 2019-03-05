@@ -89,15 +89,16 @@
 }
 
 .popup-zen-box .pzen-content p {
-	font-size: 14px;
+	font-size: 16px;
 	margin-top: 0;
 }
 
-.popup-zen-box .pzen-title {
+.popup-zen-box h3.pzen-title {
 	text-align: center;
 	font-size: 24px;
 	color: #676976;
 	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .popup-zen-box.pzen-bottomright {
@@ -206,7 +207,7 @@
 	cursor: pointer;
 }
 
-.pzen-btn {
+button.pzen-btn {
 	width: 100%;
 	height: 40px;
 	background-color: #1191cb;
@@ -220,10 +221,12 @@
 	font-weight: 400;
 	position: relative;
 	overflow: hidden;
+	border: none;
 }
 
-.pzen-btn:hover {
+button.pzen-btn:hover {
 	background-color: #1191cb;
+	border: none;
 }
 
 .pzen-powered-by {
@@ -369,9 +372,9 @@ img.pzen-loading {
 	height: 16px;
 	width: 20px;
 	margin: auto;
-	top: -10px;
+	top: 0;
 	bottom: 0;
-	transition: all .3s;
+	transition: opacity .1s;
 	opacity: 0;
 	left: 0;
 	right: 0;
@@ -389,12 +392,11 @@ img.pzen-loading {
 	}
 }
 
-.pzen-loading .pzen-email-btn:before {
-	top: 0;
+.pzen-loading .pzen-email-btn:before, .pzen-success .pzen-email-btn:before {
 	opacity: 1;
 }
 
-.pzen-loading .pzen-email-btn span {
+.pzen-loading .pzen-email-btn span, .pzen-success .pzen-email-btn span {
 	text-indent: -999em;
 	opacity: 0;
 }
