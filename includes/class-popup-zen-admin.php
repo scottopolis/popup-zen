@@ -493,7 +493,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 <h4><?php _e( 'Image', 'popup-zen-lite' ); ?></h4>
                 
                 <p>
-                    <?php _e( 'Upload a Custom Image (440px wide by 360px tall)', 'popup-zen-lite' ); ?>
+                    <?php _e( 'Upload a Custom Image', 'popup-zen-lite' ); ?>
                 </p>
 
                 <input id="pzen-image-url" size="50" type="text" name="pzen_image" value="<?php echo get_post_meta( $post->ID, 'pzen_image', 1 ); ?>" />

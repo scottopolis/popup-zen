@@ -277,9 +277,9 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                 $no_crop = get_post_meta( $id, 'image_no_crop', 1 );
                 $src = get_post_meta( $id, 'pzen_image', 1 );
 
-                if( $no_crop ) {
+                if( !empty( $src ) && $no_crop ) {
                     echo '<div class="pzen-image no-crop"><img src="' . $src . '" class="popup-zen-image" /></div>';
-                } else {
+                } else if( !empty( $src ) ) {
                     echo '<div class="pzen-image bg-cover" style="background-image: url(' . $src . ')"></div>';
                 }
 
@@ -467,6 +467,12 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                 $classes .= 'pzen-popup';
             } else {
                 $classes .= $type;
+            }
+
+            $src = get_post_meta( $id, 'pzen_image', 1 );
+
+            if( empty( $src ) ) {
+                $classes .= ' pzen-no-image';
             }
 
             $classes .= ' ' . get_post_meta( $id, 'position', 1 );
