@@ -336,6 +336,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                       <button class="pzen-tab-link" onclick="pzenAdmin.openTab(event, 'pzen-display')"><?php _e( 'Display Settings', 'popup-zen' ); ?></button>
                         
                         <div class="pzen-preview-btn-wrap">
+                            <span>Save first, then click Preview.</span>
                             <a href="#" target="_blank" class="pzen-preview-btn"><?php _e( 'Preview', 'popup-zen' ); ?></a>
 
                             <a class="pzen-site-preview-link" href="<?php echo home_url() . '?pzen_preview=' . $post->ID; ?>" target="_blank"><?php _e( 'View on site', 'popup-zen' ); ?></a>

@@ -731,7 +731,7 @@
   // show confirmation message after email submitted
   pzen.showConfirmation = function( id ) {
 
-    $('.pzen-email-btn span').hide();
+    $('.pzen-email-btn span').css('opacity', 0 );
 
     pzen.resetForm( id );
 
