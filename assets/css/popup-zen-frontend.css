@@ -282,6 +282,26 @@ img.pzen-loading {
     z-index: 9;
 }
 
+#pzen-err {
+    position: absolute;
+    background: rgba(0,0,0,.9);
+    left: 0;
+    right: 0;
+    display: block;
+    z-index: -1;
+    padding: 20px;
+    color: #fff;
+    transition: all .3s;
+    opacity: 0;
+    bottom: -10px;
+}
+
+#pzen-err.show-error {
+	opacity: 1;
+	bottom: 0;
+	z-index: 2;
+}
+
 /*
  * Expanded
  */

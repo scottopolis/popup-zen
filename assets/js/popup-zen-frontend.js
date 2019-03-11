@@ -519,11 +519,17 @@
 
         pzen.resetForm( id );
 
-        $('#pzen-' + id + ' .pzen-form').prepend('<span id="pzen-err">There seems to be a problem, can you try again?</span>');
+        var msg = 'There seems to be a problem, can you try again?';
 
-        setTimeout( function() {
-          $('#pzen-err').remove();
-        }, 3000);
+        if( err.responseJSON && err.responseJSON.error ) {
+          msg = err.responseJSON.error;
+
+          if( err.responseJSON.message ) {
+            msg += ' ' + err.responseJSON.message;
+          }
+        }
+
+        pzen.doError( msg, id );
 
         console.log(err);
       });
@@ -561,6 +567,7 @@
       .fail(function(err) {
         console.log(err);
         pzen.resetForm( id );
+        pzen.doError( 'There was a problem.', id );
       });
 
   }
@@ -602,6 +609,7 @@
       .fail(function(err) {
         console.warn(err);
         pzen.resetForm( id );
+        pzen.doError( 'There was a problem.', id );
       });
 
   }
@@ -644,7 +652,7 @@
 
     } else {
       console.warn(response);
-      $('#pzen-' + pzen.dripid + ' .pzen-content').html('<p>' + response.error + '</p>');
+      pzen.doError( response.error, id );
     }
 
   }
@@ -678,6 +686,7 @@
       .fail(function(err) {
         console.log(err);
         pzen.resetForm( id );
+        pzen.doError( response.error, id );
       });
 
   }
@@ -783,6 +792,16 @@
 
   pzen.resetForm = function( id ) {
     $( '#pzen-' + id ).removeClass('pzen-loading');
+  }
+
+  pzen.doError = function( msg, id ) {
+
+    $('#pzen-' + id + ' #pzen-err').text( msg ).addClass('show-error');
+
+    setTimeout( function() {
+      $('#pzen-' + id + ' #pzen-err').removeClass('show-error').text('');
+    }, 5000);
+
   }
 
   pzen.bdClick = function(e) {

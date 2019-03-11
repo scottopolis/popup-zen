@@ -305,6 +305,8 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
                         <?php do_action('pzen_email_form', $id); ?>
 
+                        <span id="pzen-err"></span>
+
                     </div>
 
                     <?php do_action('pzen_below_content', $id); ?>
@@ -334,7 +336,8 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
         public static function get_box_content( $id ) {
 
             $post_content = get_post_meta( $id, 'pzen_content', 1 );
-            $content = apply_filters( 'the_content', $post_content, $id );
+
+            $content = apply_filters( 'wpautop', $post_content, $id );
             return do_shortcode( $content );
 
         }
