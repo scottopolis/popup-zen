@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name:     Popup Zen Lite
+ * Plugin Name:     Popup Zen
  * Plugin URI:      https://getpopupzen.com
  * Description:     Ridding the web of obnoxious popups, one site at a time.
  * Version:         0.0.1
  * Author:          Scott Bolinger
  * Author URI:      https://scottbolinger.com
- * Text Domain:     popup-zen-lite
+ * Text Domain:     popup-zen
  *
  * @author          Scott Bolinger
  * @copyright       Copyright (c) Scott Bolinger 2019
@@ -114,7 +114,7 @@ if( !class_exists( 'Popup_Zen' ) ) {
          */
         public function load_textdomain() {
 
-            load_plugin_textdomain( 'popup-zen-lite' );
+            load_plugin_textdomain( 'popup-zen' );
             
         }
 

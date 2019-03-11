@@ -108,11 +108,29 @@
 .popup-zen-box.pzen-bottomright {
 	right: 45px;
 	bottom: 0;
+	-moz-transform: translateX(0px) translateY(15px);
+	-webkit-transform: translateX(0px) translateY(15px);
+	-o-transform: translateX(0px) translateY(15px);
+	-ms-transform: translateX(0px) translateY(15px);
+	transform: translateX(0px) translateY(15px);
 }
 
 .popup-zen-box.pzen-bottomleft {
 	left: 45px;
 	bottom: 0;
+	-moz-transform: translateX(0px) translateY(15px);
+	-webkit-transform: translateX(0px) translateY(15px);
+	-o-transform: translateX(0px) translateY(15px);
+	-ms-transform: translateX(0px) translateY(15px);
+	transform: translateX(0px) translateY(15px);
+}
+
+.pzen-bottomright.pzen-show, .pzen-bottomleft.pzen-show, .pzen-bottomright.pzen-transition-in, .pzen-bottomleft.pzen-transition-in {
+	-moz-transform: translateX(0px) translateY(0px);
+	-webkit-transform: translateX(0px) translateY(0px);
+	-o-transform: translateX(0px) translateY(0px);
+	-ms-transform: translateX(0px) translateY(0px);
+	transform: translateX(0px) translateY(0px);
 }
 
 .pzen-image.pzen-padding {

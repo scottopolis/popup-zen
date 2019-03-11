@@ -1,4 +1,4 @@
-# Popup Zen Lite
+# Popup Zen
 
 Collect high-quality leads without pissing off your site visitors.
 

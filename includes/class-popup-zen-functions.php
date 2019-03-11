@@ -99,13 +99,13 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
             $array['pluginUrl'] = Popup_Zen_URL;
 
-            $array['pzenNonce'] = wp_create_nonce('popup-zen-lite');
+            $array['pzenNonce'] = wp_create_nonce('popup-zen');
 
             $array['expires'] = '999'; // how long we should show this in num days
 
             $array['isMobile'] = wp_is_mobile();
 
-            $array['emailErr'] = __( 'Please enter a valid email address.', 'popup-zen-lite' );
+            $array['emailErr'] = __( 'Please enter a valid email address.', 'popup-zen' );
 
             // active notification IDs
             $array['active'] = self::$active;
@@ -263,8 +263,10 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
             #pzen-<?php echo intval( $id ); ?> .pzen-btn, #pzen-<?php echo intval( $id ); ?> .pzen-btn:hover { background: <?php echo $accent_color; ?>; }
             #pzen-<?php echo intval( $id ); ?> .pzen-btn, #pzen-<?php echo intval( $id ); ?> .pzen-btn:hover { color: <?php echo $btn_text_color; ?>; }
             </style>
-
-            <div id="pzen-bd-<?php echo esc_attr( $id ); ?>" data-id="<?php echo esc_attr( $id ); ?>" class="pzen-backdrop pzen-hide"></div>
+        
+            <?php if( $type === 'pzen_popup' ) : ?>
+                <div id="pzen-bd-<?php echo esc_attr( $id ); ?>" data-id="<?php echo esc_attr( $id ); ?>" class="pzen-backdrop pzen-hide"></div>
+            <?php endif; ?>
 
             <div id="pzen-<?php echo esc_attr( $id ); ?>" class="popup-zen-box <?php echo apply_filters( 'pzen_classes', '', $id ); ?>">
                     
@@ -363,39 +365,32 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                 echo 'Site admin: please update your MailChimp settings.';
             }
 
-            if( $provider === 'custom' ) {
-
-                echo get_post_meta( $id, 'custom_email_form', 1 );
-
-            } else {
-
-                if( $provider === 'ck' ) {
-                    echo '<input type="hidden" class="ck-form-id" value="' . esc_attr( get_post_meta( $id, 'ck_id', 1 ) ) . '" />';
-                } elseif( $provider === 'mc' && !empty( $mc_list_id ) ) {
-                    echo '<input type="hidden" class="mc-list-id" value="' . $mc_list_id . '" />';
-                    echo '<input type="hidden" class="mc-interests" value=' . json_encode( get_post_meta( $id, 'mc_interests', 1 ) ) . ' />';
-                } elseif( $provider === 'mailpoet' ) {
-                    echo '<input type="hidden" class="mailpoet-list-id" value="' . esc_attr( get_post_meta( $id, 'mailpoet_list_id', 1 ) ) . '" />';
-                } elseif( $provider === 'ac' && !empty( $ac_list_id ) ) {
-                    echo '<input type="hidden" class="ac-list-id" value="' . $ac_list_id . '" />';
-                } elseif( $provider === 'drip' && !empty( $drip_tags ) ) {
-                    echo '<input type="hidden" class="drip-tags" value="' . $drip_tags . '" />';
-                }
-                ?>
-                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="pzen_hp" tabindex="-1" value=""></div>
-                
-                <?php self::name_row( $id ); ?>
-
-                <span class="pzen-input pzen-email-input">
-                    <input class="pzen-field-animated <?php if( get_post_meta( $id, 'dont_show_name', 1 ) === '1' ) echo 'no-name'; ?>" id="<?php echo $id . '-email-input'; ?>" type="email" name="email"  autocomplete="fake-value" autocapitalize="off" />
-                    <label class="pzen-label-animated" for="email">
-                        <span class="pzen-label-animated-content"><?php echo esc_attr( get_post_meta( $id, 'email_label', 1 ) ); ?></span>
-                    </label>
-                </span>
-                
-                <button class="pzen-email-btn pzen-btn"><span><?php echo $btn_text; ?></span></button>
-                <?php
+            if( $provider === 'ck' ) {
+                echo '<input type="hidden" class="ck-form-id" value="' . esc_attr( get_post_meta( $id, 'ck_id', 1 ) ) . '" />';
+            } elseif( $provider === 'mc' && !empty( $mc_list_id ) ) {
+                echo '<input type="hidden" class="mc-list-id" value="' . $mc_list_id . '" />';
+                echo '<input type="hidden" class="mc-interests" value=' . json_encode( get_post_meta( $id, 'mc_interests', 1 ) ) . ' />';
+            } elseif( $provider === 'mailpoet' ) {
+                echo '<input type="hidden" class="mailpoet-list-id" value="' . esc_attr( get_post_meta( $id, 'mailpoet_list_id', 1 ) ) . '" />';
+            } elseif( $provider === 'ac' && !empty( $ac_list_id ) ) {
+                echo '<input type="hidden" class="ac-list-id" value="' . $ac_list_id . '" />';
+            } elseif( $provider === 'drip' && !empty( $drip_tags ) ) {
+                echo '<input type="hidden" class="drip-tags" value="' . $drip_tags . '" />';
             }
+            ?>
+            <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="pzen_hp" tabindex="-1" value=""></div>
+            
+            <?php self::name_row( $id ); ?>
+
+            <span class="pzen-input pzen-email-input">
+                <input class="pzen-field-animated <?php if( get_post_meta( $id, 'dont_show_name', 1 ) === '1' ) echo 'no-name'; ?>" id="<?php echo $id . '-email-input'; ?>" type="email" name="email"  autocomplete="fake-value" autocapitalize="off" />
+                <label class="pzen-label-animated" for="email">
+                    <span class="pzen-label-animated-content"><?php echo esc_attr( get_post_meta( $id, 'email_label', 1 ) ); ?></span>
+                </label>
+            </span>
+            
+            <button class="pzen-email-btn pzen-btn"><span><?php echo $btn_text; ?></span></button>
+            <?php
         }
 
         /**
