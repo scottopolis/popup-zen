@@ -212,7 +212,7 @@
     // Show optin in preview
     if( itemTypeVal === 'optin' ) {
 
-      $('#show-email-options').fadeIn();
+      $('#pzen-email-options').fadeIn();
 
     }
 

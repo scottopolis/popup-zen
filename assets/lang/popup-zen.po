@@ -251,10 +251,7 @@ msgstr ""
 
 #: ../../includes/class-popup-zen-admin.php:586
 msgid ""
-"ConvertKit List ID, <a href=\n"
-"                        \"http://popupzen.helpscoutdocs.com/article/6-"
-"convertkit-integration\" target=\"_blank\">click for help.</a> "
-"<em>*required</em>"
+"ConvertKit List ID (click list and look in address bar in ConvertKit)"
 msgstr ""
 
 #: ../../includes/class-popup-zen-admin.php:592

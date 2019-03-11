@@ -482,7 +482,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 <h4><?php _e( 'Image', 'popup-zen' ); ?></h4>
                 
                 <p>
-                    <?php _e( 'Upload a Custom Image', 'popup-zen' ); ?>
+                    <?php _e( 'Upload a Custom Image (458x450)', 'popup-zen' ); ?>
                 </p>
 
                 <input id="pzen-image-url" size="50" type="text" name="pzen_image" value="<?php echo get_post_meta( $post->ID, 'pzen_image', 1 ); ?>" />
@@ -543,7 +543,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
 
             <div class="pzen-section noborder">
 
-                <div id="show-email-options">
+                <div id="pzen-email-options">
 
                     <h4>
                         <label for="position"><?php _e( 'Email Provider' ); ?></label>
@@ -552,7 +552,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     <select name="email_provider">
 
                         <option value="default" <?php selected( get_post_meta( $post->ID, 'email_provider', true ), "default"); ?> >
-                            <?php _e( 'None', 'popup-zen' ); ?>
+                            <?php _e( 'Email Site Admin', 'popup-zen' ); ?>
                         </option>
 
                         <option value="ck" <?php selected( get_post_meta( $post->ID, 'email_provider', true ), "ck"); ?> >
@@ -584,8 +584,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                     <?php do_action( 'pzen_below_provider_select', $post->ID ); ?>
 
                     <p id="convertkit-fields">
-                        <?php _e( 'ConvertKit List ID, <a href=
-                        "http://popupzen.helpscoutdocs.com/article/6-convertkit-integration" target="_blank">click for help.</a> <em>*required</em>', 'popup-zen' ); ?>
+                        <?php _e( 'ConvertKit List ID (click list and look in address bar in ConvertKit) <em>*required</em>', 'popup-zen' ); ?>
                         <input id="ck_id" name="ck_id" class="widefat" value="<?php echo get_post_meta( $post->ID, 'ck_id', 1 ); ?>" placeholder="ConvertKit list ID" type="text" />
                     </p>
                     
