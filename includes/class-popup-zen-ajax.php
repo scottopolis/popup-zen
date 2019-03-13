@@ -75,12 +75,12 @@ if (!class_exists('Popup_Zen_Ajax')) {
         
          public function mailType($content_type) {
             $mail_type = 'text/html';
-            return apply_filters('holler_box_mailtype', $mail_type);
+            return apply_filters('popup_zen_mailtype', $mail_type);
         }
 
         public function charType($charset) {
             $charType = 'utf-8';
-            return apply_filters('holler_box_mail_chartype', $charType);
+            return apply_filters('popup_zen_mail_chartype', $charType);
         }
 
         /**

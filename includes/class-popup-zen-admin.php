@@ -82,9 +82,9 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
          */
         public function maybe_show_upgrade_link() {
 
-            if( !is_plugin_active('hollerbox-pro/holler-box-pro.php') ) {
-                add_filter( 'plugin_action_links_holler-box/holler-box.php', array( $this, 'pzen_plugin_links' ) );
-            }
+            // if( !is_plugin_active('hollerbox-pro/holler-box-pro.php') ) {
+            //     add_filter( 'plugin_action_links_holler-box/holler-box.php', array( $this, 'pzen_plugin_links' ) );
+            // }
 
         }
 
@@ -800,13 +800,6 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
             <div class="pzen-section noborder">
 
                 <?php do_action('pzen_display_settings_after', $post->ID ); ?>
-
-                <?php 
-                    
-                    // if( !is_plugin_active('popupzen-pro/holler-box-pro.php') ) {
-                    //     echo '<p>Get more powerful display and customization settings in <strong><a href="https://getpopupzen.com/pro?utm_source=after_settings&utm_medium=link&utm_campaign=pzen_settings">Popup Zen Pro</a></strong></p>';
-                    // }
-                ?>
 
             </div>
 

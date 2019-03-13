@@ -3,7 +3,7 @@
 Contributors: scottopolis
 Tags: popup, optin, lead generation, email opt-in, pop up
 Requires at least: 4.5
-Tested up to: 5.0.2
+Tested up to: 5.1
 Stable tag: 0.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,21 +12,21 @@ A WordPress popup plugin for people who hate popups, but still need to collect e
 
 == Description ==
 
-If you are looking for obnoxious, screen-blocking popups to piss off your site visitors, you are in the wrong place.
-
-If you hate popups as much as your site visitors do, and you don't want to damage your brand just to collect a few extra emails, read on...
-
 **Let's face it, popups are broken.**
 
 They are overused, and our site visitors hate them.
 
-We are sacrificing trust to increase our opt-in rates, and it's damaging our businesses.
-
-We still need to collect emails, so what is the solution?
-
 Popup Zen is a subtle, non-blocking opt-in that gets attention without being annoying.
 
 It's lightweight, easy to use, and minimalist.
+
+If you are looking for obnoxious, screen-blocking popups to piss off your site visitors, you are in the wrong place.
+
+If you hate popups as much as your site visitors do, and you don't want to damage your brand just to collect a few extra emails, read on...
+
+We are sacrificing trust to increase our opt-in rates, and it's damaging our businesses.
+
+We still need to collect emails, so what is the solution?
 
 Popup Zen will help you collect emails with style and grace.
 
@@ -41,7 +41,7 @@ Popup Zen is for people who value their audience and their brand, and don’t ne
 
 If that describes you, try it out.
 
-Developers can contribute on [Github](https://github.com/scottopolis/holler-box)
+Developers can contribute on [Github](https://github.com/scottopolis/popup-zen)
 
 == Installation ==
 
@@ -92,13 +92,13 @@ Yes, if you have an SMTP plugin like Postman, Mailgun, or other mail plugin it w
 
 *How do I setup MailChimp?*
 
-First, add your API key under Holler Box => Settings.
+First, add your API key under Popup Zen => Settings.
 
 You can find your API key in your MailChimp account under Account => Extras => API Keys. Generate a new one if it doesn't exist.
 
 Save your API key.
 
-Next, in your Holler Box, choose Mailchimp as the opt-in provider. Add your list ID. You can find this under Lists => Your List => Settings => List name and defaults. Look on the right side of the screen for List ID.
+Next, in your Popup Zen, choose Mailchimp as the opt-in provider. Add your list ID. You can find this under Lists => Your List => Settings => List name and defaults. Look on the right side of the screen for List ID.
 
 Copy/paste that into the MailChimp list ID field and save.
 
@@ -114,7 +114,7 @@ That number is the form ID, in this case it's 445667. Enter that number as the C
 
 *How do I setup MailPoet?*
 
-Install MailPoet, version 3 or later. Create a new Holler Box, and select MailPoet as the email provider. Choose your list and save, new subscribers will be added to this list.
+Install MailPoet, version 3 or later. Create a new Popup, and select MailPoet as the email provider. Choose your list and save, new subscribers will be added to this list.
 
 *Email signups are not working* 
 
@@ -122,6 +122,8 @@ Make sure your email form does not have a required field that is not displayed. 
 
 == Screenshots ==
 
-1. Notification box
+1. Zen box
 
-2. Popup
+2. Zen box expanded
+
+3. Popup
