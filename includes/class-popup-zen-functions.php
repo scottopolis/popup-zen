@@ -501,7 +501,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
             self::$active[] = $popup_id;
 
-            $this->display_pzen_box( $popup_id );
+            self::$instance->display_pzen_box( $popup_id );
 
         }
 
