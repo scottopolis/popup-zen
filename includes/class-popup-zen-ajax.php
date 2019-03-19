@@ -403,23 +403,16 @@ if (!class_exists('Popup_Zen_Ajax')) {
          */
         public function page_search() {
 
-            $s = wp_unslash($_GET['q']);
+            $s = wp_unslash($_GET['term']);
 
-            $comma = _x(',', 'page delimiter');
-            if (',' !== $comma)
-                $s = str_replace($comma, ',', $s);
-            if (false !== strpos($s, ',')) {
-                $s = explode(',', $s);
-                $s = $s[count($s) - 1];
-            }
             $s = trim($s);
-
-            $term_search_min_chars = 2;
 
             $the_query = new WP_Query(
                     array(
                 's' => $s,
-                'posts_per_page' => 5,
+                'posts_per_page' => 8,
+                'page'      => 1,
+                'post_status'   => 'publish',
                 'post_type' => 'page'
                     )
             );
@@ -435,8 +428,7 @@ if (!class_exists('Popup_Zen_Ajax')) {
                 $results = 'No results';
             }
 
-            echo join($results, "\n");
-            wp_die();
+            wp_send_json_success( $results );
         }
 
     }

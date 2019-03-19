@@ -603,3 +603,18 @@ input.pzen-number-input {
 #pzen_embed_signup #mce-error-response {display:none;}
 #pzen_embed_signup #mce-success-response {color:#529214; display:none;}
 #pzen_embed_signup label.error {display:block; float:none; width:auto; margin-left:1.05em; text-align:left; padding:.5em 0;}
+
+.ui-autocomplete {
+	float: left;
+	box-shadow: 2px 2px 3px #888888;
+    background: #FFF;
+}
+
+.ui-menu-item {
+	list-style-type: none;
+	padding: 10px;
+}
+
+.ui-menu-item:hover {
+	background: #F1F1F1;
+}

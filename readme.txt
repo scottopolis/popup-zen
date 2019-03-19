@@ -41,6 +41,8 @@ Popup Zen is for people who value their audience and their brand, and don’t ne
 
 If that describes you, try it out.
 
+Learn more at [getpopupzen.com](https://getpopupzen.com)
+
 Developers can contribute on [Github](https://github.com/scottopolis/popup-zen)
 
 == Installation ==

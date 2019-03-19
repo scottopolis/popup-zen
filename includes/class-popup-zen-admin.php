@@ -107,7 +107,7 @@ if( !class_exists( 'Popup_Zen_Admin' ) ) {
                 // Color picker: https://make.wordpress.org/core/2012/11/30/new-color-picker-in-wp-3-5/
                 wp_enqueue_style( 'popup-zen-admin', Popup_Zen_URL . 'assets/css/popup-zen-admin' . $suffix . '.css', array( 'wp-color-picker' ), Popup_Zen_VER );
 
-                wp_enqueue_script( 'popup-zen-admin', Popup_Zen_URL . 'assets/js/popup-zen-admin' . $suffix . '.js', array( 'wp-color-picker', 'jquery-ui-datepicker', 'suggest' ), Popup_Zen_VER, true );
+                wp_enqueue_script( 'popup-zen-admin', Popup_Zen_URL . 'assets/js/popup-zen-admin' . $suffix . '.js', array( 'wp-color-picker', 'jquery-ui-datepicker', 'jquery-ui-core', 'jquery-ui-autocomplete' ), Popup_Zen_VER, true );
             
                 wp_enqueue_style( 'popup-zen-frontend', Popup_Zen_URL . 'assets/css/popup-zen-frontend' . $suffix . '.css', array( 'popup-zen-admin' ), Popup_Zen_VER );
             }

@@ -91,8 +91,53 @@
       $('input[name=display_when][value=delay]').prop('checked', 'checked');
     })
     .on('click', '#pzen-upload-btn', pzen.mediaUpload )
+    .on('keyup', '#show_on_pages', pzen.suggestPages )
 
-    $('#show_on_pages').suggest( window.ajaxurl + "?action=pzen_ajax_page_search", {multiple:true, multipleSep: ","});
+  }
+
+  pzen.suggestPages = function( e ) {
+
+    if( e.key == 'Backspace' )
+      return;
+
+    var text = e.currentTarget.value;
+    
+    if( text && text.length <= 1 )
+      return;
+ 
+    $( 'input#show_on_pages' ).autocomplete({
+          source: pzen.fetchPosts,
+          minLength: 3,
+          delay: 500,
+          select: function(event, ui) {
+              var terms = this.value.split(/,\s*/);
+              terms.pop();
+              terms.push(ui.item.value);
+              terms.push('');
+              this.value = terms.join(', ');
+              return false;
+          }
+      });
+
+  }
+
+  pzen.fetchPosts = function( input, suggest ) {
+
+    var term = input.term;
+    
+    // substring of new string (only when a comma is in string)
+    if (term.indexOf(', ') > 0) {
+        var index = term.lastIndexOf(', ');
+        term = term.substring(index + 2);
+    }
+
+    $.ajax({
+      url: window.ajaxurl,
+      data: { action: 'pzen_ajax_page_search', term: term },
+      success: function( e ) {  
+        suggest( e.data ); 
+      }
+    });
 
   }
 
