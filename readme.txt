@@ -3,7 +3,7 @@
 Contributors: scottopolis
 Tags: popup, pop up, optin, lead generation, email opt-in
 Requires at least: 4.5
-Tested up to: 5.2
+Tested up to: 5.1.1
 Stable tag: 0.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
