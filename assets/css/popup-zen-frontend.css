@@ -630,6 +630,7 @@ img.pzen-loading {
 
 .pzen-input input[type=text], .pzen-input input[type=email] {
 	border: none;
+	border-radius: 0;
 	border-bottom: 1px solid #ccc;
 	height: 40px;
     background-color: transparent;

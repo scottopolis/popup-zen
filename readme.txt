@@ -1,10 +1,10 @@
-=== Popup Zen - Popups Are Broken, Get Popup Zen ===
+=== Popup Zen - Permission based popups for WordPress ===
 
 Contributors: scottopolis
-Tags: popup, optin, lead generation, email opt-in, pop up
+Tags: popup, pop up, optin, lead generation, email opt-in
 Requires at least: 4.5
-Tested up to: 5.1
-Stable tag: 0.0.1
+Tested up to: 5.2
+Stable tag: 0.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,23 +12,25 @@ A WordPress popup plugin for people who hate popups, but still need to collect e
 
 == Description ==
 
-**Let's face it, popups are broken.**
+**Do you hate popups? Feel sleazy using them? Us too.**
 
-They are overused, and our site visitors hate them.
+Obnoxious popups may have a good opt-in rate, but they are damaging your brand. Popup Zen is a new way to get high quality leads without pissing off your site visitors.
 
-Popup Zen is a subtle, non-blocking opt-in that gets attention without being annoying.
+- Collect emails without the sleaze
+- Minimalist design, easy to use
+- Ultra-lightweight codebase
 
-It's lightweight, easy to use, and minimalist.
+We built Popup Zen because we just couldn't bring ourselves to put that horrible popup in front of our site visitors. We wanted something that represented our brand better.
 
-If you are looking for obnoxious, screen-blocking popups to piss off your site visitors, you are in the wrong place.
+Instead of damaging your brand just to get a higher opt-in rate, Popup Zen believes in building trust.
 
-If you hate popups as much as your site visitors do, and you don't want to damage your brand just to collect a few extra emails, read on...
+Popup Zen gets high-quality leads by asking permission before displaying a popup. This builds trust with your site visitors, and keeps your brand image intact.
 
-We are sacrificing trust to increase our opt-in rates, and it's damaging our businesses.
+**Features**
 
-We still need to collect emails, so what is the solution?
-
-Popup Zen will help you collect emails with style and grace.
+- Customize the text, image, and colors
+- Choose where it displays
+- Integrate your email provider: MailChimp, ConvertKit, MailPoet 3, Drip, Active Campaign, or send to your email address
 
 **What it won't do**
 
@@ -36,10 +38,6 @@ Popup Zen will help you collect emails with style and grace.
 - Choose from 100 different designs
 - Create insanely complex rules for how to display it
 - Block the screen without permission
-
-Popup Zen is for people who value their audience and their brand, and don’t need to use tricks to collect emails.
-
-If that describes you, try it out.
 
 Learn more at [getpopupzen.com](https://getpopupzen.com)
 
