@@ -268,7 +268,7 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
                 <div id="pzen-bd-<?php echo esc_attr( $id ); ?>" data-id="<?php echo esc_attr( $id ); ?>" class="pzen-backdrop pzen-hide"></div>
             <?php endif; ?>
 
-            <div id="pzen-<?php echo esc_attr( $id ); ?>" class="popup-zen-box <?php echo apply_filters( 'pzen_classes', '', $id ); ?>">
+            <div id="pzen-<?php echo esc_attr( $id ); ?>" class="popup-zen-box pzen-hide <?php echo apply_filters( 'pzen_classes', '', $id ); ?>">
                     
                 <div class="pzen-collapse"><i class="icon icon-down-open"></i></div>
 
@@ -327,7 +327,6 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
 
         /**
          * Display box content
-         * Content was added dynamically with Javscript prior to 1.1.0, now it's echoed with PHP to maximize compatibility.
          *
          * @since       1.1.0
          * @param       int $id
@@ -338,7 +337,9 @@ if( !class_exists( 'Popup_Zen_Functions' ) ) {
             $post_content = get_post_meta( $id, 'pzen_content', 1 );
 
             $content = apply_filters( 'wpautop', $post_content, $id );
-            return do_shortcode( $content );
+            $content = do_shortcode( $content );
+
+            return apply_filters( 'pzen_content', $content, $id );
 
         }
 

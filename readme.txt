@@ -1,4 +1,4 @@
-=== Popup Zen - Permission based popups for WordPress ===
+=== Popup Zen - A popup for people who hate popups ===
 
 Contributors: scottopolis
 Tags: popup, pop up, optin, lead generation, email opt-in
