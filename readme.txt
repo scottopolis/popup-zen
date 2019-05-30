@@ -1,22 +1,38 @@
-=== Popup Zen - A popup for people who hate popups ===
+=== Popup Zen - Small, Simple, Lightweight Email Optin ===
 
 Contributors: scottopolis
 Tags: popup, pop up, optin, lead generation, email opt-in
 Requires at least: 4.5
-Tested up to: 5.1.1
+Tested up to: 5.2.1
 Stable tag: 0.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A WordPress popup plugin for people who hate popups, but still need to collect emails.
+A WordPress popup that is ultra lightweight, simple to use, and small.
 
 == Description ==
 
-**Do you hate popups? Feel sleazy using them? Us too.**
+The Popup Zen Box is a cleaner, simpler way to collect emails with a popup.
 
-Obnoxious popups may have a good opt-in rate, but they are damaging your brand. Popup Zen is a new way to get high quality leads without pissing off your site visitors.
+It looks great, works great, and stays out of the way of your site visitors.
 
-- Collect emails without the sleaze
+Integrate your email provider, choose where to show it, customize the colors, and publish. Done!
+
+No complex settings or 3rd party SaaS dependencies.
+
+**Features**
+
+- Customize the text, image, and colors
+- Choose where it displays - posts, pages, taxonomies, etc.
+- Integrate your email provider: MailChimp, ConvertKit, MailPoet 3, Drip, Active Campaign, or send to your email address
+
+**Why Popup Zen?**
+
+Popup Zen is clean, fast, and simple. It's also non-intrusive.
+
+Obnoxious popups may have a good opt-in rate, but they could be damaging your brand. Popup Zen is a new way to get high quality leads without pissing off your site visitors.
+
+- Simply collect emails
 - Minimalist design, easy to use
 - Ultra-lightweight codebase
 
@@ -25,12 +41,6 @@ We built Popup Zen because we just couldn't bring ourselves to put that horrible
 Instead of damaging your brand just to get a higher opt-in rate, Popup Zen believes in building trust.
 
 Popup Zen gets high-quality leads by asking permission before displaying a popup. This builds trust with your site visitors, and keeps your brand image intact.
-
-**Features**
-
-- Customize the text, image, and colors
-- Choose where it displays
-- Integrate your email provider: MailChimp, ConvertKit, MailPoet 3, Drip, Active Campaign, or send to your email address
 
 **What it won't do**
 

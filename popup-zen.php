@@ -3,7 +3,7 @@
  * Plugin Name:     Popup Zen
  * Plugin URI:      https://getpopupzen.com
  * Description:     Ridding the web of obnoxious popups, one site at a time.
- * Version:         0.0.2
+ * Version:         0.0.3
  * Author:          Scott Bolinger
  * Author URI:      https://scottbolinger.com
  * Text Domain:     popup-zen
@@ -62,7 +62,7 @@ if( !class_exists( 'Popup_Zen' ) ) {
          */
         private function setup_constants() {
             // Plugin version
-            define( 'Popup_Zen_VER', '0.0.2' );
+            define( 'Popup_Zen_VER', '0.0.3' );
 
             // Plugin path
             define( 'Popup_Zen_DIR', plugin_dir_path( __FILE__ ) );
